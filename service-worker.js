@@ -20,7 +20,12 @@ const PRECACHE_URLS = [
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)).catch(() => {})
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .catch((err) => {
+        console.error("[SW] Precaching failed:", err);
+        throw err;
+      })
   );
 });
 
@@ -51,7 +56,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      const cached = await cache.match(req, { ignoreSearch: true });
+      const cached = await cache.match(req, { ignoreSearch: false });
 
       const fetchPromise = fetch(req)
         .then((res) => {

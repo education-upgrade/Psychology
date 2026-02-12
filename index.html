@@ -4181,20 +4181,29 @@ function baseState(){
     disabledTopics:{},
   };
 }
+
+function normalizeState(input){
+  const s = (input && typeof input === "object") ? input : {};
+  const base = baseState();
+  return {
+    ...base,
+    ...s,
+    reviews: (s.reviews && typeof s.reviews === "object") ? s.reviews : base.reviews,
+    stats: (s.stats && typeof s.stats === "object") ? { ...base.stats, ...s.stats } : base.stats,
+    quiz: (s.quiz && typeof s.quiz === "object") ? { ...base.quiz, ...s.quiz } : base.quiz,
+    weekly: (s.weekly && typeof s.weekly === "object") ? s.weekly : base.weekly,
+    topicLevels: (s.topicLevels && typeof s.topicLevels === "object") ? s.topicLevels : base.topicLevels,
+    daily: (s.daily && typeof s.daily === "object") ? s.daily : base.daily,
+    dailyStreak: (s.dailyStreak && typeof s.dailyStreak === "object") ? { ...base.dailyStreak, ...s.dailyStreak } : base.dailyStreak,
+    disabledTopics: (s.disabledTopics && typeof s.disabledTopics === "object") ? s.disabledTopics : base.disabledTopics,
+  };
+}
+
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(!raw) return baseState();
-    const s = JSON.parse(raw);
-    s.reviews ||= {};
-    s.stats ||= { studied:0 };
-    s.quiz ||= { attempted:0, correct:0, bestStreakAllTime:0 };
-    s.weekly ||= {};
-    s.topicLevels ||= {};
-    s.daily ||= {};
-    s.dailyStreak ||= { count:0, best:0, lastDate:null };
-    s.disabledTopics ||= {};
-    return s;
+    return normalizeState(JSON.parse(raw));
   }catch{
     return baseState();
   }
@@ -6005,7 +6014,7 @@ $("btnImport").addEventListener("click", ()=>{
   try{
     const obj = JSON.parse(raw);
     if(!obj || typeof obj !== "object") throw new Error("Invalid data");
-    STATE = obj;
+    STATE = normalizeState(obj);
     saveState();
     computeKpis();
     alert("Imported successfully.");
