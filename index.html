@@ -1502,7 +1502,7 @@ h1{
   background: var(--bg);
   z-index:9999;
   opacity:1;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 1.7s ease-in-out;
 }
 #splashScreen .splashInner{
   display:flex;
@@ -6084,7 +6084,7 @@ function __runSplashFade(){
   const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Timing: calm pause, tiny extra delay, then a slow fade
-  const fadeMs = prefersReduced ? 0 : 1500;   // 2s fade
+  const fadeMs = prefersReduced ? 0 : 1700;   // 1.7s fade
   const showMs = prefersReduced ? 0 : 900;   // logo visible
   const extraDelayMs = prefersReduced ? 0 : 300; // subtle delay before fade begins
 
