@@ -1780,8 +1780,8 @@ h1{
       </button>
 
       <button class="gamePillBtn" type="button" id="openMatchBtn">
-        <div class="gamePillTitle">Match-Up</div>
-        <div class="gamePillDesc">Match names to descriptions. Fast discrimination practice.</div>
+        <div class="gamePillTitle">Example Match (Data Bank)</div>
+        <div class="gamePillDesc">Match key examples to the correct descriptions by topic.</div>
       </button>
 </div>
 
@@ -1905,7 +1905,7 @@ h1{
 
       <div class="row" style="justify-content:space-between">
         <div class="pill" id="matchMeta">Pairs: 0 • Correct: 0</div>
-        <div class="pill" id="matchHelp">Pick a name, then a description.</div>
+        <div class="pill" id="matchHelp">Pick an example, then the matching description.</div>
       </div>
 
       <div class="row" style="justify-content:space-between;margin-top:10px">
@@ -1917,7 +1917,7 @@ h1{
 
       <div class="matchGrid">
         <div class="matchCol">
-          <div class="note" style="margin-bottom:8px">Names</div>
+          <div class="note" style="margin-bottom:8px">Key examples</div>
           <div id="matchNames"></div>
         </div>
         <div class="matchCol">
@@ -5790,14 +5790,14 @@ $("emojiMode").addEventListener("change", startEmojiRound);
 /* ==========================================================
    MATCHING GAME
    ========================================================== */
-function dedupeByName(people){
+function dedupeByName(items){
   const seen = new Set();
   const out = [];
-  for(const p of people){
-    const k = String(p.name||"").toLowerCase();
+  for(const item of items){
+    const k = String(item.name||"").toLowerCase();
     if(!k || seen.has(k)) continue;
     seen.add(k);
-    out.push(p);
+    out.push(item);
   }
   return out;
 }
@@ -5814,30 +5814,57 @@ let MATCH = {
   best: 0
 };
 
-function buildPeoplePool(topicId){
-  const allP = Object.keys(FACT_BANK).flatMap(tid => (FACT_BANK[tid].people||[]).map(p=>({...p, topicId: tid})));
-  if(topicId === "MIXED") return dedupeByName(allP);
+function buildExamplePool(topicId){
+  const topicIds = (topicId === "MIXED")
+    ? TOPICS.filter(t=>isTopicEnabled(t.id)).map(t=>t.id)
+    : [topicId];
 
-  const topicPeople = (FACT_BANK[topicId]?.people || []).map(p=>({...p, topicId}));
-  const decoys = shuffle(allP.filter(p=>p.topicId!==topicId)).slice(0, 6);
-  return dedupeByName([...topicPeople, ...decoys]);
+  const out = [];
+
+  topicIds.forEach(tid=>{
+    const bucket = FACT_BANK[tid] || {};
+
+    (bucket.events||[]).forEach(ev=>{
+      const what = String(ev.what||"").replace(/\s+/g," ").trim();
+      const why = String(ev.whyMatters||"").replace(/\s+/g," ").trim();
+      const desc = [what, why].filter(Boolean).join(" ");
+      if(!ev.name || !desc) return;
+      out.push({ name: ev.name, desc, topicId: tid });
+    });
+
+    (bucket.people||[]).forEach(person=>{
+      const role = String(person.role||"").replace(/\s+/g," ").trim();
+      const significance = String(person.significance||"").replace(/\s+/g," ").trim();
+      const desc = [role, significance].filter(Boolean).join(". ");
+      if(!person.name || !desc) return;
+      out.push({ name: person.name, desc, topicId: tid });
+    });
+  });
+
+  return dedupeByName(out);
 }
-function makeTrickyDescription(p){
-  // People cards are now role-only (significance may be blank)
-  const role = String(p.role||"").replace(/\s+/g," ").trim();
-  return role || "Key figure in this topic.";
-}
+
 function startMatchGame(){
   const topicId = $("matchTopicSelect").value;
   const pairsWanted = Number($("matchDifficulty").value);
 
-  const pool = buildPeoplePool(topicId);
+  const pool = buildExamplePool(topicId);
   const chosen = shuffle(pool).slice(0, Math.min(pairsWanted, pool.length));
+
+  if(chosen.length === 0){
+    MATCH = {
+      pairs: [], names: [], descs: [], selectedNameId: null, selectedDescId: null,
+      correct: 0, total: 0, locked: new Set(), streak: 0, best: 0
+    };
+    renderMatch();
+    $("matchHelp").textContent = "No data-bank examples available for this topic yet.";
+    return;
+  }
 
   const pairs = chosen.map((p, i)=>({
     key:`p${i}`,
     name: p.name,
-    desc: makeTrickyDescription(p)
+    desc: p.desc
   }));
 
   MATCH = {
@@ -5854,6 +5881,7 @@ function startMatchGame(){
   };
 
   renderMatch();
+  $("matchHelp").textContent = "Pick an example, then the matching description.";
 }
 function renderMatch(){
   $("matchNames").innerHTML = "";
@@ -5913,21 +5941,21 @@ function attemptMatch(){
     MATCH.streak++;
     MATCH.best = Math.max(MATCH.best, MATCH.streak);
 
-    $("matchHelp").textContent = "✅ Correct! Keep going.";
+    $("matchHelp").textContent = "✅ Correct! Keep matching.";
 
     if(MATCH.streak > 0 && MATCH.streak % 4 === 0){
       confetti.burst(80);
     }
   }else{
     MATCH.streak = 0;
-    $("matchHelp").textContent = "❌ Not a match — look for the precise clue in the wording.";
+    $("matchHelp").textContent = "❌ Not a match — compare the details in the description.";
   }
 
   MATCH.selectedNameId = null;
   MATCH.selectedDescId = null;
 
   if(MATCH.correct >= MATCH.total){
-    $("matchHelp").textContent = "🏆 Completed! New game to reshuffle.";
+    $("matchHelp").textContent = "🏆 Completed! Start a new topic or reshuffle.";
     confetti.burst(160);
   }
 }
