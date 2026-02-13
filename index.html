@@ -1389,6 +1389,8 @@ h1{
     }
   
 .banner-title-pill {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   padding: 10px 20px;
   font-size: 30px;        /* same size as before */
@@ -1403,6 +1405,24 @@ h1{
 
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   animation: bannerFadeUp 180ms ease-out both;
+}
+
+.bannerTitleWrap{
+  position:relative;
+  display:inline-block;
+}
+
+.bannerLogoOverlay{
+  position:absolute;
+  left:50%;
+  bottom:-12px;
+  transform:translateX(-50%);
+  width:120px;
+  max-width:82%;
+  opacity:.22;
+  filter:saturate(.85);
+  pointer-events:none;
+  z-index:1;
 }
 
 
@@ -1541,7 +1561,10 @@ h1{
   <div class="headerInner">
     <div class="brand">
       <div>
-        <div class="banner-title-pill">AQA A‑Level Psychology</div>
+        <div class="bannerTitleWrap">
+          <img id="bannerLogoOverlay" class="bannerLogoOverlay" src="" alt="" aria-hidden="true">
+          <div class="banner-title-pill">AQA A‑Level Psychology</div>
+        </div>
       </div>
     </div>
 
@@ -6087,6 +6110,15 @@ function init(){
   // start on Home
   setTab("home");
 }
+
+function syncBannerLogoFromSplash(){
+  const splashLogo = document.querySelector("#splashScreen img");
+  const bannerLogo = document.getElementById("bannerLogoOverlay");
+  if(!splashLogo || !bannerLogo) return;
+  bannerLogo.src = splashLogo.src;
+}
+
+syncBannerLogoFromSplash();
 /* =========================
    SPLASH: fade to Home
    ========================= */
