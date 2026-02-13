@@ -1391,7 +1391,9 @@ h1{
 .banner-title-pill {
   position: relative;
   z-index: 2;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 20px;
   font-size: 30px;        /* same size as before */
   font-weight: 800;
@@ -1405,6 +1407,16 @@ h1{
 
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   animation: bannerFadeUp 180ms ease-out both;
+}
+.banner-title-pill-logo{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+.banner-title-pill-text{
+  white-space: nowrap;
 }
 
 .bannerCenterLogo{
@@ -1558,7 +1570,10 @@ h1{
 
     <div class="brand">
       <div>
-        <div class="banner-title-pill">AQA A‑Level Psychology</div>
+        <div class="banner-title-pill">
+          <img id="bannerTitleLogo" class="banner-title-pill-logo" src="" alt="">
+          <span class="banner-title-pill-text">AQA A‑Level Psychology</span>
+        </div>
       </div>
     </div>
 
@@ -6108,8 +6123,10 @@ function init(){
 function syncBannerLogoFromSplash(){
   const splashLogo = document.querySelector("#splashScreen img");
   const bannerLogo = document.getElementById("bannerLogoOverlay");
-  if(!splashLogo || !bannerLogo) return;
-  bannerLogo.src = splashLogo.src;
+  const bannerTitleLogo = document.getElementById("bannerTitleLogo");
+  if(!splashLogo) return;
+  if(bannerLogo) bannerLogo.src = splashLogo.src;
+  if(bannerTitleLogo) bannerTitleLogo.src = splashLogo.src;
 }
 
 syncBannerLogoFromSplash();
