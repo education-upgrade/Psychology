@@ -290,7 +290,7 @@ h1{
       .bannerKpis{ margin-top:8px; gap:8px; }
       .kpiPill{ min-width: 0; flex:1 1 30%; padding:10px 10px; }
       .kpiPill .kpiVal{ font-size:16px; }
-      .logoSignalPill{ padding:6px 12px; }
+      .logoSignalPill{ padding:0; }
       .logoSignalImage{ width:128px; max-width:44vw; }
       main{ padding-top:12px; }
     }
@@ -1393,14 +1393,10 @@ h1{
 }
 
 .logoSignalPill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:8px 16px;
-  border-radius:999px;
-  background:linear-gradient(180deg, rgba(203, 234, 255, 0.92), rgba(185, 224, 255, 0.92));
-  border:1px solid rgba(120, 178, 228, 0.55);
-  box-shadow:0 8px 20px rgba(43, 124, 193, 0.2), inset 0 1px 0 rgba(255,255,255,.55);
+  padding:0;
+  background:transparent;
+  border:none;
+  box-shadow:none;
 }
 
 .logoSignalImage{
