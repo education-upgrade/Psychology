@@ -1407,19 +1407,14 @@ h1{
   animation: bannerFadeUp 180ms ease-out both;
 }
 
-.bannerTitleWrap{
-  position:relative;
-  display:inline-block;
-}
-
-.bannerLogoOverlay{
+.bannerCenterLogo{
   position:absolute;
   left:50%;
-  bottom:-12px;
-  transform:translateX(-50%);
-  width:120px;
-  max-width:82%;
-  opacity:.22;
+  top:52%;
+  transform:translate(-50%, -50%);
+  width:138px;
+  max-width:32vw;
+  opacity:.2;
   filter:saturate(.85);
   pointer-events:none;
   z-index:1;
@@ -1559,12 +1554,11 @@ h1{
 
 <header id="homeHeader">
   <div class="headerInner">
+    <img id="bannerLogoOverlay" class="bannerCenterLogo" src="" alt="" aria-hidden="true">
+
     <div class="brand">
       <div>
-        <div class="bannerTitleWrap">
-          <img id="bannerLogoOverlay" class="bannerLogoOverlay" src="" alt="" aria-hidden="true">
-          <div class="banner-title-pill">AQA A‑Level Psychology</div>
-        </div>
+        <div class="banner-title-pill">AQA A‑Level Psychology</div>
       </div>
     </div>
 
