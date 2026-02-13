@@ -293,8 +293,8 @@ h1{
       .bannerKpis{ margin-top:8px; gap:8px; }
       .kpiPill{ min-width: 0; flex:1 1 30%; padding:10px 10px; }
       .kpiPill .kpiVal{ font-size:16px; }
-      .logoSignalPill{ padding:8px 10px; }
-      .logoSignalImage{ width:90px; max-width:32vw; }
+      .logoSignalPill{ padding:6px 10px; }
+      .logoSignalImage{ width:78px; max-width:30vw; }
       main{ padding-top:12px; }
     }
     
@@ -560,20 +560,6 @@ h1{
       align-items:center;
       white-space:nowrap;
     }
-
-    /* Signal pills (meaning + gentle pressure, no new UI blocks) */
-    .signalPill{
-      flex-direction:column;
-      align-items:flex-start;
-      white-space:normal;
-      line-height:1.15;
-      padding:8px 12px;
-      gap:2px;
-      max-width:260px;
-    }
-    .signalPill .pillTop{font-weight:900;color:var(--text);font-size:12px}
-    .signalPill .pillSub{font-size:11px;color:var(--muted);font-weight:750}
-    .signalPill .pillTopRow{display:flex;align-items:center;gap:8px}
 
     .hookLine{margin-top:3px;color:var(--muted);font-size:12px}
 .divider{height:1px;background:var(--line);margin:12px 0}
@@ -1416,14 +1402,14 @@ h1{
 }
 
 .logoSignalPill{
-  padding:8px 12px;
+  padding:6px 10px;
   background:rgba(255,255,255,.82);
   border-color:rgba(0,0,0,.10);
 }
 
 .logoSignalImage{
-  width:110px;
-  max-width:28vw;
+  width:92px;
+  max-width:24vw;
   height:auto;
   display:block;
 }
@@ -1571,10 +1557,6 @@ h1{
     </div>
 
     <div class="row">
-      <div class="pill signalPill" id="weeklyBadgePill">
-        <div class="pillTop">🏅 Week signal</div>
-        <div class="pillSub">Keep momentum rolling</div>
-      </div>
       <div class="pill logoSignalPill" aria-label="Education Upgrade logo">
         <img id="bannerPillLogo" class="logoSignalImage" src="" alt="Education Upgrade">
       </div>
@@ -5218,25 +5200,6 @@ function updateBannerTitlePill(){
 }
 
 
-function weeklySignalSubtext(name){
-  const n = String(name||"").toLowerCase();
-  if(n.includes("diamond")) return "Top-tier engagement";
-  if(n.includes("gold"))    return "Strong consistency";
-  if(n.includes("silver"))  return "Good momentum";
-  if(n.includes("bronze"))  return "Back on track";
-  return "Keep momentum rolling";
-}
-
-function renderWeeklySignal(badge){
-  const pill = document.getElementById("weeklyBadgePill");
-  if(!pill) return;
-  const top = `${badge.icon} ${badge.name} week`;
-  const sub = weeklySignalSubtext(badge.name);
-  pill.innerHTML = `<div class="pillTop">${top}</div><div class="pillSub">${sub}</div>`;
-  updateBannerTitlePill();
-
-}
-
 function renderStreakSignal(){
   const btn = document.getElementById("streakPill");
   if(!btn) return;
@@ -5297,12 +5260,9 @@ function computeKpis(){
   $("kpiFocus").textContent = String(focusCount);
   setRing(progress);
 
-  const badge = getWeeklyBadge();
   // Banner microcopy (status + rotating teacher whisper)
   try{ updateHeaderCopy(); }catch(e){}
 
-  // Weekly signal pill (meaning, not stats)
-  try{ renderWeeklySignal(badge); }catch(e){}
 
   // progress note card removed from home; keep microcopy in weekly signal + streak panel
 
