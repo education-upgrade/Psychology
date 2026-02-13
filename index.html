@@ -376,7 +376,12 @@ h1{
   height:132px;
   border-radius:16px;
   border:1px solid rgba(0,0,0,.08);
-  background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(253,235,228,.70));
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(32,24,26,.46)),
+    var(--topicBgImage, linear-gradient(180deg, rgba(255,255,255,.95), rgba(253,235,228,.70)));
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
   box-shadow: 0 8px 14px rgba(0,0,0,.06);
   position:relative;
   overflow:hidden;
@@ -435,6 +440,15 @@ h1{
 .tankContent .tileNum{ font-size:18px; }
 .tankContent .tileMain{ font-size:13px; }
 .tankContent .tileYears{ font-size:11px; }
+.tankContent .tileMain{
+  color:#fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.55);
+  background: rgba(18,18,18,.34);
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:12px;
+  padding:8px 10px;
+  backdrop-filter: blur(2px);
+}
 
 .topicTile .levelBadge{ margin-top:10px; }
 
@@ -2062,6 +2076,21 @@ const TOPICS = [
 /* ==========================================================
    FACT_BANK (UNCHANGED content - fully populated)
    ========================================================== */
+
+const TOPIC_TILE_BACKGROUNDS = {
+  t1: "url('https://image.pollinations.ai/prompt/cinematic%20psychology%20classroom%20group%20conformity%20illustration%2C%20social%20influence%2C%20soft%20peach%20palette')",
+  t2: "url('https://image.pollinations.ai/prompt/dreamy%20brain%20library%20with%20floating%20memory%20cards%2C%20neural%20pathways%2C%20educational%20art')",
+  t3: "url('https://image.pollinations.ai/prompt/warm%20parent%20and%20child%20bond%2C%20attachment%20theory%20concept%20art%2C%20gentle%20lighting')",
+  t4: "url('https://image.pollinations.ai/prompt/mental%20health%20symbolic%20landscape%2C%20storm%20to%20calm%20path%2C%20psychopathology%20concept%20art')",
+  t5: "url('https://image.pollinations.ai/prompt/multiple%20psychology%20approaches%20collage%2C%20cognitive%20behavioural%20biological%20humanistic%20symbols')",
+  t6: "url('https://image.pollinations.ai/prompt/biopsychology%20brain%20and%20nervous%20system%20sci-fi%20medical%20illustration%2C%20clean%20pastel%20tones')",
+  t7: "url('https://image.pollinations.ai/prompt/research%20methods%20data%20charts%20lab%20notebook%20experiment%20setup%2C%20academic%20digital%20art')",
+  t8: "url('https://image.pollinations.ai/prompt/ethical%20scales%20and%20speech%20bubbles%2C%20issues%20and%20debates%20in%20psychology%2C%20conceptual%20illustration')",
+  t9: "url('https://image.pollinations.ai/prompt/aggression%20concept%20art%2C%20contrasting%20anger%20and%20self-control%2C%20dramatic%20lighting')",
+  t10:"url('https://image.pollinations.ai/prompt/schizophrenia%20symbolic%20mind%20fragments%20and%20healing%20light%2C%20respectful%20mental%20health%20art')",
+  t11:"url('https://image.pollinations.ai/prompt/relationships%20connection%20between%20people%2C%20communication%20threads%2C%20romantic%20psychology%20concept')"
+};
+
 const FACT_BANK = {
   t1: {
     title: "1. Social Influence",
@@ -4931,9 +4960,11 @@ function renderTopicDashboard(){
       celebrateLevelUp(t.title, lvl);
     }
 
+    const tileBg = TOPIC_TILE_BACKGROUNDS[tid] || "linear-gradient(180deg, rgba(255,255,255,.95), rgba(253,235,228,.70))";
+
     return `
       <button class="topicTile ${isTopicEnabled(tid) ? "" : "isDisabled"}" data-topic="${tid}" title="Open this topic">
-        <div class="progressTank" style="--fill:${fill}%; --liq:${liq};">
+        <div class="progressTank" style="--fill:${fill}%; --liq:${liq}; --topicBgImage:${tileBg};">
           
           <div class="topicToggleWrap" title="Toggle this topic on/off">
             <label class="switch">
