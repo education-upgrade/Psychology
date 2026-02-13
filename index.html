@@ -406,27 +406,6 @@ h1{
   transition: height .7s cubic-bezier(.2,.9,.2,1);
   will-change: height;
 }
-.progressLiquid::before{
-  content:"";
-  position:absolute;
-  left:-30%;
-  bottom: calc(100% - 18px);
-  width:160%;
-  height:46px;
-  background:
-    radial-gradient(20px 18px at 20px 30px, rgba(255,255,255,.55) 0 55%, transparent 58%),
-    radial-gradient(22px 18px at 60px 18px, rgba(255,255,255,.45) 0 55%, transparent 58%),
-    radial-gradient(22px 18px at 100px 30px, rgba(255,255,255,.40) 0 55%, transparent 58%);
-  opacity:.7;
-  filter: blur(.2px);
-  animation: waveSlide 4.5s linear infinite;
-  pointer-events:none;
-}
-@keyframes waveSlide{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(-120px); }
-}
-
 .tankContent{
   position:absolute;
   inset:0;
