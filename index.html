@@ -293,8 +293,8 @@ h1{
       .bannerKpis{ margin-top:8px; gap:8px; }
       .kpiPill{ min-width: 0; flex:1 1 30%; padding:10px 10px; }
       .kpiPill .kpiVal{ font-size:16px; }
-      .logoSignalPill{ padding:6px 10px; }
-      .logoSignalImage{ width:78px; max-width:30vw; }
+      .logoSignalPill{ padding:0; }
+      .logoSignalImage{ width:104px; max-width:36vw; }
       main{ padding-top:12px; }
     }
     
@@ -1402,16 +1402,18 @@ h1{
 }
 
 .logoSignalPill{
-  padding:6px 10px;
-  background:rgba(255,255,255,.82);
-  border-color:rgba(0,0,0,.10);
+  padding:0;
+  background:transparent;
+  border:none;
+  box-shadow:none;
 }
 
 .logoSignalImage{
-  width:92px;
-  max-width:24vw;
+  width:124px;
+  max-width:32vw;
   height:auto;
   display:block;
+  filter:brightness(1.22) saturate(1.3) contrast(1.12) drop-shadow(0 10px 20px rgba(0,0,0,.2));
 }
 
 
@@ -1557,7 +1559,7 @@ h1{
     </div>
 
     <div class="row">
-      <div class="pill logoSignalPill" aria-label="Education Upgrade logo">
+      <div class="logoSignalPill" aria-label="Education Upgrade logo">
         <img id="bannerPillLogo" class="logoSignalImage" src="" alt="Education Upgrade">
       </div>
     </div>
