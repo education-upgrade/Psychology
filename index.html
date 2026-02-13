@@ -287,11 +287,14 @@ h1{
     /* Mobile: keep header compact so streak card is first thing visible */
     @media (max-width: 520px){
       .headerInner{ padding:12px 14px 10px; }
-      h1{ font-size:24px; }
+      h1{ font-size:22px; }
+      .banner-title-pill{ font-size:20px; padding:9px 14px; }
       .sub{ font-size:12px; }
       .bannerKpis{ margin-top:8px; gap:8px; }
       .kpiPill{ min-width: 0; flex:1 1 30%; padding:10px 10px; }
       .kpiPill .kpiVal{ font-size:16px; }
+      .logoSignalPill{ padding:8px 10px; }
+      .logoSignalImage{ width:90px; max-width:32vw; }
       main{ padding-top:12px; }
     }
     
@@ -1393,9 +1396,9 @@ h1{
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  font-size: 30px;        /* same size as before */
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: clamp(22px, 4vw, 26px);
   font-weight: 800;
   letter-spacing: -0.4px;
   line-height: 1;
@@ -1408,28 +1411,21 @@ h1{
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   animation: bannerFadeUp 180ms ease-out both;
 }
-.banner-title-pill-logo{
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  object-fit: contain;
-  flex: 0 0 auto;
-}
 .banner-title-pill-text{
   white-space: nowrap;
 }
 
-.bannerCenterLogo{
-  position:absolute;
-  left:50%;
-  top:52%;
-  transform:translate(-50%, -50%);
-  width:138px;
-  max-width:32vw;
-  opacity:.2;
-  filter:saturate(.85);
-  pointer-events:none;
-  z-index:1;
+.logoSignalPill{
+  padding:8px 12px;
+  background:rgba(255,255,255,.82);
+  border-color:rgba(0,0,0,.10);
+}
+
+.logoSignalImage{
+  width:110px;
+  max-width:28vw;
+  height:auto;
+  display:block;
 }
 
 
@@ -1566,12 +1562,9 @@ h1{
 
 <header id="homeHeader">
   <div class="headerInner">
-    <img id="bannerLogoOverlay" class="bannerCenterLogo" src="" alt="" aria-hidden="true">
-
     <div class="brand">
       <div>
         <div class="banner-title-pill">
-          <img id="bannerTitleLogo" class="banner-title-pill-logo" src="" alt="">
           <span class="banner-title-pill-text">AQA A‑Level Psychology</span>
         </div>
       </div>
@@ -1582,8 +1575,9 @@ h1{
         <div class="pillTop">🏅 Week signal</div>
         <div class="pillSub">Keep momentum rolling</div>
       </div>
-      
-
+      <div class="pill logoSignalPill" aria-label="Education Upgrade logo">
+        <img id="bannerPillLogo" class="logoSignalImage" src="" alt="Education Upgrade">
+      </div>
     </div>
 
     <!-- KPI pills: keep key stats visible without pushing streak off-screen on mobile -->
@@ -6122,11 +6116,9 @@ function init(){
 
 function syncBannerLogoFromSplash(){
   const splashLogo = document.querySelector("#splashScreen img");
-  const bannerLogo = document.getElementById("bannerLogoOverlay");
-  const bannerTitleLogo = document.getElementById("bannerTitleLogo");
+  const bannerPillLogo = document.getElementById("bannerPillLogo");
   if(!splashLogo) return;
-  if(bannerLogo) bannerLogo.src = splashLogo.src;
-  if(bannerTitleLogo) bannerTitleLogo.src = splashLogo.src;
+  if(bannerPillLogo) bannerPillLogo.src = splashLogo.src;
 }
 
 syncBannerLogoFromSplash();
