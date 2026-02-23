@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#f3f7fb">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-    <link rel="preload" as="image" href="section-bg.jpg?v8">
+    <link rel="preload" as="image" href="background-bg.jpg?v8">
 <style>
     /* ======================================================
        LIGHT PASTEL BLUE THEME (eye-safe)
@@ -18,7 +18,7 @@
 
     :root{
       /* Background image used inside cards on all non-Home tabs */
-      --sectionCardBg: url("./section-bg.jpg");
+      --sectionCardBg: url("./background-bg.jpg");
       --paleBlueBgFilter: saturate(.39) brightness(1.08) contrast(.95) hue-rotate(168deg);
       --paleBlueBgMask: linear-gradient(180deg, rgba(214,231,247,.21), rgba(233,243,252,.30));
 
@@ -7213,8 +7213,8 @@ function updateDailyUI(){
     const dailyTopicBackgrounds = {
       t1: "./topic1.png?v=1",
       t2: "./topic2.png?v=1",
-      t3: "./section-bg.jpg?v=8",
-      t4: "./section-bg.jpg?v=8"
+      t3: "./background-bg.jpg?v=8",
+      t4: "./background-bg.jpg?v=8"
     };
     const bg = dailyTopicBackgrounds[d.topicId];
     streakCard.style.setProperty('--dailyTopicBg', bg ? `url('${bg}')` : 'none');
@@ -8370,8 +8370,8 @@ function renderTopicDashboard(){
   const topicBackgrounds = {
     t1: "./topic1.png?v=1",
     t2: "./topic2.png?v=1",
-    t3: "./section-bg.jpg?v=8",
-    t4: "./section-bg.jpg?v=8"
+    t3: "./background-bg.jpg?v=8",
+    t4: "./background-bg.jpg?v=8"
   };
 
   el.innerHTML = topicIds.map(tid=>{
@@ -8424,7 +8424,7 @@ function renderTopicDashboard(){
       celebrateLevelUp(t.title, lvl);
     }
 
-    const topicBg = topicBackgrounds[tid] || "section-bg.jpg";
+    const topicBg = topicBackgrounds[tid] || "background-bg.jpg";
 
     return `
       <button class="topicTile ${isTopicEnabled(tid) ? "" : "isDisabled"}" data-topic="${tid}" title="Open this topic" style="--topicTileBg:url('${topicBg}');">
