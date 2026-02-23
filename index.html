@@ -15878,7 +15878,7 @@ EVENTS.forEach(e=>{
 
   return bank;
 }
-function buildPaper1TopUpQuestions(topicId, currentBank, targetCount){
+function buildTopicTopUpQuestions(topicId, currentBank, targetCount){
   const topicTerms = (FACT_BANK[topicId]?.terms || []).filter(t=>String(t.term||"").trim() && String(t.meaning||"").trim());
   if(!topicTerms.length) return [];
 
@@ -15895,6 +15895,8 @@ function buildPaper1TopUpQuestions(topicId, currentBank, targetCount){
 
   const topicTermNames = topicTerms.map(t=>String(t.term));
   const topicMeanings = topicTerms.map(t=>String(t.meaning));
+  const allTermNames = allTerms().map(t=>String(t.term));
+  const allMeanings = allTerms().map(t=>String(t.meaning));
 
   let i = 0;
   const guardLimit = 3000;
@@ -15909,16 +15911,18 @@ function buildPaper1TopUpQuestions(topicId, currentBank, targetCount){
     let explain = "";
 
     if(useDescribePrompt){
-      const wrongTerms = shuffle(topicTermNames.filter(name=>name !== t.term)).slice(0, 3);
+      const localWrongTerms = topicTermNames.filter(name=>name !== t.term);
+      const wrongTerms = shuffle(localWrongTerms.length >= 3 ? localWrongTerms : allTermNames.filter(name=>name !== t.term)).slice(0, 3);
       if(wrongTerms.length < 3){ i++; continue; }
-      q = `Paper 1 concept check: which term matches this description? “${promptText}”`;
+      q = `Concept check: which term matches this description? “${promptText}”`;
       answer = String(t.term);
       choices = shuffle([answer, ...wrongTerms]);
       explain = `Correct: ${t.term}.`;
     }else{
-      const wrongDefs = shuffle(topicMeanings.filter(m=>m !== String(t.meaning))).slice(0, 3);
+      const localWrongDefs = topicMeanings.filter(m=>m !== String(t.meaning));
+      const wrongDefs = shuffle(localWrongDefs.length >= 3 ? localWrongDefs : allMeanings.filter(m=>m !== String(t.meaning))).slice(0, 3);
       if(wrongDefs.length < 3){ i++; continue; }
-      q = `Paper 1 concept check: ${t.term} is best described as…`;
+      q = `Concept check: ${t.term} is best described as…`;
       answer = String(t.meaning);
       choices = shuffle([answer, ...wrongDefs]);
       explain = `Correct: ${t.meaning}`;
@@ -15935,28 +15939,44 @@ function buildPaper1TopUpQuestions(topicId, currentBank, targetCount){
   return out;
 }
 
-function enforcePaper1McqQuota(bank, targetCount=60){
-  const paper1TopicIds = ["t1", "t2", "t3", "t4"];
+function enforceTopicMcqQuota(bank, targetCountByTopic={}){
+  const allTopicIds = TOPICS.map(t=>t.id);
   const out = [];
 
-  for(const topicId of paper1TopicIds){
+  for(const topicId of allTopicIds){
+    const targetCount = Number(targetCountByTopic[topicId] ?? 30);
     const topicQuestions = bank.filter(q=>q.topicId === topicId);
     let padded = topicQuestions.slice();
 
     if(padded.length < targetCount){
-      const extras = buildPaper1TopUpQuestions(topicId, padded, targetCount);
+      const extras = buildTopicTopUpQuestions(topicId, padded, targetCount);
       padded = padded.concat(extras);
     }
 
     out.push(...padded.slice(0, targetCount));
   }
 
-  const paper1Set = new Set(paper1TopicIds);
-  const otherQuestions = bank.filter(q=>!paper1Set.has(q.topicId));
-  return [...otherQuestions, ...out];
+  return out;
 }
 
-const MCQ_BANK = enforcePaper1McqQuota([...MCQ_BANK_MANUAL, ...buildMcqBank()], 60);
+const MCQ_BANK = enforceTopicMcqQuota([...MCQ_BANK_MANUAL, ...buildMcqBank()], {
+  t1: 60,
+  t2: 60,
+  t3: 60,
+  t4: 60,
+  t5: 40,
+  t6: 40,
+  t7: 40,
+  t8: 40,
+  t9: 40,
+  t10: 40,
+  t11: 40,
+  t12: 40,
+  t13: 40,
+  t14: 40,
+  t15: 40,
+  t16: 40
+});
 
 function getQuizPool(topicId){
   const enabled = (x)=>isTopicEnabled(x.topicId);
