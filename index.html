@@ -3044,6 +3044,14 @@ section#games.gamePaneActive .gamesHeroCard{
     .pathwayTabBtn.active{background:var(--accent4);border-color:var(--accent)}
     .plannerBox{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;margin-top:8px;font-weight:700}
     .resetMapBtn{margin-left:auto}
+    .mapPresetBlock{border:1px solid var(--line);border-radius:12px;background:var(--accent4);padding:10px;margin-top:8px}
+    .mapPlanGrid{display:grid;gap:10px;margin-top:10px}
+    .ao3TagRow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+    .aoTag{display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:900}
+    .coverageList{margin:8px 0 0 18px;display:grid;gap:6px}
+    .coverageNote{margin-top:10px}
+    .copyToast{position:fixed;right:16px;bottom:92px;background:var(--textStrong);color:#fff;padding:8px 12px;border-radius:999px;font-weight:800;z-index:35;box-shadow:var(--shadow)}
+    .copyToast.hidden{display:none}
 
 </style>
 </head>
@@ -3789,6 +3797,9 @@ section#games.gamePaneActive .gamesHeroCard{
       <div id="examQuestionList" class="examQuestionList"></div>
     </div>
 
+    <div id="mapInlineCard" class="card hidden" aria-live="polite"></div>
+    <div id="essayWriterCard" class="card hidden" aria-live="polite"></div>
+    <div id="essayFeedbackCard" class="card hidden" aria-live="polite"></div>
     <div id="essayScaffoldCard" class="card hidden" aria-live="polite"></div>
   </section>
 
@@ -3820,6 +3831,18 @@ section#games.gamePaneActive .gamesHeroCard{
     </div>
   </div>
 </div>
+
+<div id="ao3ExampleModal" class="mapModal hidden" role="dialog" aria-modal="true" aria-labelledby="ao3ExampleTitle">
+  <div class="mapModalCard">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:8px">
+      <h3 id="ao3ExampleTitle" class="examSectionTitle" style="margin:0">Annotated AO3 example</h3>
+      <button id="ao3ExampleClose" class="btn" type="button">Close</button>
+    </div>
+    <div id="ao3ExampleBody" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<div id="copyToast" class="copyToast hidden" role="status" aria-live="polite">Copied ✅</div>
 
 </main>
 
@@ -6706,16 +6729,116 @@ const MATCH_PEOPLE_DEFAULTS = {};
    EXAMS: 16 MARK ESSAY PRACTICE (MAP)
    ========================================================== */
 const ESSAY_QUESTIONS = [
-  { id:"q1", topicTag:"Social Influence", commandWord:"Discuss", isScenario:false, questionText:"Discuss research into conformity." },
-  { id:"q2", topicTag:"Social Influence", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate explanations for obedience." },
-  { id:"q3", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true, questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario." },
-  { id:"q4", topicTag:"Memory", commandWord:"Discuss", isScenario:false, questionText:"Discuss explanations for forgetting." },
-  { id:"q5", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate the learning theory explanation of attachment." },
-  { id:"q6", topicTag:"Attachment", commandWord:"Discuss", isScenario:true, questionText:"Discuss the effects of institutionalisation on attachment. Refer to the scenario." },
-  { id:"q7", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate one or more psychological explanations for depression." },
-  { id:"q8", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true, questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario." },
-  { id:"q9", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false, questionText:"Discuss issues of reliability and validity in psychological research." },
-  { id:"q10", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate the role of the limbic system in aggression." }
+  {
+    id:"q1", topicTag:"Social Influence", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss research into conformity.",
+    mapAskPreset:"Focus on Asch’s line judgement research, variables affecting conformity, key findings, then evaluate research and explanations.",
+    evalBank:[
+      { label:"Lab studies may lack ecological validity", keywords:["ecological validity","artificial","lab","mundane realism"] },
+      { label:"Demand characteristics / participant reactivity", keywords:["demand characteristics","guess","responded","social desirability"] },
+      { label:"Sampling limits generalisability", keywords:["male","american","student","generalise"] },
+      { label:"High control supports cause-and-effect conclusions", keywords:["control","standardised","cause","internal validity"] }
+    ]
+  },
+  {
+    id:"q2", topicTag:"Social Influence", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate explanations for obedience.",
+    mapAskPreset:"Focus on agentic state and legitimacy of authority explanations, then evaluate with supporting/challenging evidence and real-world relevance.",
+    evalBank:[
+      { label:"Research support from Milgram-style findings", keywords:["milgram","obedience rates","agentic","authority"] },
+      { label:"Limited explanation because disobedience also occurs", keywords:["disobedience","resist","autonomous state","variation"] },
+      { label:"Real-world events can support situational pressures", keywords:["my lai","holocaust","situational","authority pressure"] },
+      { label:"Ethical concerns in obedience research", keywords:["ethics","deception","distress","protection"] }
+    ]
+  },
+  {
+    id:"q3", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true,
+    questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario.",
+    mapAskPreset:"Focus on anxiety and EWT accuracy (e.g., weapon focus, Yerkes-Dodson), explain findings, then evaluate and connect directly to scenario details.",
+    evalBank:[
+      { label:"Weapon focus can reduce peripheral detail recall", keywords:["weapon focus","peripheral","johnson","scott"] },
+      { label:"Moderate anxiety may improve accuracy", keywords:["yerkes","dodson","moderate anxiety","inverted u"] },
+      { label:"Field studies increase ecological validity", keywords:["field study","real life","yuille","christian"] },
+      { label:"Anxiety effects are mixed and depend on context", keywords:["mixed findings","depends","context","type of anxiety"] }
+    ]
+  },
+  {
+    id:"q4", topicTag:"Memory", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss explanations for forgetting.",
+    mapAskPreset:"Focus on interference and retrieval failure explanations, key research support, then evaluate explanatory power and limitations.",
+    evalBank:[
+      { label:"Interference supported by lab evidence", keywords:["interference","mcgeoch","baddeley","similarity"] },
+      { label:"Retrieval failure linked to cue-dependent forgetting", keywords:["retrieval failure","cue","tulving","context dependent"] },
+      { label:"Lab tasks may lack everyday realism", keywords:["artificial","ecological validity","word lists","lab"] },
+      { label:"Forgetting likely has multiple interacting causes", keywords:["more than one","interaction","explanation","combination"] }
+    ]
+  },
+  {
+    id:"q5", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the learning theory explanation of attachment.",
+    mapAskPreset:"Focus on classical/operant conditioning and drive reduction account of attachment, then evaluate against evidence and alternative explanations.",
+    evalBank:[
+      { label:"Learning theory explains food association processes", keywords:["classical conditioning","operant conditioning","drive reduction","food"] },
+      { label:"Harlow challenges food as main attachment basis", keywords:["harlow","contact comfort","cloth mother","wire mother"] },
+      { label:"Schaffer and Emerson challenge feeding explanation", keywords:["schaffer","emerson","primary attachment","not feeder"] },
+      { label:"Monotropic/evolutionary theories may explain better", keywords:["bowlby","monotropy","innate","adaptive"] }
+    ]
+  },
+  {
+    id:"q6", topicTag:"Attachment", commandWord:"Discuss", isScenario:true,
+    questionText:"Discuss the effects of institutionalisation on attachment. Refer to the scenario.",
+    mapAskPreset:"Focus on disinhibited attachment and intellectual effects from institutional care, timing of adoption, and evaluate evidence quality with scenario links.",
+    evalBank:[
+      { label:"Disinhibited attachment is a key effect", keywords:["disinhibited","indiscriminate","stranger","romania"] },
+      { label:"Earlier adoption predicts better outcomes", keywords:["before six months","early adoption","timing","sensitive period"] },
+      { label:"Some cognitive deficits reduce over time", keywords:["iq","cognitive","catch up","improve"] },
+      { label:"Institutional quality varies so findings may not generalise", keywords:["quality of care","not all institutions","generalise","variation"] }
+    ]
+  },
+  {
+    id:"q7", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate one or more psychological explanations for depression.",
+    mapAskPreset:"Focus on cognitive explanations (e.g., Beck/Ellis) and/or behavioural accounts, then evaluate empirical support and treatment implications.",
+    evalBank:[
+      { label:"Negative schemas/cognitive triad provide mechanism", keywords:["negative schema","cognitive triad","beck","irrational beliefs"] },
+      { label:"CBT success supports cognitive account", keywords:["cbt","cognitive therapy","effective","ellis"] },
+      { label:"Depression likely has interacting biological factors", keywords:["biological","genes","serotonin","interactionist"] },
+      { label:"Method issues in diagnosis and self-report data", keywords:["self report","validity","diagnosis","measurement"] }
+    ]
+  },
+  {
+    id:"q8", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true,
+    questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario.",
+    mapAskPreset:"Focus on genetic and neural explanations for OCD, supporting evidence, then evaluate reductionism/determinism and scenario application.",
+    evalBank:[
+      { label:"Genetic vulnerability is supported by family/twin findings", keywords:["family","twin","genetic","candidate gene"] },
+      { label:"Neural mechanisms include serotonin and OFC links", keywords:["serotonin","orbitofrontal","basal ganglia","neural"] },
+      { label:"Biological treatments lend partial support", keywords:["ssri","drug therapy","improve","response"] },
+      { label:"Explanations can be biologically reductionist", keywords:["reductionist","environment","learning","deterministic"] }
+    ]
+  },
+  {
+    id:"q9", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss issues of reliability and validity in psychological research.",
+    mapAskPreset:"Focus on what reliability and validity mean, common threats and improvements, and evaluate trade-offs across research methods.",
+    evalBank:[
+      { label:"Reliability includes internal/external consistency", keywords:["test retest","inter rater","internal consistency","replicate"] },
+      { label:"Validity includes internal/external/ecological elements", keywords:["internal validity","external validity","ecological validity","construct validity"] },
+      { label:"Standardisation can improve reliability", keywords:["standardised","controls","consistent procedure","objective"] },
+      { label:"Highly controlled studies may reduce real-world validity", keywords:["lab","artificial","mundane realism","trade off"] }
+    ]
+  },
+  {
+    id:"q10", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the role of the limbic system in aggression.",
+    mapAskPreset:"Focus on limbic structures (amygdala/hypothalamus) in aggression, relevant evidence, then evaluate complexity and interacting influences.",
+    evalBank:[
+      { label:"Amygdala/hypothalamus are implicated in aggressive behaviour", keywords:["amygdala","hypothalamus","limbic","aggression"] },
+      { label:"Animal and lesion evidence offers support", keywords:["lesion","animal study","stimulation","neural evidence"] },
+      { label:"Human aggression is influenced by social context too", keywords:["social factors","environment","learning","situational"] },
+      { label:"Neural explanations can be deterministic/reductionist", keywords:["deterministic","reductionist","oversimplified","complex"] }
+    ]
+  }
 ];
 
 const TOPIC_TAG_TO_ID = {
@@ -6730,6 +6853,7 @@ const TOPIC_TAG_TO_ID = {
 const EXAM_BANK = ESSAY_QUESTIONS.map(q=>({ ...q, topicId:TOPIC_TAG_TO_ID[q.topicTag]||"t1" }));
 const MAP_STORAGE_KEY = "aqa_psychology_map_v1";
 const MAP_MIN_CHARS = 80;
+const AO1_MIN_CHARS = 120;
 
 
 /* ==========================================================
@@ -10484,7 +10608,7 @@ function attemptMatch(){
 $("btnStartMatch").addEventListener("click", startMatchGame);
 
 /* ==========================================================
-   EXAM TAB UI (MAP gating + scaffolds)
+   EXAM TAB UI (inline MAP planner + essay writer)
    ========================================================== */
 let activeMapQuestionId = null;
 let activeScaffoldPathway = "sf";
@@ -10498,19 +10622,43 @@ function saveMapStore(store){
 function getQuestionById(id){
   return ESSAY_QUESTIONS.find(q=>q.id===id) || null;
 }
+function commandMeaningPreset(commandWord){
+  if(commandWord === "Discuss") return "Explain AO1 in detail and evaluate with balanced judgement.";
+  if(commandWord === "Outline and evaluate") return "AO1 outline + AO3 evaluation with judgement.";
+  return "Explain AO1 clearly and evaluate with justified judgement.";
+}
+function defaultMapEntry(id){
+  const q = getQuestionById(id);
+  return {
+    meaning: q ? commandMeaningPreset(q.commandWord) : "",
+    ask: q?.mapAskPreset || "",
+    plan:"",
+    ao1Plan:"",
+    ao2Plan:"",
+    ao3Plan1:"",
+    ao3Plan2:"",
+    ao3Plan3:"",
+    essayText:"",
+    lastFeedback:null,
+    completed:false,
+    readyToWrite:false,
+    lastEdited:null
+  };
+}
 function getMapEntry(id){
   const store = loadMapStore();
-  return store[id] || { meaning:"", ask:"", plan:"", completed:false, readyToWrite:false, lastEdited:null };
+  const current = store[id] || {};
+  return { ...defaultMapEntry(id), ...current };
 }
 function upsertMapEntry(id, updates){
   const store = loadMapStore();
-  const current = getMapEntry(id);
+  const current = { ...defaultMapEntry(id), ...(store[id] || {}) };
   store[id] = { ...current, ...updates, lastEdited:new Date().toISOString() };
   saveMapStore(store);
 }
 function mapStatusLabel(entry){
   if(entry.completed) return "MAP completed";
-  if((entry.meaning||"").trim() || (entry.ask||"").trim() || (entry.plan||"").trim()) return "MAP in progress";
+  if((entry.ao1Plan||"").trim() || (entry.ao3Plan1||"").trim() || (entry.ao3Plan2||"").trim() || (entry.ao3Plan3||"").trim()) return "MAP in progress";
   return "MAP not started";
 }
 function renderExamTab(){
@@ -10535,16 +10683,12 @@ function renderExamTab(){
       <div class="row" style="margin-top:12px;justify-content:space-between;gap:8px">
         <span class="note">${entry.lastEdited ? `Last edited: ${new Date(entry.lastEdited).toLocaleString()}` : "No MAP saved yet."}</span>
         <button class="btn" type="button" data-reset-map="${q.id}">Reset MAP</button>
-        <button class="btn primary" type="button" data-launch-map="${q.id}">Open MAP Planner</button>
       </div>
     </article>`;
   }).join("");
 
-  listEl.querySelectorAll("[data-launch-map]").forEach(btn=>{
-    btn.addEventListener("click", ()=>openMapPlanner(btn.getAttribute("data-launch-map")));
-  });
   listEl.querySelectorAll("[data-open-map]").forEach(card=>{
-    card.addEventListener("dblclick", ()=>openMapPlanner(card.getAttribute("data-open-map")));
+    card.addEventListener("click", ()=>openInlineMap(card.getAttribute("data-open-map")));
   });
   listEl.querySelectorAll("[data-reset-map]").forEach(btn=>{
     btn.addEventListener("click", (ev)=>{
@@ -10558,133 +10702,274 @@ function resetMapForQuestion(questionId){
   const store = loadMapStore();
   delete store[questionId];
   saveMapStore(store);
-  if(activeMapQuestionId === questionId){ closeMapPlanner(); }
-  const scaffold = $("essayScaffoldCard");
-  if(scaffold && scaffold.dataset.questionId === questionId){ scaffold.classList.add("hidden"); scaffold.innerHTML = ""; }
+  if(activeMapQuestionId === questionId){
+    ["mapInlineCard","essayWriterCard","essayFeedbackCard"].forEach(id=>{ const el=$(id); if(el){ el.classList.add("hidden"); el.innerHTML=""; } });
+  }
   renderExamTab();
 }
 
 function openMapPlanner(questionId){
+  openInlineMap(questionId);
+}
+
+function openInlineMap(questionId){
   const q = getQuestionById(questionId);
   if(!q) return;
   activeMapQuestionId = questionId;
-  const entry = getMapEntry(questionId);
-  $("mapPlannerQuestion").textContent = q.questionText;
-  $("mapMeaningInput").value = entry.meaning || "";
-  $("mapAskInput").value = entry.ask || "";
-  $("mapPlanInput").value = entry.plan || "";
-  $("mapPlannerModal").classList.remove("hidden");
-  updateMapProgress();
-}
-
-function closeMapPlanner(){
-  $("mapPlannerModal")?.classList.add("hidden");
-  activeMapQuestionId = null;
-}
-
-function updateMapProgress(){
-  if(!activeMapQuestionId) return;
-  const meaning = $("mapMeaningInput").value;
-  const ask = $("mapAskInput").value;
-  const plan = $("mapPlanInput").value;
-  const lengths = [meaning.trim().length, ask.trim().length, plan.trim().length];
-  const isReady = lengths.every(len=>len >= MAP_MIN_CHARS);
-  upsertMapEntry(activeMapQuestionId, {
-    meaning, ask, plan,
-    completed:isReady
-  });
-  $("mapUnlockBtn").disabled = !isReady;
-  $("mapProgressText").textContent = `Minimum ${MAP_MIN_CHARS} characters per box. Current: M ${lengths[0]}, A ${lengths[1]}, P ${lengths[2]}.`;
-  renderExamTab();
-}
-
-function unlockScaffold(){
-  if(!activeMapQuestionId) return;
-  const entry = getMapEntry(activeMapQuestionId);
-  if(!entry.completed) return;
-  renderEssayScaffold(activeMapQuestionId);
-  closeMapPlanner();
+  renderInlineMap(questionId);
+  renderWriter(questionId);
+  const card = $("mapInlineCard");
+  card?.scrollIntoView({ behavior:"smooth", block:"start" });
+  recordDailyPlanOpened(TOPIC_TAG_TO_ID[q.topicTag] || "t1");
 }
 
 function pathwaySpec(path){
-  if(path === "amb") return { title:"Ambition", subtitle:"AO3 = PEELC x3", ao3:["PEELC 1","PEELC 2","PEELC 3"] };
-  if(path === "mas") return { title:"Mastery", subtitle:"AO3 = PEELAC x3", ao3:["PEELAC 1","PEELAC 2","PEELAC 3"] };
-  return { title:"Strong Foundations", subtitle:"AO3 = PEEL x3", ao3:["PEEL 1","PEEL 2","PEEL 3"] };
+  if(path === "amb") return { title:"Ambition", subtitle:"AO3 planned as PEELC x3" };
+  if(path === "mas") return { title:"Mastery", subtitle:"AO3 planned as PEELAC x3" };
+  return { title:"Strong Foundations", subtitle:"AO3 planned as PEEL x3" };
 }
 
-function renderEssayScaffold(questionId){
+function renderInlineMap(questionId){
   const q = getQuestionById(questionId);
+  const entry = getMapEntry(questionId);
   if(!q) return;
-  const card = $("essayScaffoldCard");
-  card.dataset.questionId = questionId;
   const spec = pathwaySpec(activeScaffoldPathway);
+  const card = $("mapInlineCard");
+  if(!card) return;
 
-  card.innerHTML = `
-    <div class="scaffoldHeader">
-      <h3 class="examSectionTitle" style="margin-bottom:0">Essay Scaffold</h3>
-      <div class="examQTextLarge" style="margin-top:0">${escapeHtml(q.questionText)}</div>
-      <div class="note">16-mark essays are levelled and holistic. Use MAP first, then build AO1 and AO3 clearly.</div>
+  card.innerHTML = `<div class="scaffoldHeader">
+    <h3 class="examSectionTitle" style="margin-bottom:0">MAP Planner (inline)</h3>
+    <div class="examQTextLarge" style="margin-top:0">${escapeHtml(q.questionText)}</div>
 
-      <div class="checklistPanel">
-        <div style="font-weight:900">AO1 checklist (all pathways)</div>
-        <ul style="margin:8px 0 0 18px">
-          <li>Accurate, detailed theory explanation</li>
-          <li>Key terminology</li>
-          <li>Relevant research evidence</li>
-          <li>Logical organisation</li>
-        </ul>
+    <div class="mapPresetBlock"><strong>Meaning (M)</strong><div class="note" style="margin-top:6px">${escapeHtml(commandMeaningPreset(q.commandWord))}</div></div>
+    <div class="mapPresetBlock"><strong>Ask (A)</strong><div class="note" style="margin-top:6px">${escapeHtml(q.mapAskPreset || "")}</div></div>
+
+    <div class="pathwayTabs" role="tablist" aria-label="AO3 pathway tabs">
+      <button class="pathwayTabBtn ${activeScaffoldPathway === "sf" ? "active" : ""}" type="button" data-pathway="sf">Strong Foundations</button>
+      <button class="pathwayTabBtn ${activeScaffoldPathway === "amb" ? "active" : ""}" type="button" data-pathway="amb">Ambition</button>
+      <button class="pathwayTabBtn ${activeScaffoldPathway === "mas" ? "active" : ""}" type="button" data-pathway="mas">Mastery</button>
+    </div>
+
+    <div class="pathwayPanel">
+      <div style="font-weight:900">${spec.title}</div>
+      <div class="note">${spec.subtitle}. AO1 is always expected to be detailed.</div>
+      ${activeScaffoldPathway === "mas" ? `<div class="note" style="margin-top:6px"><strong>Flow tip:</strong> use concessive phrasing (Despite..., While..., However...) to link evaluation.</div>` : ""}
+      <div class="mapPlanGrid">
+        <div>
+          <label for="ao1PlanInput">AO1 plan (required)</label>
+          <textarea id="ao1PlanInput" class="mapTextArea" placeholder="Detailed AO1 knowledge for this essay...">${escapeHtml(entry.ao1Plan || "")}</textarea>
+          <div class="mapHelper">Minimum ${AO1_MIN_CHARS} characters.</div>
+        </div>
+        ${q.isScenario ? `<div class="ao2Panel"><label for="ao2PlanInput"><strong>AO2 Application (separate skill)</strong></label><textarea id="ao2PlanInput" class="mapTextArea" placeholder="Apply your AO1 to the scenario details...">${escapeHtml(entry.ao2Plan || "")}</textarea><div class="mapHelper">Minimum ${MAP_MIN_CHARS} characters for scenario questions.</div></div>` : ""}
+        <div>
+          <label for="ao3Plan1Input">AO3 Point 1 (required)</label>
+          <textarea id="ao3Plan1Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 1...">${escapeHtml(entry.ao3Plan1 || "")}</textarea>
+        </div>
+        <div>
+          <label for="ao3Plan2Input">AO3 Point 2 (required)</label>
+          <textarea id="ao3Plan2Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 2...">${escapeHtml(entry.ao3Plan2 || "")}</textarea>
+        </div>
+        <div>
+          <label for="ao3Plan3Input">AO3 Point 3 (required)</label>
+          <textarea id="ao3Plan3Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 3...">${escapeHtml(entry.ao3Plan3 || "")}</textarea>
+          <div class="mapHelper">Each AO3 point minimum ${MAP_MIN_CHARS} characters.</div>
+        </div>
       </div>
-
-      ${q.isScenario ? `<div class="ao2Panel"><div style="font-weight:900">AO2 Application (separate)</div>
-        <ul style="margin:8px 0 0 18px">
-          <li>Which details of the scenario link to the theory?</li>
-          <li>How does the theory explain what is happening in the scenario?</li>
-        </ul>
-      </div>` : ""}
-
-      <div class="pathwayTabs" role="tablist" aria-label="AO3 pathway tabs">
-        <button class="pathwayTabBtn ${activeScaffoldPathway === "sf" ? "active" : ""}" type="button" data-pathway="sf">Strong Foundations</button>
-        <button class="pathwayTabBtn ${activeScaffoldPathway === "amb" ? "active" : ""}" type="button" data-pathway="amb">Ambition</button>
-        <button class="pathwayTabBtn ${activeScaffoldPathway === "mas" ? "active" : ""}" type="button" data-pathway="mas">Mastery</button>
+      <div class="row" style="margin-top:10px;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <button class="btn" type="button" id="showAo3ExampleBtn">Show annotated AO3 example</button>
+        <button class="btn" type="button" id="resetMapInlineBtn">Reset MAP</button>
       </div>
-
-      <div class="pathwayPanel">
-        <div style="font-weight:900">${spec.title}</div>
-        <div class="note">${spec.subtitle}</div>
-        ${activeScaffoldPathway === "mas" ? `<div class="note" style="margin-top:8px"><strong>Aim for flow:</strong> one evaluative point leads into the next (e.g., concessive phrasing like ‘Despite…’, ‘While…’, ‘However…’), with weighting and judgement.</div>` : ""}
-        <div class="plannerBox">AO1 plan box: Explain the theory in detail</div>
-        ${spec.ao3.map(x=>`<div class="plannerBox">AO3 plan box: ${x}</div>`).join("")}
-      </div>
-
-      <div class="row" style="justify-content:space-between;margin-top:6px;gap:10px">
-        <label class="row" style="margin:0;gap:8px"><input type="checkbox" id="readyToWriteToggle" ${getMapEntry(questionId).readyToWrite ? "checked" : ""}> Ready to write</label>
-        <button class="btn" id="resetMapInlineBtn" type="button">Reset MAP</button>
+      <div id="inlineMapProgressText" class="note" style="margin-top:8px"></div>
+      <div class="row" style="justify-content:flex-end;margin-top:8px">
+        <button id="inlineUnlockBtn" class="btn primary" type="button" disabled>Unlock writing</button>
       </div>
     </div>
-  `;
+  </div>`;
 
   card.classList.remove("hidden");
-  card.querySelectorAll("[data-pathway]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      activeScaffoldPathway = btn.getAttribute("data-pathway");
-      renderEssayScaffold(questionId);
-    });
-  });
-  $("readyToWriteToggle")?.addEventListener("change", (ev)=>{
-    upsertMapEntry(questionId, { readyToWrite: !!ev.target.checked });
-    renderExamTab();
-  });
+  card.querySelectorAll("[data-pathway]").forEach(btn=>btn.addEventListener("click", ()=>{
+    activeScaffoldPathway = btn.getAttribute("data-pathway");
+    renderInlineMap(questionId);
+  }));
+
+  ["ao1PlanInput","ao2PlanInput","ao3Plan1Input","ao3Plan2Input","ao3Plan3Input"].forEach(id=>$(id)?.addEventListener("input", ()=>updateInlineMapProgress(questionId)));
+  $("showAo3ExampleBtn")?.addEventListener("click", ()=>openAo3ExampleModal(activeScaffoldPathway, questionId));
+  $("inlineUnlockBtn")?.addEventListener("click", ()=>renderWriter(questionId, true));
   $("resetMapInlineBtn")?.addEventListener("click", ()=>resetMapForQuestion(questionId));
 
-  recordDailyPlanOpened(TOPIC_TAG_TO_ID[q.topicTag] || "t1");
-  card.scrollIntoView({ behavior:"smooth", block:"start" });
+  updateInlineMapProgress(questionId);
+}
+
+function updateInlineMapProgress(questionId){
+  const q = getQuestionById(questionId);
+  if(!q) return;
+  const ao1Plan = $("ao1PlanInput")?.value || "";
+  const ao2Plan = $("ao2PlanInput")?.value || "";
+  const ao3Plan1 = $("ao3Plan1Input")?.value || "";
+  const ao3Plan2 = $("ao3Plan2Input")?.value || "";
+  const ao3Plan3 = $("ao3Plan3Input")?.value || "";
+
+  const checks = {
+    ao1: ao1Plan.trim().length >= AO1_MIN_CHARS,
+    ao3_1: ao3Plan1.trim().length >= MAP_MIN_CHARS,
+    ao3_2: ao3Plan2.trim().length >= MAP_MIN_CHARS,
+    ao3_3: ao3Plan3.trim().length >= MAP_MIN_CHARS,
+    ao2: !q.isScenario || ao2Plan.trim().length >= MAP_MIN_CHARS
+  };
+  const ready = Object.values(checks).every(Boolean);
+  const progressText = `AO1 ${ao1Plan.trim().length}/${AO1_MIN_CHARS} • AO3-1 ${ao3Plan1.trim().length}/${MAP_MIN_CHARS} • AO3-2 ${ao3Plan2.trim().length}/${MAP_MIN_CHARS} • AO3-3 ${ao3Plan3.trim().length}/${MAP_MIN_CHARS}${q.isScenario ? ` • AO2 ${ao2Plan.trim().length}/${MAP_MIN_CHARS}` : ""}`;
+
+  upsertMapEntry(questionId, {
+    meaning: commandMeaningPreset(q.commandWord),
+    ask: q.mapAskPreset || "",
+    plan:[ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3].filter(Boolean).join("\n\n"),
+    ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3,
+    completed: ready,
+    readyToWrite: ready
+  });
+
+  $("inlineUnlockBtn").disabled = !ready;
+  $("inlineMapProgressText").textContent = ready ? `Ready to write ✅ ${progressText}` : `Complete minimum planning first. ${progressText}`;
+  renderWriter(questionId);
+  renderExamTab();
+}
+
+function renderWriter(questionId, forceOpen=false){
+  const q = getQuestionById(questionId);
+  const entry = getMapEntry(questionId);
+  const card = $("essayWriterCard");
+  if(!q || !card) return;
+
+  if(!entry.readyToWrite && !forceOpen){
+    card.classList.add("hidden");
+    card.innerHTML = "";
+    return;
+  }
+
+  card.innerHTML = `<h3 class="examSectionTitle">Write your answer</h3>
+    <div class="note">Paste or type your full 16-mark answer here.</div>
+    <textarea id="essayTextInput" class="mapTextArea" style="min-height:220px;margin-top:10px" placeholder="Write your full essay response...">${escapeHtml(entry.essayText || "")}</textarea>
+    <div class="row" style="margin-top:10px;justify-content:flex-end;gap:8px;flex-wrap:wrap">
+      <button class="btn primary" type="button" id="submitEssayBtn">Submit for feedback</button>
+      <button class="btn" type="button" id="copyEssayBtn">Copy essay</button>
+    </div>`;
+  card.classList.remove("hidden");
+
+  $("essayTextInput")?.addEventListener("input", (ev)=>upsertMapEntry(questionId, { essayText: ev.target.value }));
+  $("submitEssayBtn")?.addEventListener("click", ()=>submitEssayForFeedback(questionId));
+  $("copyEssayBtn")?.addEventListener("click", ()=>copyEssayBundle(questionId));
+}
+
+function submitEssayForFeedback(questionId){
+  const q = getQuestionById(questionId);
+  const entry = getMapEntry(questionId);
+  if(!q) return;
+  const essayText = ($("essayTextInput")?.value || entry.essayText || "").trim();
+  if(!essayText){ alert("Please type your full essay before submitting."); return; }
+  const lower = essayText.toLowerCase();
+  const included = [];
+  const missing = [];
+
+  (q.evalBank || []).forEach(point=>{
+    const hit = (point.keywords || []).some(k=>lower.includes(String(k).toLowerCase()));
+    (hit ? included : missing).push(point.label);
+  });
+
+  const feedback = {
+    included,
+    missing,
+    note: missing.length ? "Great start — improve coverage by adding some of the missing evaluation ideas." : "Strong coverage across the evaluation point bank. Keep your judgement explicit."
+  };
+  upsertMapEntry(questionId, { essayText, lastFeedback: feedback });
+
+  const feedbackCard = $("essayFeedbackCard");
+  if(!feedbackCard) return;
+  feedbackCard.innerHTML = `<h3 class="examSectionTitle">Coverage feedback</h3>
+    <div class="note">This is a transparent coverage checker, not a mark or level.</div>
+    <div class="pathwayPanel" style="margin-top:10px">
+      <div style="font-weight:900">✅ Included</div>
+      <ul class="coverageList">${included.length ? included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No evaluation ideas detected yet.</li>"}</ul>
+      <div style="font-weight:900;margin-top:10px">⚠️ Missing / consider adding</div>
+      <ul class="coverageList">${missing.length ? missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious gaps from this bank.</li>"}</ul>
+      <div class="coverageNote note">${escapeHtml(feedback.note)}</div>
+    </div>`;
+  feedbackCard.classList.remove("hidden");
+}
+
+function feedbackSummaryText(feedback){
+  if(!feedback) return "No feedback submitted yet.";
+  return `Included: ${(feedback.included||[]).join("; ") || "None"}
+Missing: ${(feedback.missing||[]).join("; ") || "None"}
+Note: ${feedback.note||""}`;
+}
+
+async function copyEssayBundle(questionId){
+  const q = getQuestionById(questionId);
+  const entry = getMapEntry(questionId);
+  if(!q) return;
+  const bundle = [
+    `Question: ${q.questionText}`,
+    `Meaning: ${entry.meaning}`,
+    `Ask: ${entry.ask}`,
+    `AO1 plan: ${entry.ao1Plan || ""}`,
+    q.isScenario ? `AO2 plan: ${entry.ao2Plan || ""}` : null,
+    `AO3 plan 1: ${entry.ao3Plan1 || ""}`,
+    `AO3 plan 2: ${entry.ao3Plan2 || ""}`,
+    `AO3 plan 3: ${entry.ao3Plan3 || ""}`,
+    "",
+    "Essay:",
+    entry.essayText || "",
+    "",
+    "Feedback summary:",
+    feedbackSummaryText(entry.lastFeedback)
+  ].filter(Boolean).join("\n");
+
+  let copied = false;
+  try{
+    await navigator.clipboard.writeText(bundle);
+    copied = true;
+  }catch(e){
+    const ta = document.createElement("textarea");
+    ta.value = bundle;
+    document.body.appendChild(ta);
+    ta.select();
+    copied = document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+  if(copied){
+    const toast = $("copyToast");
+    toast?.classList.remove("hidden");
+    setTimeout(()=>toast?.classList.add("hidden"), 1300);
+  }
+}
+
+function renderAnnotatedExample(pathway, questionId){
+  const q = getQuestionById(questionId);
+  const linkText = q?.questionText?.replace(/\.$/,"") || "research question";
+  if(pathway === "sf"){
+    return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span></div>
+      <p><strong>[P]</strong> One limitation is that conformity studies can be overly artificial, which may reduce how well findings represent everyday behaviour. <strong>[E]</strong> Research found that participants judged line lengths in highly controlled lab settings where social pressure was scripted. <strong>[E]</strong> This may support causal conclusions, but it can limit realism because participants know they are in an experiment. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} suggests useful evidence, but conclusions should be applied cautiously beyond the lab.</p>`;
+  }
+  if(pathway === "amb"){
+    return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span><span class="aoTag">C</span></div>
+      <p><strong>[P]</strong> A strength is that obedience findings demonstrate clear situational pressures, but interpretation should still be balanced. <strong>[E]</strong> Research found that obedience changed when authority legitimacy and proximity were manipulated. <strong>[E]</strong> This implies situational factors can strongly shape behaviour and supports the explanation. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} indicates that context can powerfully influence responses. <strong>[C]</strong> However, individual differences and moral resistance mean situational accounts are not always sufficient on their own.</p>`;
+  }
+  return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span><span class="aoTag">A</span><span class="aoTag">C</span></div>
+    <p><strong>[P]</strong> Despite strong support for biological factors, a fuller judgement is needed because behaviour is rarely determined by one mechanism alone. <strong>[E]</strong> Research found that neural and genetic patterns are associated with the target behaviour across controlled studies. <strong>[E]</strong> This supports the claim by showing measurable links, while also highlighting that association is not complete causation in every case. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} suggests important biological contributions, but conclusions should remain provisional. <strong>[A]</strong> This is important because interventions in education, health, or justice should combine biological insight with social support for better outcomes. <strong>[C]</strong> However, when social and cognitive influences are considered, the evaluation flows toward an interactionist judgement rather than a purely reductionist one.</p>`;
+}
+
+function openAo3ExampleModal(pathway, questionId){
+  const q = getQuestionById(questionId);
+  $("ao3ExampleTitle").textContent = `Annotated AO3 example (${pathwaySpec(pathway).subtitle})`;
+  $("ao3ExampleBody").innerHTML = `<div class="note" style="margin-bottom:8px">Question focus: ${escapeHtml(q?.questionText || "")}</div>${renderAnnotatedExample(pathway, questionId)}`;
+  $("ao3ExampleModal").classList.remove("hidden");
 }
 
 (function initExamMapUi(){
-  $("mapPlannerClose")?.addEventListener("click", closeMapPlanner);
-  $("mapPlannerModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "mapPlannerModal") closeMapPlanner(); });
-  ["mapMeaningInput","mapAskInput","mapPlanInput"].forEach(id=>$(id)?.addEventListener("input", updateMapProgress));
-  $("mapUnlockBtn")?.addEventListener("click", unlockScaffold);
+  $("mapPlannerClose")?.addEventListener("click", ()=>$("mapPlannerModal")?.classList.add("hidden"));
+  $("mapPlannerModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "mapPlannerModal") $("mapPlannerModal")?.classList.add("hidden"); });
+  $("ao3ExampleClose")?.addEventListener("click", ()=>$("ao3ExampleModal")?.classList.add("hidden"));
+  $("ao3ExampleModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "ao3ExampleModal") $("ao3ExampleModal")?.classList.add("hidden"); });
 })();
 
 if($("btnExport") && $("dataBox")){
