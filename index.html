@@ -6852,8 +6852,6 @@ const TOPIC_TAG_TO_ID = {
 
 const EXAM_BANK = ESSAY_QUESTIONS.map(q=>({ ...q, topicId:TOPIC_TAG_TO_ID[q.topicTag]||"t1" }));
 const MAP_STORAGE_KEY = "aqa_psychology_map_v1";
-const MAP_MIN_CHARS = 80;
-const AO1_MIN_CHARS = 120;
 
 
 /* ==========================================================
@@ -10758,9 +10756,9 @@ function renderInlineMap(questionId){
         <div>
           <label for="ao1PlanInput">AO1 plan (required)</label>
           <textarea id="ao1PlanInput" class="mapTextArea" placeholder="Detailed AO1 knowledge for this essay...">${escapeHtml(entry.ao1Plan || "")}</textarea>
-          <div class="mapHelper">Minimum ${AO1_MIN_CHARS} characters.</div>
+          <div class="mapHelper">Enter your AO1 planning points.</div>
         </div>
-        ${q.isScenario ? `<div class="ao2Panel"><label for="ao2PlanInput"><strong>AO2 Application (separate skill)</strong></label><textarea id="ao2PlanInput" class="mapTextArea" placeholder="Apply your AO1 to the scenario details...">${escapeHtml(entry.ao2Plan || "")}</textarea><div class="mapHelper">Minimum ${MAP_MIN_CHARS} characters for scenario questions.</div></div>` : ""}
+        ${q.isScenario ? `<div class="ao2Panel"><label for="ao2PlanInput"><strong>AO2 Application (separate skill)</strong></label><textarea id="ao2PlanInput" class="mapTextArea" placeholder="Apply your AO1 to the scenario details...">${escapeHtml(entry.ao2Plan || "")}</textarea><div class="mapHelper">Add scenario application notes.</div></div>` : ""}
         <div>
           <label for="ao3Plan1Input">AO3 Point 1 (required)</label>
           <textarea id="ao3Plan1Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 1...">${escapeHtml(entry.ao3Plan1 || "")}</textarea>
@@ -10772,7 +10770,7 @@ function renderInlineMap(questionId){
         <div>
           <label for="ao3Plan3Input">AO3 Point 3 (required)</label>
           <textarea id="ao3Plan3Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 3...">${escapeHtml(entry.ao3Plan3 || "")}</textarea>
-          <div class="mapHelper">Each AO3 point minimum ${MAP_MIN_CHARS} characters.</div>
+          <div class="mapHelper">Add one clear evaluation point in each box.</div>
         </div>
       </div>
       <div class="row" style="margin-top:10px;justify-content:space-between;gap:8px;flex-wrap:wrap">
@@ -10810,14 +10808,14 @@ function updateInlineMapProgress(questionId){
   const ao3Plan3 = $("ao3Plan3Input")?.value || "";
 
   const checks = {
-    ao1: ao1Plan.trim().length >= AO1_MIN_CHARS,
-    ao3_1: ao3Plan1.trim().length >= MAP_MIN_CHARS,
-    ao3_2: ao3Plan2.trim().length >= MAP_MIN_CHARS,
-    ao3_3: ao3Plan3.trim().length >= MAP_MIN_CHARS,
-    ao2: !q.isScenario || ao2Plan.trim().length >= MAP_MIN_CHARS
+    ao1: ao1Plan.trim().length > 0,
+    ao3_1: ao3Plan1.trim().length > 0,
+    ao3_2: ao3Plan2.trim().length > 0,
+    ao3_3: ao3Plan3.trim().length > 0,
+    ao2: !q.isScenario || ao2Plan.trim().length > 0
   };
   const ready = Object.values(checks).every(Boolean);
-  const progressText = `AO1 ${ao1Plan.trim().length}/${AO1_MIN_CHARS} • AO3-1 ${ao3Plan1.trim().length}/${MAP_MIN_CHARS} • AO3-2 ${ao3Plan2.trim().length}/${MAP_MIN_CHARS} • AO3-3 ${ao3Plan3.trim().length}/${MAP_MIN_CHARS}${q.isScenario ? ` • AO2 ${ao2Plan.trim().length}/${MAP_MIN_CHARS}` : ""}`;
+  const progressText = `AO1 ${checks.ao1 ? "done" : "missing"} • AO3-1 ${checks.ao3_1 ? "done" : "missing"} • AO3-2 ${checks.ao3_2 ? "done" : "missing"} • AO3-3 ${checks.ao3_3 ? "done" : "missing"}${q.isScenario ? ` • AO2 ${checks.ao2 ? "done" : "missing"}` : ""}`;
 
   upsertMapEntry(questionId, {
     meaning: commandMeaningPreset(q.commandWord),
@@ -10829,7 +10827,7 @@ function updateInlineMapProgress(questionId){
   });
 
   $("inlineUnlockBtn").disabled = !ready;
-  $("inlineMapProgressText").textContent = ready ? `Ready to write ✅ ${progressText}` : `Complete minimum planning first. ${progressText}`;
+  $("inlineMapProgressText").textContent = ready ? `Ready to write ✅ ${progressText}` : `Complete required planning fields first. ${progressText}`;
   renderWriter(questionId);
   renderExamTab();
 }
