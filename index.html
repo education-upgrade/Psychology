@@ -6733,110 +6733,192 @@ const ESSAY_QUESTIONS = [
     id:"q1", topicTag:"Social Influence", commandWord:"Discuss", isScenario:false,
     questionText:"Discuss research into conformity.",
     mapAskPreset:"Focus on Asch’s line judgement research, variables affecting conformity, key findings, then evaluate research and explanations.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","sample","students","undergraduates","male","american","n="], minHits:1 },
+      { label:"Design named", keywords:["lab experiment","experiment","repeated measures","independent groups","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["confederate","critical trials","unanimous","line judgement","asch"], minHits:1 },
+      { label:"Findings included", keywords:["found that","36.8","one third","75%","conformed"], minHits:1 },
+      { label:"Named study/studies", keywords:["asch","perrin","spencer"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Lab studies may lack ecological validity", keywords:["ecological validity","artificial","lab","mundane realism"] },
-      { label:"Demand characteristics / participant reactivity", keywords:["demand characteristics","guess","responded","social desirability"] },
-      { label:"Sampling limits generalisability", keywords:["male","american","student","generalise"] },
-      { label:"High control supports cause-and-effect conclusions", keywords:["control","standardised","cause","internal validity"] }
+      { label:"Lab studies may lack ecological validity", keywords:["ecological validity","artificial","lab","mundane realism"], minHits:2 },
+      { label:"Demand characteristics / participant reactivity", keywords:["demand characteristics","guess","responded","social desirability"], minHits:1 },
+      { label:"Sampling limits generalisability", keywords:["male","american","student","generalise"], minHits:2 },
+      { label:"High control supports cause-and-effect conclusions", keywords:["control","standardised","cause","internal validity"], minHits:1 }
     ]
   },
   {
     id:"q2", topicTag:"Social Influence", commandWord:"Outline and evaluate", isScenario:false,
     questionText:"Outline and evaluate explanations for obedience.",
     mapAskPreset:"Focus on agentic state and legitimacy of authority explanations, then evaluate with supporting/challenging evidence and real-world relevance.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","sample","men","volunteers","male","n="], minHits:1 },
+      { label:"Design named", keywords:["lab experiment","experiment","baseline procedure","controlled"], minHits:1 },
+      { label:"Procedure detail", keywords:["learner","teacher","shock generator","prods","uniform"], minHits:1 },
+      { label:"Findings included", keywords:["65%","obedience rate","found that","450 volts"], minHits:1 },
+      { label:"Named study/studies", keywords:["milgram","bickman","hofling"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Research support from Milgram-style findings", keywords:["milgram","obedience rates","agentic","authority"] },
-      { label:"Limited explanation because disobedience also occurs", keywords:["disobedience","resist","autonomous state","variation"] },
-      { label:"Real-world events can support situational pressures", keywords:["my lai","holocaust","situational","authority pressure"] },
-      { label:"Ethical concerns in obedience research", keywords:["ethics","deception","distress","protection"] }
+      { label:"Research support from Milgram-style findings", keywords:["milgram","obedience rates","agentic","authority"], minHits:1 },
+      { label:"Limited explanation because disobedience also occurs", keywords:["disobedience","resist","autonomous state","variation"], minHits:1 },
+      { label:"Real-world events can support situational pressures", keywords:["my lai","holocaust","situational","authority pressure"], minHits:1 },
+      { label:"Ethical concerns in obedience research", keywords:["ethics","deception","distress","protection"], minHits:1 }
     ]
   },
   {
     id:"q3", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true,
     questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario.",
     mapAskPreset:"Focus on anxiety and EWT accuracy (e.g., weapon focus, Yerkes-Dodson), explain findings, then evaluate and connect directly to scenario details.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","sample","witnesses","n="], minHits:1 },
+      { label:"Design named", keywords:["lab experiment","field study","study","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["weapon","anxiety","identification","line-up","eyewitness"], minHits:1 },
+      { label:"Findings included", keywords:["found that","accuracy","worse recall","better recall","inverted u"], minHits:1 },
+      { label:"Named study/studies", keywords:["johnson","scott","yuille","christian","deffenbacher"], minHits:1 }
+    ],
+    ao2Bank:[
+      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
+      { label:"Scenario details linked to anxiety/EWT", keywords:["witness","suspect","crime","anxiety","identification"], minHits:2 }
+    ],
     evalBank:[
-      { label:"Weapon focus can reduce peripheral detail recall", keywords:["weapon focus","peripheral","johnson","scott"] },
-      { label:"Moderate anxiety may improve accuracy", keywords:["yerkes","dodson","moderate anxiety","inverted u"] },
-      { label:"Field studies increase ecological validity", keywords:["field study","real life","yuille","christian"] },
-      { label:"Anxiety effects are mixed and depend on context", keywords:["mixed findings","depends","context","type of anxiety"] }
+      { label:"Weapon focus can reduce peripheral detail recall", keywords:["weapon focus","peripheral","johnson","scott"], minHits:1 },
+      { label:"Moderate anxiety may improve accuracy", keywords:["yerkes","dodson","moderate anxiety","inverted u"], minHits:1 },
+      { label:"Field studies increase ecological validity", keywords:["field study","real life","yuille","christian"], minHits:2 },
+      { label:"Anxiety effects are mixed and depend on context", keywords:["mixed findings","depends","context","type of anxiety"], minHits:1 }
     ]
   },
   {
     id:"q4", topicTag:"Memory", commandWord:"Discuss", isScenario:false,
     questionText:"Discuss explanations for forgetting.",
     mapAskPreset:"Focus on interference and retrieval failure explanations, key research support, then evaluate explanatory power and limitations.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","sample","students","n="], minHits:1 },
+      { label:"Design named", keywords:["lab experiment","study","design","independent groups"], minHits:1 },
+      { label:"Procedure detail", keywords:["word lists","similarity","cue","context","state dependent"], minHits:1 },
+      { label:"Findings included", keywords:["found that","more interference","recalled","forgot"], minHits:1 },
+      { label:"Named study/studies", keywords:["mcgeoch","baddeley","tulving","godden","baddeley"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Interference supported by lab evidence", keywords:["interference","mcgeoch","baddeley","similarity"] },
-      { label:"Retrieval failure linked to cue-dependent forgetting", keywords:["retrieval failure","cue","tulving","context dependent"] },
-      { label:"Lab tasks may lack everyday realism", keywords:["artificial","ecological validity","word lists","lab"] },
-      { label:"Forgetting likely has multiple interacting causes", keywords:["more than one","interaction","explanation","combination"] }
+      { label:"Interference supported by lab evidence", keywords:["interference","mcgeoch","baddeley","similarity"], minHits:1 },
+      { label:"Retrieval failure linked to cue-dependent forgetting", keywords:["retrieval failure","cue","tulving","context dependent"], minHits:1 },
+      { label:"Lab tasks may lack everyday realism", keywords:["artificial","ecological validity","word lists","lab"], minHits:2 },
+      { label:"Forgetting likely has multiple interacting causes", keywords:["more than one","interaction","explanation","combination"], minHits:1 }
     ]
   },
   {
     id:"q5", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false,
     questionText:"Outline and evaluate the learning theory explanation of attachment.",
     mapAskPreset:"Focus on classical/operant conditioning and drive reduction account of attachment, then evaluate against evidence and alternative explanations.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","babies","infants","sample"], minHits:1 },
+      { label:"Design named", keywords:["observation","study","experiment","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["feeding","conditioning","drive reduction","association"], minHits:1 },
+      { label:"Findings included", keywords:["found that","attachment","contact comfort","preferred"], minHits:1 },
+      { label:"Named study/studies", keywords:["harlow","schaffer","emerson","bowlby"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Learning theory explains food association processes", keywords:["classical conditioning","operant conditioning","drive reduction","food"] },
-      { label:"Harlow challenges food as main attachment basis", keywords:["harlow","contact comfort","cloth mother","wire mother"] },
-      { label:"Schaffer and Emerson challenge feeding explanation", keywords:["schaffer","emerson","primary attachment","not feeder"] },
-      { label:"Monotropic/evolutionary theories may explain better", keywords:["bowlby","monotropy","innate","adaptive"] }
+      { label:"Learning theory explains food association processes", keywords:["classical conditioning","operant conditioning","drive reduction","food"], minHits:1 },
+      { label:"Harlow challenges food as main attachment basis", keywords:["harlow","contact comfort","cloth mother","wire mother"], minHits:1 },
+      { label:"Schaffer and Emerson challenge feeding explanation", keywords:["schaffer","emerson","primary attachment","not feeder"], minHits:1 },
+      { label:"Monotropic/evolutionary theories may explain better", keywords:["bowlby","monotropy","innate","adaptive"], minHits:1 }
     ]
   },
   {
     id:"q6", topicTag:"Attachment", commandWord:"Discuss", isScenario:true,
     questionText:"Discuss the effects of institutionalisation on attachment. Refer to the scenario.",
     mapAskPreset:"Focus on disinhibited attachment and intellectual effects from institutional care, timing of adoption, and evaluate evidence quality with scenario links.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["children","sample","romanian orphans","n="], minHits:1 },
+      { label:"Design named", keywords:["longitudinal","study","natural experiment","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["adoption","institution","follow up","age at adoption"], minHits:1 },
+      { label:"Findings included", keywords:["found that","disinhibited","iq","catch up"], minHits:1 },
+      { label:"Named study/studies", keywords:["rutter","zea nah","bucharest"], minHits:1 }
+    ],
+    ao2Bank:[
+      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
+      { label:"Scenario details applied to institutionalisation", keywords:["care home","adoption","attachment","child","institution"], minHits:2 }
+    ],
     evalBank:[
-      { label:"Disinhibited attachment is a key effect", keywords:["disinhibited","indiscriminate","stranger","romania"] },
-      { label:"Earlier adoption predicts better outcomes", keywords:["before six months","early adoption","timing","sensitive period"] },
-      { label:"Some cognitive deficits reduce over time", keywords:["iq","cognitive","catch up","improve"] },
-      { label:"Institutional quality varies so findings may not generalise", keywords:["quality of care","not all institutions","generalise","variation"] }
+      { label:"Disinhibited attachment is a key effect", keywords:["disinhibited","indiscriminate","stranger","romania"], minHits:1 },
+      { label:"Earlier adoption predicts better outcomes", keywords:["before six months","early adoption","timing","sensitive period"], minHits:1 },
+      { label:"Some cognitive deficits reduce over time", keywords:["iq","cognitive","catch up","improve"], minHits:1 },
+      { label:"Institutional quality varies so findings may not generalise", keywords:["quality of care","not all institutions","generalise","variation"], minHits:2 }
     ]
   },
   {
     id:"q7", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false,
     questionText:"Outline and evaluate one or more psychological explanations for depression.",
     mapAskPreset:"Focus on cognitive explanations (e.g., Beck/Ellis) and/or behavioural accounts, then evaluate empirical support and treatment implications.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","patients","sample","depressed"], minHits:1 },
+      { label:"Design named", keywords:["study","clinical","experiment","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["negative triad","irrational beliefs","reinforcement","cognitive"], minHits:1 },
+      { label:"Findings included", keywords:["found that","symptoms reduced","correlation","improvement"], minHits:1 },
+      { label:"Named study/studies", keywords:["beck","ellis","lewinsohn","cbt"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Negative schemas/cognitive triad provide mechanism", keywords:["negative schema","cognitive triad","beck","irrational beliefs"] },
-      { label:"CBT success supports cognitive account", keywords:["cbt","cognitive therapy","effective","ellis"] },
-      { label:"Depression likely has interacting biological factors", keywords:["biological","genes","serotonin","interactionist"] },
-      { label:"Method issues in diagnosis and self-report data", keywords:["self report","validity","diagnosis","measurement"] }
+      { label:"Negative schemas/cognitive triad provide mechanism", keywords:["negative schema","cognitive triad","beck","irrational beliefs"], minHits:1 },
+      { label:"CBT success supports cognitive account", keywords:["cbt","cognitive therapy","effective","ellis"], minHits:1 },
+      { label:"Depression likely has interacting biological factors", keywords:["biological","genes","serotonin","interactionist"], minHits:1 },
+      { label:"Method issues in diagnosis and self-report data", keywords:["self report","validity","diagnosis","measurement"], minHits:2 }
     ]
   },
   {
     id:"q8", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true,
     questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario.",
     mapAskPreset:"Focus on genetic and neural explanations for OCD, supporting evidence, then evaluate reductionism/determinism and scenario application.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","patients","sample","ocd"], minHits:1 },
+      { label:"Design named", keywords:["family study","twin study","study","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["candidate gene","serotonin","brain scan","neural"], minHits:1 },
+      { label:"Findings included", keywords:["found that","higher concordance","improve with ssri","association"], minHits:1 },
+      { label:"Named study/studies", keywords:["nestadt","saxena","pauls","ocd"], minHits:1 }
+    ],
+    ao2Bank:[
+      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
+      { label:"Scenario details linked to OCD explanation", keywords:["compulsion","obsession","ritual","distress","ocd"], minHits:2 }
+    ],
     evalBank:[
-      { label:"Genetic vulnerability is supported by family/twin findings", keywords:["family","twin","genetic","candidate gene"] },
-      { label:"Neural mechanisms include serotonin and OFC links", keywords:["serotonin","orbitofrontal","basal ganglia","neural"] },
-      { label:"Biological treatments lend partial support", keywords:["ssri","drug therapy","improve","response"] },
-      { label:"Explanations can be biologically reductionist", keywords:["reductionist","environment","learning","deterministic"] }
+      { label:"Genetic vulnerability is supported by family/twin findings", keywords:["family","twin","genetic","candidate gene"], minHits:1 },
+      { label:"Neural mechanisms include serotonin and OFC links", keywords:["serotonin","orbitofrontal","basal ganglia","neural"], minHits:1 },
+      { label:"Biological treatments lend partial support", keywords:["ssri","drug therapy","improve","response"], minHits:1 },
+      { label:"Explanations can be biologically reductionist", keywords:["reductionist","environment","learning","deterministic"], minHits:1 }
     ]
   },
   {
     id:"q9", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false,
     questionText:"Discuss issues of reliability and validity in psychological research.",
     mapAskPreset:"Focus on what reliability and validity mean, common threats and improvements, and evaluate trade-offs across research methods.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","sample","researchers"], minHits:1 },
+      { label:"Design named", keywords:["experiment","questionnaire","observation","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["test-retest","inter-rater","controls","standardised"], minHits:1 },
+      { label:"Findings included", keywords:["found that","higher reliability","validity improved","replicate"], minHits:1 },
+      { label:"Named study/studies", keywords:["asch","milgram","bandura","loftus"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Reliability includes internal/external consistency", keywords:["test retest","inter rater","internal consistency","replicate"] },
-      { label:"Validity includes internal/external/ecological elements", keywords:["internal validity","external validity","ecological validity","construct validity"] },
-      { label:"Standardisation can improve reliability", keywords:["standardised","controls","consistent procedure","objective"] },
-      { label:"Highly controlled studies may reduce real-world validity", keywords:["lab","artificial","mundane realism","trade off"] }
+      { label:"Reliability includes internal/external consistency", keywords:["test retest","inter rater","internal consistency","replicate"], minHits:1 },
+      { label:"Validity includes internal/external/ecological elements", keywords:["internal validity","external validity","ecological validity","construct validity"], minHits:2 },
+      { label:"Standardisation can improve reliability", keywords:["standardised","controls","consistent procedure","objective"], minHits:1 },
+      { label:"Highly controlled studies may reduce real-world validity", keywords:["lab","artificial","mundane realism","trade off"], minHits:2 }
     ]
   },
   {
     id:"q10", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false,
     questionText:"Outline and evaluate the role of the limbic system in aggression.",
     mapAskPreset:"Focus on limbic structures (amygdala/hypothalamus) in aggression, relevant evidence, then evaluate complexity and interacting influences.",
+    ao1Bank:[
+      { label:"Participants/sample stated", keywords:["participants","animals","patients","sample"], minHits:1 },
+      { label:"Design named", keywords:["animal study","lesion study","experiment","design"], minHits:1 },
+      { label:"Procedure detail", keywords:["amygdala","hypothalamus","stimulation","lesion"], minHits:1 },
+      { label:"Findings included", keywords:["found that","aggression increased","aggression reduced","association"], minHits:1 },
+      { label:"Named study/studies", keywords:["bard","siegel","raine","limbic"], minHits:1 }
+    ],
     evalBank:[
-      { label:"Amygdala/hypothalamus are implicated in aggressive behaviour", keywords:["amygdala","hypothalamus","limbic","aggression"] },
-      { label:"Animal and lesion evidence offers support", keywords:["lesion","animal study","stimulation","neural evidence"] },
-      { label:"Human aggression is influenced by social context too", keywords:["social factors","environment","learning","situational"] },
-      { label:"Neural explanations can be deterministic/reductionist", keywords:["deterministic","reductionist","oversimplified","complex"] }
+      { label:"Amygdala/hypothalamus are implicated in aggressive behaviour", keywords:["amygdala","hypothalamus","limbic","aggression"], minHits:1 },
+      { label:"Animal and lesion evidence offers support", keywords:["lesion","animal study","stimulation","neural evidence"], minHits:1 },
+      { label:"Human aggression is influenced by social context too", keywords:["social factors","environment","learning","situational"], minHits:1 },
+      { label:"Neural explanations can be deterministic/reductionist", keywords:["deterministic","reductionist","oversimplified","complex"], minHits:1 }
     ]
   }
 ];
@@ -10611,6 +10693,17 @@ $("btnStartMatch").addEventListener("click", startMatchGame);
 let activeMapQuestionId = null;
 let activeScaffoldPathway = "sf";
 
+function pathwayUiToStorage(path){
+  if(path === "amb") return "AMB";
+  if(path === "mas") return "MAS";
+  return "SF";
+}
+function pathwayStorageToUi(path){
+  if(path === "AMB") return "amb";
+  if(path === "MAS") return "mas";
+  return "sf";
+}
+
 function loadMapStore(){
   try{ return JSON.parse(localStorage.getItem(MAP_STORAGE_KEY) || "{}"); }catch(e){ return {}; }
 }
@@ -10637,6 +10730,7 @@ function defaultMapEntry(id){
     ao3Plan2:"",
     ao3Plan3:"",
     essayText:"",
+    selectedPathway:"SF",
     lastFeedback:null,
     completed:false,
     readyToWrite:false,
@@ -10714,6 +10808,7 @@ function openInlineMap(questionId){
   const q = getQuestionById(questionId);
   if(!q) return;
   activeMapQuestionId = questionId;
+  activeScaffoldPathway = pathwayStorageToUi(getMapEntry(questionId).selectedPathway);
   renderInlineMap(questionId);
   renderWriter(questionId);
   const card = $("mapInlineCard");
@@ -10787,6 +10882,7 @@ function renderInlineMap(questionId){
   card.classList.remove("hidden");
   card.querySelectorAll("[data-pathway]").forEach(btn=>btn.addEventListener("click", ()=>{
     activeScaffoldPathway = btn.getAttribute("data-pathway");
+    upsertMapEntry(questionId, { selectedPathway: pathwayUiToStorage(activeScaffoldPathway) });
     renderInlineMap(questionId);
   }));
 
@@ -10822,6 +10918,7 @@ function updateInlineMapProgress(questionId){
     ask: q.mapAskPreset || "",
     plan:[ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3].filter(Boolean).join("\n\n"),
     ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3,
+    selectedPathway: pathwayUiToStorage(activeScaffoldPathway),
     completed: ready,
     readyToWrite: ready
   });
@@ -10858,47 +10955,221 @@ function renderWriter(questionId, forceOpen=false){
   $("copyEssayBtn")?.addEventListener("click", ()=>copyEssayBundle(questionId));
 }
 
+function countKeywordHits(lowerText, keywords=[]){
+  return (keywords || []).reduce((hits, kw)=>hits + (lowerText.includes(String(kw || "").toLowerCase()) ? 1 : 0), 0);
+}
+
+function extractQuestionKeywordPhrase(questionObj){
+  const qText = String(questionObj?.questionText || "").toLowerCase();
+  if(qText.includes("conformity")) return "research into conformity";
+  if(qText.includes("obedience")) return "explanations for obedience";
+  if(qText.includes("eyewitness")) return "effects of anxiety on eyewitness testimony";
+  if(qText.includes("forgetting")) return "explanations for forgetting";
+  if(qText.includes("attachment")) return "attachment";
+  if(qText.includes("depression")) return "psychological explanations for depression";
+  if(qText.includes("ocd")) return "biological explanations for ocd";
+  if(qText.includes("reliability") || qText.includes("validity")) return "reliability and validity in psychological research";
+  if(qText.includes("limbic")) return "role of the limbic system in aggression";
+  return qText.replace(/[.?]/g, "").trim();
+}
+
+function pathwaySignalTargets(selectedPathway){
+  const qPhrase = extractQuestionKeywordPhrase(getQuestionById(activeMapQuestionId) || {});
+  const base = {
+    evidenceAnchor:{
+      label:"Evidence anchor",
+      min:1,
+      matches:["research found that","study found that"]
+    },
+    linkBack:{
+      label:"Link back to question",
+      min:1,
+      matches:["therefore"],
+      questionPhrase:qPhrase
+    },
+    counterMarker:{
+      label:"Counter marker",
+      min: selectedPathway === "SF" ? 0 : 1,
+      matches:["however","although","nevertheless","despite","on the other hand"]
+    },
+    importanceApplication:{
+      label:"Importance/application",
+      min: selectedPathway === "MAS" ? 1 : 0,
+      matches:["this is important because","this matters because","justice system","jury","workplace","courts","policing","schools","nhs"]
+    }
+  };
+  return base;
+}
+
+function paragraphSignalSummary(text, signals){
+  const paragraphs = String(text || "").split(/
+\s*
+/).map(p=>p.trim()).filter(Boolean);
+  const counts = { paragraphs: paragraphs.length, evidence:0, linkBack:0, counter:0, importance:0 };
+  paragraphs.forEach(par=>{
+    const lower = par.toLowerCase();
+    if(signals.evidenceAnchor.matches.some(m=>lower.includes(m))) counts.evidence++;
+    const hasTherefore = lower.includes("therefore");
+    const hasQPhrase = signals.linkBack.questionPhrase ? lower.includes(signals.linkBack.questionPhrase) : false;
+    if(hasTherefore && hasQPhrase) counts.linkBack++;
+    if(signals.counterMarker.matches.some(m=>lower.includes(m))) counts.counter++;
+    if(signals.importanceApplication.matches.some(m=>lower.includes(m))) counts.importance++;
+  });
+  return counts;
+}
+
+function analyzeEssay(answerText, questionObj, selectedPathway){
+  const lower = String(answerText || "").toLowerCase();
+  const pathway = ["SF","AMB","MAS"].includes(selectedPathway) ? selectedPathway : "SF";
+
+  const ao1Included = [];
+  const ao1Missing = [];
+  (questionObj.ao1Bank || []).forEach(item=>{
+    const minHits = item.minHits || 1;
+    const hits = countKeywordHits(lower, item.keywords || []);
+    (hits >= minHits ? ao1Included : ao1Missing).push(item.label);
+  });
+
+  const ao3Included = [];
+  const ao3Missing = [];
+  (questionObj.evalBank || []).forEach(item=>{
+    const minHits = item.minHits || 1;
+    const hits = countKeywordHits(lower, item.keywords || []);
+    (hits >= minHits ? ao3Included : ao3Missing).push(item.label);
+  });
+
+  const signalDefs = pathwaySignalTargets(pathway);
+  const questionPhrase = extractQuestionKeywordPhrase(questionObj);
+  signalDefs.linkBack.questionPhrase = questionPhrase;
+
+  const evidenceCount = signalDefs.evidenceAnchor.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
+  const linkBackCount = lower.includes("therefore") && lower.includes(questionPhrase) ? 1 : 0;
+  const counterCount = signalDefs.counterMarker.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
+  const importanceCount = signalDefs.importanceApplication.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
+
+  const flowIndicators = ["despite","while","although","arguably","suggests","implies","therefore","consequently"];
+  const flowHits = flowIndicators.filter(w=>lower.includes(w)).length;
+
+  const evalRequired = pathway === "SF" ? 2 : 3;
+  const ao2 = questionObj.isScenario ? (questionObj.ao2Bank || []).map(item=>{
+    const hits = countKeywordHits(lower, item.keywords || []);
+    const minHits = item.minHits || 1;
+    return { label:item.label, met:hits >= minHits };
+  }) : [];
+
+  const signalReport = {
+    pathway,
+    questionPhrase,
+    evaluationRequired: evalRequired,
+    evaluationMet: ao3Included.length >= evalRequired,
+    evidenceAnchor:{ met: evidenceCount >= 1, count:evidenceCount, min:1 },
+    linkBack:{ met: linkBackCount >= 1, count:linkBackCount, min:1 },
+    counterMarker:{ met: pathway === "SF" ? true : counterCount >= 1, count:counterCount, min: pathway === "SF" ? 0 : 1 },
+    importanceApplication:{ met: pathway === "MAS" ? importanceCount >= 1 : true, count:importanceCount, min: pathway === "MAS" ? 1 : 0 },
+    flow:{ met: pathway === "MAS" ? flowHits >= 2 : true, count:flowHits, min: pathway === "MAS" ? 2 : 0 },
+    paragraphStats: paragraphSignalSummary(answerText, signalDefs)
+  };
+
+  const sfHint = "Add ‘Research found that…’ and an explicit ‘Therefore, research into X suggests…’ link.";
+  const ambHint = `${sfHint} Add one counterargument using ‘However…’`;
+  const masHint = `${ambHint} Add one real-world implication using ‘This is important because…’ and show flow using ‘Despite/While… consequently…’`;
+
+  const feedbackText = pathway === "MAS" ? masHint : (pathway === "AMB" ? ambHint : sfHint);
+
+  return {
+    ao1Coverage:{
+      included: ao1Included,
+      missing: ao1Missing,
+      nextStep: `Add ${ao1Missing.slice(0,3).join(" + ") || "participants + design + one key finding"}.`
+    },
+    ao2Coverage: questionObj.isScenario ? {
+      included: ao2.filter(x=>x.met).map(x=>x.label),
+      missing: ao2.filter(x=>!x.met).map(x=>x.label),
+      note:"AO2 is separate from evaluation — keep it distinct."
+    } : null,
+    ao3Coverage:{ included: ao3Included, missing: ao3Missing, required: evalRequired },
+    signalReport,
+    feedbackText
+  };
+}
+
 function submitEssayForFeedback(questionId){
   const q = getQuestionById(questionId);
   const entry = getMapEntry(questionId);
   if(!q) return;
   const essayText = ($("essayTextInput")?.value || entry.essayText || "").trim();
   if(!essayText){ alert("Please type your full essay before submitting."); return; }
-  const lower = essayText.toLowerCase();
-  const included = [];
-  const missing = [];
+  const selectedPathway = entry.selectedPathway || pathwayUiToStorage(activeScaffoldPathway);
+  const analysis = analyzeEssay(essayText, q, selectedPathway);
 
-  (q.evalBank || []).forEach(point=>{
-    const hit = (point.keywords || []).some(k=>lower.includes(String(k).toLowerCase()));
-    (hit ? included : missing).push(point.label);
-  });
-
-  const feedback = {
-    included,
-    missing,
-    note: missing.length ? "Great start — improve coverage by adding some of the missing evaluation ideas." : "Strong coverage across the evaluation point bank. Keep your judgement explicit."
-  };
-  upsertMapEntry(questionId, { essayText, lastFeedback: feedback });
+  const feedback = { ...analysis, pathway:selectedPathway };
+  upsertMapEntry(questionId, { essayText, selectedPathway, lastFeedback: feedback });
 
   const feedbackCard = $("essayFeedbackCard");
   if(!feedbackCard) return;
+  const modeLabel = selectedPathway === "MAS" ? "Mastery" : (selectedPathway === "AMB" ? "Ambition" : "Strong Foundations");
+  const sig = analysis.signalReport;
+  const structureRows = [
+    ["Evidence anchor", sig.evidenceAnchor.met],
+    ["Link back", sig.linkBack.met],
+    ["Counter marker", sig.counterMarker.met],
+    ["Importance/application", sig.importanceApplication.met],
+    ["Flow indicators", sig.flow.met]
+  ];
+
   feedbackCard.innerHTML = `<h3 class="examSectionTitle">Coverage feedback</h3>
-    <div class="note">This is a transparent coverage checker, not a mark or level.</div>
+    <div class="note">This is a skills + coverage coach, not an examiner mark or level.</div>
+    <div class="examBadge" style="display:inline-flex;margin-top:8px">Feedback mode: ${modeLabel}</div>
+
     <div class="pathwayPanel" style="margin-top:10px">
-      <div style="font-weight:900">✅ Included</div>
-      <ul class="coverageList">${included.length ? included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No evaluation ideas detected yet.</li>"}</ul>
-      <div style="font-weight:900;margin-top:10px">⚠️ Missing / consider adding</div>
-      <ul class="coverageList">${missing.length ? missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious gaps from this bank.</li>"}</ul>
-      <div class="coverageNote note">${escapeHtml(feedback.note)}</div>
+      <div style="font-weight:900">1) AO1 detail checklist</div>
+      <div style="margin-top:6px">✅ Included</div>
+      <ul class="coverageList">${analysis.ao1Coverage.included.length ? analysis.ao1Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No AO1 elements detected yet.</li>"}</ul>
+      <div style="margin-top:8px">⚠️ Missing</div>
+      <ul class="coverageList">${analysis.ao1Coverage.missing.length ? analysis.ao1Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious AO1 gaps from this bank.</li>"}</ul>
+      <div class="coverageNote note">Next step: ${escapeHtml(analysis.ao1Coverage.nextStep || "Add participants + design + one key finding.")}</div>
+    </div>
+
+    <div class="pathwayPanel" style="margin-top:10px">
+      <div style="font-weight:900">2) AO3 evaluation points (possible points, not mandatory list)</div>
+      <div class="note">Pathway target: at least ${sig.evaluationRequired} evaluation points hit.</div>
+      <div style="margin-top:6px">✅ Included</div>
+      <ul class="coverageList">${analysis.ao3Coverage.included.length ? analysis.ao3Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No evaluation points detected yet.</li>"}</ul>
+      <div style="margin-top:8px">⚠️ Missing</div>
+      <ul class="coverageList">${analysis.ao3Coverage.missing.length ? analysis.ao3Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious gaps from this eval bank.</li>"}</ul>
+    </div>
+
+    ${q.isScenario ? `<div class="pathwayPanel" style="margin-top:10px"><div style="font-weight:900">AO2 (scenario application) — separate panel</div><div style="margin-top:6px">✅ Included</div><ul class="coverageList">${(analysis.ao2Coverage?.included||[]).length ? analysis.ao2Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No AO2 scenario application signals detected yet.</li>"}</ul><div style="margin-top:8px">⚠️ Missing</div><ul class="coverageList">${(analysis.ao2Coverage?.missing||[]).length ? analysis.ao2Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious AO2 gaps from this bank.</li>"}</ul><div class="coverageNote note">${escapeHtml(analysis.ao2Coverage?.note || "AO2 is separate from evaluation — keep it distinct.")}</div></div>` : ""}
+
+    <div class="pathwayPanel" style="margin-top:10px">
+      <div style="font-weight:900">3) Structure signals (${modeLabel})</div>
+      <ul class="coverageList">${structureRows.filter(([_,met],idx)=> selectedPathway === "SF" ? idx < 2 : (selectedPathway === "AMB" ? idx < 3 : true)).map(([label, met])=>`<li>${met ? "✅" : "❌"} ${escapeHtml(label)}</li>`).join("")}</ul>
+      <div class="note">Paragraph signals: ${sig.paragraphStats.paragraphs} paragraphs • evidence in ${sig.paragraphStats.evidence} • link-back in ${sig.paragraphStats.linkBack} • counter in ${sig.paragraphStats.counter} • importance/application in ${sig.paragraphStats.importance}</div>
+    </div>
+
+    <div class="pathwayPanel" style="margin-top:10px">
+      <div style="font-weight:900">4) Next steps</div>
+      <ul class="coverageList">
+        <li>${escapeHtml(analysis.feedbackText)}</li>
+        <li>Target at least ${sig.evaluationRequired} clear AO3 points from the question's evaluation bank.</li>
+        <li>Keep AO1 specifics concrete (participants, design, procedure, finding, named study).</li>
+      </ul>
     </div>`;
   feedbackCard.classList.remove("hidden");
 }
 
 function feedbackSummaryText(feedback){
   if(!feedback) return "No feedback submitted yet.";
-  return `Included: ${(feedback.included||[]).join("; ") || "None"}
-Missing: ${(feedback.missing||[]).join("; ") || "None"}
-Note: ${feedback.note||""}`;
+  const ao1In = feedback.ao1Coverage?.included || [];
+  const ao1Miss = feedback.ao1Coverage?.missing || [];
+  const ao3In = feedback.ao3Coverage?.included || [];
+  const ao3Miss = feedback.ao3Coverage?.missing || [];
+  return `Pathway: ${feedback.pathway || "SF"}
+AO1 included: ${ao1In.join("; ") || "None"}
+AO1 missing: ${ao1Miss.join("; ") || "None"}
+AO3 included: ${ao3In.join("; ") || "None"}
+AO3 missing: ${ao3Miss.join("; ") || "None"}
+Coach note: ${feedback.feedbackText || ""}`;
 }
 
 async function copyEssayBundle(questionId){
