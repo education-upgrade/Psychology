@@ -15878,7 +15878,85 @@ EVENTS.forEach(e=>{
 
   return bank;
 }
-const MCQ_BANK = [...MCQ_BANK_MANUAL];
+function buildPaper1TopUpQuestions(topicId, currentBank, targetCount){
+  const topicTerms = (FACT_BANK[topicId]?.terms || []).filter(t=>String(t.term||"").trim() && String(t.meaning||"").trim());
+  if(!topicTerms.length) return [];
+
+  const topicQuestions = currentBank.filter(q=>q.topicId === topicId);
+  const seen = new Set(topicQuestions.map(q=>`${q.q}::${q.answer}`));
+  const out = [];
+
+  const trimMeaning = (txt)=>{
+    const raw = String(txt || "").replace(/\s+/g, " ").trim();
+    if(!raw) return "";
+    const firstSentence = raw.split(/(?<=[.!?])\s+/)[0] || raw;
+    return firstSentence.length > 170 ? `${firstSentence.slice(0, 167)}…` : firstSentence;
+  };
+
+  const topicTermNames = topicTerms.map(t=>String(t.term));
+  const topicMeanings = topicTerms.map(t=>String(t.meaning));
+
+  let i = 0;
+  const guardLimit = 3000;
+  while((topicQuestions.length + out.length) < targetCount && i < guardLimit){
+    const t = topicTerms[i % topicTerms.length];
+    const promptText = trimMeaning(t.meaning);
+    const useDescribePrompt = (i % 2) === 0;
+
+    let q = "";
+    let answer = "";
+    let choices = [];
+    let explain = "";
+
+    if(useDescribePrompt){
+      const wrongTerms = shuffle(topicTermNames.filter(name=>name !== t.term)).slice(0, 3);
+      if(wrongTerms.length < 3){ i++; continue; }
+      q = `Paper 1 concept check: which term matches this description? “${promptText}”`;
+      answer = String(t.term);
+      choices = shuffle([answer, ...wrongTerms]);
+      explain = `Correct: ${t.term}.`;
+    }else{
+      const wrongDefs = shuffle(topicMeanings.filter(m=>m !== String(t.meaning))).slice(0, 3);
+      if(wrongDefs.length < 3){ i++; continue; }
+      q = `Paper 1 concept check: ${t.term} is best described as…`;
+      answer = String(t.meaning);
+      choices = shuffle([answer, ...wrongDefs]);
+      explain = `Correct: ${t.meaning}`;
+    }
+
+    const key = `${q}::${answer}`;
+    if(!seen.has(key)){
+      seen.add(key);
+      out.push({ topicId, q, choices, answer, explain });
+    }
+    i++;
+  }
+
+  return out;
+}
+
+function enforcePaper1McqQuota(bank, targetCount=60){
+  const paper1TopicIds = ["t1", "t2", "t3", "t4"];
+  const out = [];
+
+  for(const topicId of paper1TopicIds){
+    const topicQuestions = bank.filter(q=>q.topicId === topicId);
+    let padded = topicQuestions.slice();
+
+    if(padded.length < targetCount){
+      const extras = buildPaper1TopUpQuestions(topicId, padded, targetCount);
+      padded = padded.concat(extras);
+    }
+
+    out.push(...padded.slice(0, targetCount));
+  }
+
+  const paper1Set = new Set(paper1TopicIds);
+  const otherQuestions = bank.filter(q=>!paper1Set.has(q.topicId));
+  return [...otherQuestions, ...out];
+}
+
+const MCQ_BANK = enforcePaper1McqQuota([...MCQ_BANK_MANUAL, ...buildMcqBank()], 60);
 
 function getQuizPool(topicId){
   const enabled = (x)=>isTopicEnabled(x.topicId);
