@@ -6643,36 +6643,6 @@ const MATCH_PEOPLE_DEFAULTS = {};
 })();
 
 /* ==========================================================
-   TOPIC 5 REMOVAL (MERGE INTO TOPIC 4)
-   ========================================================== */
-(function(){
-  const T4 = "t4", T5 = "t5";
-  const NEW_T4_TITLE = "4. Stalinist Dictatorship and reaction 1941-1964";
-  function mergeBanks(bank){
-    if(!bank || !bank[T5]) return;
-    if(!bank[T4]){ bank[T4] = bank[T5]; delete bank[T5]; return; }
-    const a = bank[T4], b = bank[T5];
-    Object.keys(b).forEach((k)=>{
-      if(k === "title") return;
-      const bv = b[k], av = a[k];
-      if(Array.isArray(bv)){
-        a[k] = Array.isArray(av) ? av.concat(bv) : bv.slice();
-      } else if(bv && typeof bv === "object"){
-        a[k] = Object.assign({}, (av||{}), bv);
-      } else if(typeof av === "undefined"){
-        a[k] = bv;
-      }
-    });
-    delete bank[T5];
-  }
-  mergeBanks(FACT_BANK);
-  mergeBanks(TIMELINE_BANK);
-  mergeBanks(CONNECTIONS_BANK);
-  mergeBanks(EMOJI_BANK);
-  if(FACT_BANK && FACT_BANK[T4]) FACT_BANK[T4].title = NEW_T4_TITLE;
-})();
-
-/* ==========================================================
    EXAM BANK (3 questions per topic — already true here)
    ========================================================== */
 const EXAM_BANK = [];
