@@ -11002,9 +11002,7 @@ function pathwaySignalTargets(selectedPathway){
 }
 
 function paragraphSignalSummary(text, signals){
-  const paragraphs = String(text || "").split(/
-\s*
-/).map(p=>p.trim()).filter(Boolean);
+  const paragraphs = String(text || "").split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean);
   const counts = { paragraphs: paragraphs.length, evidence:0, linkBack:0, counter:0, importance:0 };
   paragraphs.forEach(par=>{
     const lower = par.toLowerCase();
