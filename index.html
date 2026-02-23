@@ -3804,12 +3804,2065 @@ section#games.gamePaneActive .gamesHeroCard{
 /* ==========================================================
    TOPICS (SoW order)
    ========================================================== */
-const TOPICS = [];
+const TOPICS = [
+  {
+    "id": "t1",
+    "title": "Paper 1: Social Influence"
+  },
+  {
+    "id": "t2",
+    "title": "Paper 1: Memory"
+  },
+  {
+    "id": "t3",
+    "title": "Paper 1: Attachment"
+  },
+  {
+    "id": "t4",
+    "title": "Paper 1: Psychopathology"
+  },
+  {
+    "id": "t5",
+    "title": "Paper 2: Approaches"
+  },
+  {
+    "id": "t6",
+    "title": "Paper 2: Research Methods"
+  },
+  {
+    "id": "t7",
+    "title": "Paper 2: Biopsychology"
+  },
+  {
+    "id": "t8",
+    "title": "Paper 3: Issues & Debates"
+  },
+  {
+    "id": "t9",
+    "title": "Paper 3: Relationships"
+  },
+  {
+    "id": "t10",
+    "title": "Paper 3: Schizophrenia"
+  },
+  {
+    "id": "t11",
+    "title": "Paper 3: Aggression"
+  },
+  {
+    "id": "t12",
+    "title": "Paper 3: Gender"
+  },
+  {
+    "id": "t13",
+    "title": "Paper 3: Cognition & Development"
+  },
+  {
+    "id": "t14",
+    "title": "Paper 3: Eating Behaviour"
+  },
+  {
+    "id": "t15",
+    "title": "Paper 3: Stress"
+  },
+  {
+    "id": "t16",
+    "title": "Paper 3: Forensic Psychology"
+  }
+];
 
 /* ==========================================================
    FACT_BANK (UNCHANGED content - fully populated)
    ========================================================== */
-const FACT_BANK = {};
+const FACT_BANK = {
+  "t1": {
+    "title": "Paper 1: Social Influence",
+    "terms": [
+      {
+        "term": "Conformity",
+        "meaning": "A change in a person’s behaviour or beliefs due to real or imagined pressure from others. Unlike obedience, there is no direct order; instead, the person yields to group norms. Conformity can involve only outward behaviour change or a genuine shift in private beliefs depending on the process involved.",
+        "significance": ""
+      },
+      {
+        "term": "Compliance",
+        "meaning": "A relatively shallow form of conformity in which an individual publicly agrees with the majority but privately disagrees. It is typically driven by a desire for social approval and to avoid rejection, so the behaviour usually stops once group pressure is removed.",
+        "significance": ""
+      },
+      {
+        "term": "Internalisation",
+        "meaning": "The deepest form of conformity where the individual accepts the group’s position as correct and adopts it as their own. Because the belief itself changes, internalisation tends to be long-lasting and remains even when the group is not present.",
+        "significance": ""
+      },
+      {
+        "term": "Identification",
+        "meaning": "A form of conformity where a person adopts the attitudes and behaviours of a valued group to feel part of it. The change is often temporary: it lasts while group membership matters, but the person may not truly accept the view in all contexts.",
+        "significance": ""
+      },
+      {
+        "term": "Normative Social Influence (NSI)",
+        "meaning": "Conformity motivated by the desire to be liked, accepted, or to avoid social disapproval. NSI is strongest when the group is important to the individual (e.g., friends) and typically produces compliance rather than private belief change.",
+        "significance": ""
+      },
+      {
+        "term": "Informational Social Influence (ISI)",
+        "meaning": "Conformity motivated by the desire to be correct, especially in ambiguous or difficult situations. The individual assumes others have better knowledge, so they adopt the group view; this often leads to internalisation because the person believes the information is true.",
+        "significance": ""
+      },
+      {
+        "term": "Asch’s line judgement study (Asch)",
+        "meaning": "A laboratory study in which participants judged line lengths while surrounded by confederates who deliberately gave wrong answers. Many participants conformed on critical trials, showing that people may abandon obvious correct answers to avoid standing out, highlighting the power of normative pressure even in clear tasks.",
+        "significance": ""
+      },
+      {
+        "term": "Critical trials (Asch)",
+        "meaning": "Trials in which the confederates unanimously gave the same incorrect answer, creating direct social pressure on the naïve participant. Conformity on these trials is used as the key measure of majority influence.",
+        "significance": ""
+      },
+      {
+        "term": "Group size (Asch variation)",
+        "meaning": "A situational variable showing that conformity increases as the majority grows, up to a point (typically around three people). Beyond this, additional members produce little extra pressure, suggesting perceived majority strength matters more than sheer numbers.",
+        "significance": ""
+      },
+      {
+        "term": "Unanimity (Asch variation)",
+        "meaning": "A situational variable showing that conformity decreases sharply when unanimity is broken. If even one person dissents, the participant is less likely to conform because social support reduces normative pressure and increases confidence in resisting the group.",
+        "significance": ""
+      },
+      {
+        "term": "Task difficulty (Asch variation)",
+        "meaning": "A situational factor where more difficult or ambiguous judgements increase conformity. When the correct answer is less clear, participants rely more on informational influence and assume the majority is correct.",
+        "significance": ""
+      },
+      {
+        "term": "Obedience",
+        "meaning": "A form of social influence in which an individual follows a direct order from an authority figure. It involves a clear hierarchy and perceived right to command, meaning behaviour can occur even when it conflicts with personal morals.",
+        "significance": ""
+      },
+      {
+        "term": "Agentic state (Milgram)",
+        "meaning": "A mental state where a person sees themselves as acting on behalf of authority rather than as an autonomous individual. Responsibility for consequences is displaced onto the authority figure, making harmful obedience more likely.",
+        "significance": ""
+      },
+      {
+        "term": "Agentic shift (Milgram)",
+        "meaning": "The transition from an autonomous state (self-directed) to an agentic state (authority-directed). Milgram argued this shift can occur when an individual recognises the legitimacy of authority and accepts their role within the hierarchy.",
+        "significance": ""
+      },
+      {
+        "term": "Legitimacy of authority",
+        "meaning": "The perception that an authority figure has the right to give orders because of their role, status, or institutional setting. This increases obedience because people are socialised to respect and comply with legitimate sources of power.",
+        "significance": ""
+      },
+      {
+        "term": "Proximity (Milgram variation)",
+        "meaning": "A situational variable showing that obedience decreases when the victim is physically closer or when the authority figure is more distant. Closeness increases the emotional impact of harm, while distant authority reduces immediate pressure to obey.",
+        "significance": ""
+      },
+      {
+        "term": "Location (Milgram variation)",
+        "meaning": "A situational factor showing that obedience is higher in prestigious or credible settings and lower in less legitimate environments. A respected institution can signal authority and increase compliance with orders.",
+        "significance": ""
+      },
+      {
+        "term": "Uniform (Milgram variation)",
+        "meaning": "A situational cue indicating authority (e.g., lab coat). Uniforms strengthen perceived legitimacy and can increase obedience because they symbolise expertise, status, and power.",
+        "significance": ""
+      },
+      {
+        "term": "Authoritarian personality (Adorno)",
+        "meaning": "A dispositional explanation suggesting some individuals are more likely to obey due to a rigid, hierarchical worldview. Traits include strong respect for authority, hostility towards out-groups, and a preference for strict social order, often linked to harsh or controlling upbringing.",
+        "significance": ""
+      },
+      {
+        "term": "F-scale (Adorno)",
+        "meaning": "A questionnaire developed to measure authoritarian tendencies (e.g., submissiveness to authority, conventional attitudes). It is used as a tool to assess the degree to which individuals may be predisposed to obedience.",
+        "significance": ""
+      },
+      {
+        "term": "Social support (resisting influence)",
+        "meaning": "The presence of an ally who resists group pressure, making it easier for an individual to do the same. Social support breaks unanimity, reduces anxiety about rejection, and provides an alternative viewpoint that strengthens resistance to conformity or obedience.",
+        "significance": ""
+      },
+      {
+        "term": "Locus of control (Rotter)",
+        "meaning": "A personality dimension describing how far people believe outcomes are under personal control. Individuals with an internal locus of control tend to see outcomes as dependent on their actions and are often more resistant to social influence than those with an external locus who attribute outcomes to luck or powerful others.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t2": {
+    "title": "Paper 1: Memory",
+    "terms": [
+      {
+        "term": "Multi-Store Model (Atkinson & Shiffrin)",
+        "meaning": "A structural model proposing three separate stores: sensory register, short-term memory (STM), and long-term memory (LTM). Information flows from sensory input to STM via attention and to LTM via rehearsal, and each store differs in coding, capacity, and duration.",
+        "significance": ""
+      },
+      {
+        "term": "Sensory register",
+        "meaning": "The first memory store that holds incoming sensory information in its original modality (e.g., visual or auditory). It has a very high capacity but extremely brief duration; without attention, information rapidly decays and is lost.",
+        "significance": ""
+      },
+      {
+        "term": "Iconic store",
+        "meaning": "The visual component of the sensory register that briefly holds images. It supports continuous perception by allowing visual information to persist for fractions of a second after the stimulus ends.",
+        "significance": ""
+      },
+      {
+        "term": "Echoic store",
+        "meaning": "The auditory component of the sensory register that holds sound information for a few seconds. This helps explain why people can ‘play back’ what was just heard, such as a final sentence in a conversation.",
+        "significance": ""
+      },
+      {
+        "term": "Attention",
+        "meaning": "A selective process that moves information from the sensory register into STM. Because sensory stores are fleeting, attention determines which inputs are processed further and which are lost.",
+        "significance": ""
+      },
+      {
+        "term": "Short-term memory (STM)",
+        "meaning": "A temporary store for information currently in conscious awareness. STM has limited capacity and duration and is vulnerable to displacement and interference, especially without rehearsal.",
+        "significance": ""
+      },
+      {
+        "term": "Capacity of STM (Miller)",
+        "meaning": "The amount of information STM can hold at one time, often described as around 7±2 items. Capacity can be increased through chunking, where information is reorganised into meaningful units.",
+        "significance": ""
+      },
+      {
+        "term": "Chunking",
+        "meaning": "A strategy for expanding effective STM capacity by grouping separate items into larger meaningful units. Chunking depends on prior knowledge stored in LTM, allowing information to be compressed and recalled more efficiently.",
+        "significance": ""
+      },
+      {
+        "term": "Duration of STM (Peterson & Peterson)",
+        "meaning": "The length of time information can be held in STM without rehearsal, typically around 18–30 seconds. When rehearsal is prevented (e.g., by counting backwards), recall declines rapidly, showing short duration.",
+        "significance": ""
+      },
+      {
+        "term": "Coding in STM (Baddeley)",
+        "meaning": "The form in which information is stored in STM, commonly acoustic (sound-based). Evidence suggests people confuse items that sound similar in STM, supporting acoustic coding.",
+        "significance": ""
+      },
+      {
+        "term": "Maintenance rehearsal",
+        "meaning": "Repeating information to keep it in STM and prevent decay. In the MSM, prolonged rehearsal is the key mechanism for transferring information from STM to LTM.",
+        "significance": ""
+      },
+      {
+        "term": "Long-term memory (LTM)",
+        "meaning": "A relatively permanent store with potentially unlimited capacity and long duration. LTM is often semantically coded (meaning-based), and retrieval depends on cues and organisational structures.",
+        "significance": ""
+      },
+      {
+        "term": "Coding in LTM (Baddeley)",
+        "meaning": "The form in which information is stored in LTM, often semantic. People are more likely to confuse items with similar meanings in LTM than items with similar sounds, supporting semantic coding.",
+        "significance": ""
+      },
+      {
+        "term": "Working Memory Model (Baddeley & Hitch)",
+        "meaning": "A model describing STM as an active system with multiple components rather than a single store. It proposes a central executive that allocates attention and two main slave systems for verbal and visual-spatial processing, later extended with an episodic buffer.",
+        "significance": ""
+      },
+      {
+        "term": "Central executive",
+        "meaning": "The attentional control system that coordinates the workings of the slave systems. It has limited capacity, can switch attention between tasks, and plays a key role in planning and decision-making.",
+        "significance": ""
+      },
+      {
+        "term": "Phonological loop",
+        "meaning": "A subsystem specialised for processing and temporarily storing verbal and auditory information. It helps explain why people find it difficult to do two verbal tasks at once due to competition for the same limited resource.",
+        "significance": ""
+      },
+      {
+        "term": "Phonological store",
+        "meaning": "Part of the phonological loop that briefly holds speech-based sounds. Without rehearsal, verbal material in the store fades quickly.",
+        "significance": ""
+      },
+      {
+        "term": "Articulatory control process",
+        "meaning": "The ‘inner voice’ that rehearses verbal information and refreshes it in the phonological store. This is why silently repeating a phone number helps keep it in mind.",
+        "significance": ""
+      },
+      {
+        "term": "Visuo-spatial sketchpad",
+        "meaning": "A subsystem that temporarily stores and manipulates visual images and spatial relationships. It supports tasks like mental rotation, navigation, and visualising diagrams.",
+        "significance": ""
+      },
+      {
+        "term": "Episodic buffer",
+        "meaning": "A temporary, limited-capacity store that integrates information across the phonological loop, visuo-spatial sketchpad, and LTM. It creates coherent ‘episodes’ by combining different modalities into a single representation.",
+        "significance": ""
+      },
+      {
+        "term": "Interference",
+        "meaning": "An explanation for forgetting suggesting that memories compete with one another, especially when they are similar. The presence of competing information disrupts recall rather than the memory trace simply decaying.",
+        "significance": ""
+      },
+      {
+        "term": "Proactive interference",
+        "meaning": "When older memories disrupt the recall of newer information. For example, a previous password may intrude when trying to recall a new one.",
+        "significance": ""
+      },
+      {
+        "term": "Retroactive interference",
+        "meaning": "When newly learned information disrupts the recall of older memories. For example, learning a new phone number can make it harder to remember the previous one.",
+        "significance": ""
+      },
+      {
+        "term": "Retrieval failure",
+        "meaning": "Forgetting that occurs because appropriate cues are not available at recall. The memory is stored in LTM but cannot be accessed without the right contextual or state cues.",
+        "significance": ""
+      },
+      {
+        "term": "Encoding specificity principle (Tulving)",
+        "meaning": "The idea that recall is most effective when the cues present at retrieval match those present at encoding. This explains context-dependent and state-dependent forgetting.",
+        "significance": ""
+      },
+      {
+        "term": "Leading questions (Loftus)",
+        "meaning": "Questions phrased in a way that suggests a particular answer, potentially altering a witness’s response. Leading wording can produce response bias or can modify the memory trace by introducing misleading information.",
+        "significance": ""
+      },
+      {
+        "term": "Post-event discussion",
+        "meaning": "When witnesses discuss an event after it has occurred and their accounts influence one another. This can lead to memory conformity as people adopt details they did not personally observe.",
+        "significance": ""
+      },
+      {
+        "term": "Weapon focus",
+        "meaning": "A phenomenon where a weapon draws attention, reducing the amount of attention paid to other details such as the perpetrator’s face. High anxiety can narrow attentional focus, impairing identification accuracy.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive interview (Geiselman & Fisher)",
+        "meaning": "An interviewing technique designed to increase accurate recall by using psychological principles of retrieval. Key components include context reinstatement, reporting everything, recalling in different orders, and recalling from different perspectives to increase access to stored information.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t3": {
+    "title": "Paper 1: Attachment",
+    "terms": [
+      {
+        "term": "Imprinting (Lorenz)",
+        "meaning": "A rapid, innate form of attachment observed in some species where young animals follow and bond with the first moving object they encounter. It occurs within a critical period and supports the view that attachment has a biological basis shaped by survival needs.",
+        "significance": ""
+      },
+      {
+        "term": "Critical period (Lorenz)",
+        "meaning": "A biologically determined time window shortly after birth during which imprinting must occur. If imprinting does not happen in this period, normal attachment behaviour may not develop, indicating time limits on early bonding in some species.",
+        "significance": ""
+      },
+      {
+        "term": "Contact comfort (Harlow)",
+        "meaning": "The preference for physical comfort (softness and warmth) over food as the primary basis of attachment. Harlow’s findings suggest that attachment is not simply a learned association with feeding but also provides emotional security.",
+        "significance": ""
+      },
+      {
+        "term": "Secure base (Harlow/Ainsworth)",
+        "meaning": "The idea that an attachment figure provides a foundation of safety that allows exploration. When threatened, the infant returns to the caregiver for comfort, showing attachment supports both protection and independence.",
+        "significance": ""
+      },
+      {
+        "term": "Learning theory of attachment",
+        "meaning": "An explanation proposing that attachment forms through classical and operant conditioning. The caregiver becomes associated with food (classical conditioning) and the relief of hunger is negatively reinforcing (operant conditioning), making the caregiver a source of reward.",
+        "significance": ""
+      },
+      {
+        "term": "Primary drive",
+        "meaning": "A biological need such as hunger that motivates behaviour. In learning theory, the caregiver becomes important because they satisfy this primary drive.",
+        "significance": ""
+      },
+      {
+        "term": "Secondary reinforcement",
+        "meaning": "When the caregiver becomes rewarding in their own right because they are associated with meeting primary needs. This explains why the caregiver may be sought even in the absence of food.",
+        "significance": ""
+      },
+      {
+        "term": "Monotropy (Bowlby)",
+        "meaning": "The proposal that infants have an innate tendency to form one primary attachment that is more important than all others. Bowlby argued this bond has special evolutionary significance because it maximises survival through protection and care.",
+        "significance": ""
+      },
+      {
+        "term": "Social releasers (Bowlby)",
+        "meaning": "Innate behaviours and physical features (e.g., smiling, crying, baby-face) that trigger caregiving responses. These increase the likelihood of adult attention and strengthen the infant’s survival chances.",
+        "significance": ""
+      },
+      {
+        "term": "Internal working model (Bowlby)",
+        "meaning": "A mental representation of the self and others formed from the earliest attachment. It shapes expectations about relationships, including trust, intimacy, and self-worth, influencing later friendships, romantic relationships, and parenting.",
+        "significance": ""
+      },
+      {
+        "term": "Strange Situation (Ainsworth)",
+        "meaning": "A controlled observation with separations and reunions designed to assess attachment quality. It measures separation anxiety, stranger anxiety, reunion behaviour, and safe-base exploration to classify attachment type.",
+        "significance": ""
+      },
+      {
+        "term": "Secure attachment (Ainsworth)",
+        "meaning": "An attachment type where the infant uses the caregiver as a secure base, shows moderate distress on separation, and seeks comfort on reunion. The infant is easily soothed, indicating trust in caregiver availability and responsiveness.",
+        "significance": ""
+      },
+      {
+        "term": "Insecure-avoidant attachment (Ainsworth)",
+        "meaning": "An attachment type characterised by low separation anxiety and avoidance of contact on reunion. The infant appears independent, but this may reflect learned suppression of attachment behaviour when caregivers are rejecting.",
+        "significance": ""
+      },
+      {
+        "term": "Insecure-resistant attachment (Ainsworth)",
+        "meaning": "An attachment type marked by high separation anxiety and ambivalent reunion behaviour (seeking contact but resisting comfort). It is often linked to inconsistent caregiving, producing uncertainty about caregiver availability.",
+        "significance": ""
+      },
+      {
+        "term": "Cultural variations in attachment (van IJzendoorn & Kroonenberg)",
+        "meaning": "Differences in the distribution of attachment types across cultures, often reflecting child-rearing practices and norms. While secure attachment is commonly the most frequent, some cultures show higher avoidant or resistant patterns due to social expectations.",
+        "significance": ""
+      },
+      {
+        "term": "Maternal deprivation hypothesis (Bowlby)",
+        "meaning": "The claim that prolonged separation from an attachment figure during a critical period can cause long-term emotional and cognitive damage, particularly if there is no adequate substitute care. Bowlby linked deprivation to later difficulties in affection and empathy.",
+        "significance": ""
+      },
+      {
+        "term": "Affectionless psychopathy (Bowlby)",
+        "meaning": "A lack of guilt, empathy, and emotional attachment to others, proposed as a potential outcome of early prolonged deprivation. It reflects impaired emotional development and difficulties forming normal relationships.",
+        "significance": ""
+      },
+      {
+        "term": "Institutionalisation",
+        "meaning": "The effects of being raised in an institution (e.g., orphanage) with limited consistent emotional care. Outcomes can include delayed intellectual development, attachment difficulties, and social problems, especially when early deprivation is severe and prolonged.",
+        "significance": ""
+      },
+      {
+        "term": "Disinhibited attachment",
+        "meaning": "An attachment disturbance where children show indiscriminate friendliness and seek attention from unfamiliar adults. It is linked to a lack of stable early attachments and is often seen following institutional care.",
+        "significance": ""
+      },
+      {
+        "term": "Continuity hypothesis (Bowlby)",
+        "meaning": "The view that early attachment experiences influence later social and emotional development through the internal working model. Secure early attachment is associated with more positive later relationships, while insecurity may predict difficulties with trust and intimacy.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t4": {
+    "title": "Paper 1: Psychopathology",
+    "terms": [
+      {
+        "term": "Deviation from social norms",
+        "meaning": "Defining abnormality as behaviour that violates the unwritten rules of acceptable conduct within a society. This definition depends on cultural context, as norms vary across cultures and time, meaning judgements of abnormality can reflect social values rather than dysfunction.",
+        "significance": ""
+      },
+      {
+        "term": "Failure to function adequately (Rosenhan & Seligman)",
+        "meaning": "Defining abnormality as an inability to cope with everyday demands, such as maintaining work, relationships, and self-care. Indicators include personal distress, maladaptiveness, irrationality, unpredictability, and behaviours that make observers uncomfortable.",
+        "significance": ""
+      },
+      {
+        "term": "Statistical infrequency",
+        "meaning": "Defining abnormality as behaviour that is rare in the population, often using deviation from the mean on a normal distribution. It provides an objective criterion but can misclassify desirable rare characteristics as abnormal and may not reflect distress or impairment.",
+        "significance": ""
+      },
+      {
+        "term": "Deviation from ideal mental health (Jahoda)",
+        "meaning": "Defining abnormality by the absence of positive mental health criteria such as self-esteem, autonomy, accurate perception of reality, resistance to stress, and self-actualisation. It is a holistic, positive definition but may set unrealistically high standards for normality.",
+        "significance": ""
+      },
+      {
+        "term": "Phobia",
+        "meaning": "An irrational, persistent fear of a specific object or situation that leads to avoidance and significant distress. The fear is disproportionate to actual danger and can interfere with daily functioning through panic responses and safety behaviours.",
+        "significance": ""
+      },
+      {
+        "term": "Behavioural characteristics (phobias)",
+        "meaning": "Observable behaviours such as avoidance, escape, and freezing responses. Avoidance is reinforced because it reduces anxiety, but it maintains the phobia by preventing learning that the stimulus is safe.",
+        "significance": ""
+      },
+      {
+        "term": "Emotional characteristics (phobias)",
+        "meaning": "Intense fear and anxiety that is immediate and persistent when confronted with the phobic stimulus. Emotional responses are disproportionate and can include panic symptoms such as increased heart rate and trembling.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive characteristics (phobias)",
+        "meaning": "Irrational beliefs and selective attention to the feared stimulus, often involving catastrophising danger. Sufferers may recognise the fear is unreasonable but still experience overwhelming threat expectations.",
+        "significance": ""
+      },
+      {
+        "term": "Two-process model (Mowrer)",
+        "meaning": "A behavioural explanation proposing that phobias are acquired through classical conditioning (learning fear by association) and maintained through operant conditioning. Avoidance reduces anxiety via negative reinforcement, preventing extinction of the fear response.",
+        "significance": ""
+      },
+      {
+        "term": "Systematic desensitisation",
+        "meaning": "A behavioural therapy that reduces phobic anxiety through gradual exposure paired with relaxation. The client constructs a fear hierarchy and learns relaxation techniques; repeated exposure while relaxed counter-conditions fear and weakens avoidance.",
+        "significance": ""
+      },
+      {
+        "term": "Flooding",
+        "meaning": "A behavioural therapy involving immediate exposure to the most feared stimulus for a prolonged period. Without avoidance, anxiety eventually decreases through extinction as the feared outcome does not occur, although the method can be distressing and has drop-out risk.",
+        "significance": ""
+      },
+      {
+        "term": "Depression",
+        "meaning": "A mood disorder characterised by persistent low mood, loss of pleasure (anhedonia), and negative thinking patterns that impair daily functioning. It can include sleep and appetite disruption, low energy, and reduced motivation.",
+        "significance": ""
+      },
+      {
+        "term": "Behavioural characteristics (depression)",
+        "meaning": "Reduced activity, withdrawal from social interaction, disruption to sleep, and changes in appetite. Some individuals show aggression or agitation, while others show slowed movement and speech.",
+        "significance": ""
+      },
+      {
+        "term": "Emotional characteristics (depression)",
+        "meaning": "Persistent sadness, feelings of worthlessness, and low self-esteem. Emotional numbness and irritability may occur, and severe depression can include suicidal ideation.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive characteristics (depression)",
+        "meaning": "Negative biases in attention, interpretation, and memory, including rumination and poor concentration. Individuals may hold pessimistic beliefs about themselves and the future, maintaining low mood.",
+        "significance": ""
+      },
+      {
+        "term": "Negative triad (Beck)",
+        "meaning": "A pattern of negative thinking about the self, the world, and the future that maintains depression. Beck argued these thoughts stem from negative schemas and cognitive biases formed from early experiences.",
+        "significance": ""
+      },
+      {
+        "term": "Negative schemas (Beck)",
+        "meaning": "Deeply held beliefs about the self and world (e.g., ‘I’m unlovable’) that bias information processing. When activated by stress, schemas lead to negative automatic thoughts and sustain depressive thinking.",
+        "significance": ""
+      },
+      {
+        "term": "ABC model (Ellis)",
+        "meaning": "A cognitive explanation stating that an activating event (A) triggers beliefs (B), which then produce emotional consequences (C). Depression results from irrational beliefs; challenging these beliefs can reduce negative emotional outcomes.",
+        "significance": ""
+      },
+      {
+        "term": "CBT (Beck/Ellis)",
+        "meaning": "A psychological therapy that targets unhelpful thoughts and behaviours to improve mood. It involves identifying negative automatic thoughts, challenging cognitive distortions, and using behavioural tasks to test beliefs and build healthier thinking patterns.",
+        "significance": ""
+      },
+      {
+        "term": "OCD",
+        "meaning": "A disorder characterised by obsessions (intrusive, unwanted thoughts) and compulsions (repetitive behaviours or mental acts). Compulsions reduce anxiety temporarily, which negatively reinforces the behaviour and maintains the disorder.",
+        "significance": ""
+      },
+      {
+        "term": "Obsessions",
+        "meaning": "Recurrent intrusive thoughts, images, or impulses that cause anxiety or distress. Individuals often recognise obsessions as irrational but find them difficult to control.",
+        "significance": ""
+      },
+      {
+        "term": "Compulsions",
+        "meaning": "Repetitive behaviours (e.g., checking) or mental acts (e.g., counting) performed to reduce anxiety caused by obsessions. Compulsions are time-consuming and can significantly disrupt daily life.",
+        "significance": ""
+      },
+      {
+        "term": "SSRIs (drug therapy for OCD)",
+        "meaning": "Selective serotonin reuptake inhibitors that increase serotonin availability in the synapse by blocking reuptake. Increased serotonin is linked to reduced anxiety and obsessional symptoms, though side effects and delayed onset are common.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t5": {
+    "title": "Paper 2: Approaches",
+    "terms": [
+      {
+        "term": "Behaviourism",
+        "meaning": "An approach that explains behaviour as learned through interaction with the environment and argues psychology should focus on observable behaviour. It assumes learning principles apply across species, supporting controlled laboratory research and scientific prediction.",
+        "significance": ""
+      },
+      {
+        "term": "Classical conditioning (Pavlov)",
+        "meaning": "Learning by association where a neutral stimulus becomes a conditioned stimulus through repeated pairing with an unconditioned stimulus. The conditioned stimulus then produces a conditioned response, demonstrating how reflexive behaviour can be learned.",
+        "significance": ""
+      },
+      {
+        "term": "Unconditioned stimulus (UCS)",
+        "meaning": "A stimulus that naturally produces an unlearned response (e.g., food). It does not require learning to elicit the response.",
+        "significance": ""
+      },
+      {
+        "term": "Unconditioned response (UCR)",
+        "meaning": "The natural, reflexive response elicited by the UCS (e.g., salivation to food).",
+        "significance": ""
+      },
+      {
+        "term": "Neutral stimulus (NS)",
+        "meaning": "A stimulus that initially produces no relevant response. It becomes meaningful through association with the UCS.",
+        "significance": ""
+      },
+      {
+        "term": "Conditioned stimulus (CS)",
+        "meaning": "A previously neutral stimulus that triggers a learned response after being paired with the UCS.",
+        "significance": ""
+      },
+      {
+        "term": "Conditioned response (CR)",
+        "meaning": "The learned response elicited by the CS, often similar to the UCR but produced by the new stimulus.",
+        "significance": ""
+      },
+      {
+        "term": "Operant conditioning (Skinner)",
+        "meaning": "Learning through consequences where behaviour is shaped by reinforcement and punishment. Behaviour followed by rewarding outcomes becomes more frequent, while behaviour followed by unpleasant outcomes becomes less frequent.",
+        "significance": ""
+      },
+      {
+        "term": "Positive reinforcement",
+        "meaning": "Presenting a rewarding stimulus after a behaviour, increasing the likelihood of repetition. For example, praise after completing work strengthens study behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Negative reinforcement",
+        "meaning": "Removing an unpleasant stimulus after a behaviour, increasing repetition. For example, fastening a seatbelt stops an alarm, reinforcing the behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Punishment",
+        "meaning": "Introducing an unpleasant consequence or removing a desirable one to reduce behaviour. Punishment suppresses behaviour but may not teach an alternative and can produce avoidance.",
+        "significance": ""
+      },
+      {
+        "term": "Social learning theory (Bandura)",
+        "meaning": "An approach stating that behaviour is learned through observing models and the consequences they receive. It bridges behaviourism and cognition by including mediational processes that determine whether imitation occurs.",
+        "significance": ""
+      },
+      {
+        "term": "Imitation",
+        "meaning": "Copying observed behaviour performed by a role model, particularly when the behaviour is seen as effective or rewarded.",
+        "significance": ""
+      },
+      {
+        "term": "Identification",
+        "meaning": "Adopting behaviour and attitudes of a model who is perceived as similar or aspirational. Identification increases the likelihood of imitation because the observer wants to associate with the model.",
+        "significance": ""
+      },
+      {
+        "term": "Vicarious reinforcement",
+        "meaning": "Learning that occurs by observing others being rewarded or punished. Seeing a model rewarded increases imitation, while seeing punishment reduces imitation.",
+        "significance": ""
+      },
+      {
+        "term": "Mediational processes (Bandura)",
+        "meaning": "Cognitive factors between observation and imitation: attention to the model, retention of behaviour in memory, reproduction ability, and motivation to perform it. These processes explain why not all observed behaviour is copied.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive approach",
+        "meaning": "An approach that explains behaviour in terms of internal mental processes such as perception, memory, and reasoning. Cognitive psychologists infer these processes scientifically from behaviour and use theoretical models to explain information processing.",
+        "significance": ""
+      },
+      {
+        "term": "Inference",
+        "meaning": "Drawing conclusions about unobservable mental processes from observable behaviour. For example, errors in recall can be used to infer how memory is encoded and retrieved.",
+        "significance": ""
+      },
+      {
+        "term": "Schema",
+        "meaning": "A mental framework that organises knowledge and expectations, guiding perception and interpretation. Schemas improve efficiency but can distort reality by filtering new information to fit existing beliefs.",
+        "significance": ""
+      },
+      {
+        "term": "Biological approach",
+        "meaning": "An approach explaining behaviour through genetics, neurochemistry, brain structure, and evolutionary influences. It uses scientific methods such as brain scanning and genetic analysis to explain individual differences and disorders.",
+        "significance": ""
+      },
+      {
+        "term": "Genotype",
+        "meaning": "An individual’s genetic makeup inherited from parents, which influences predispositions for behaviour and psychological traits.",
+        "significance": ""
+      },
+      {
+        "term": "Phenotype",
+        "meaning": "The observable characteristics arising from the interaction of genotype and environment. Phenotype highlights that genes express differently depending on experience and context.",
+        "significance": ""
+      },
+      {
+        "term": "Psychodynamic approach (Freud)",
+        "meaning": "An approach suggesting behaviour is shaped by unconscious conflicts developed in early childhood. Personality is structured into id, ego, and superego, and defence mechanisms protect the ego from anxiety.",
+        "significance": ""
+      },
+      {
+        "term": "Id",
+        "meaning": "The primitive, instinctive component of personality operating on the pleasure principle. It demands immediate gratification of basic drives.",
+        "significance": ""
+      },
+      {
+        "term": "Ego",
+        "meaning": "The rational component operating on the reality principle, negotiating between id impulses, superego demands, and external reality.",
+        "significance": ""
+      },
+      {
+        "term": "Superego",
+        "meaning": "The moral component representing internalised rules and standards. It produces guilt when behaviour conflicts with moral expectations.",
+        "significance": ""
+      },
+      {
+        "term": "Humanistic approach",
+        "meaning": "An approach emphasising free will, personal growth, and subjective experience. It focuses on helping individuals achieve their potential through self-understanding and supportive relationships.",
+        "significance": ""
+      },
+      {
+        "term": "Self-actualisation (Maslow)",
+        "meaning": "The drive to fulfil one’s potential and achieve personal growth once basic needs are met. Self-actualisation is the highest level in Maslow’s hierarchy of needs.",
+        "significance": ""
+      },
+      {
+        "term": "Hierarchy of needs (Maslow)",
+        "meaning": "A motivational theory proposing that basic needs (physiological and safety) must be satisfied before higher psychological needs (love/belonging, esteem) and self-actualisation can be achieved.",
+        "significance": ""
+      },
+      {
+        "term": "Conditions of worth (Rogers)",
+        "meaning": "Requirements placed on an individual for them to be valued, leading to self-worth being dependent on meeting others’ expectations. Conditions of worth can create incongruence and hinder healthy development.",
+        "significance": ""
+      },
+      {
+        "term": "Unconditional positive regard (Rogers)",
+        "meaning": "Acceptance and support without conditions, enabling a person to develop self-worth and reduce incongruence. It is central to client-centred therapy and psychological growth.",
+        "significance": ""
+      },
+      {
+        "term": "Congruence (Rogers)",
+        "meaning": "A state where a person’s self-concept closely matches their ideal self, producing psychological wellbeing. Incongruence creates anxiety and can lead to maladjustment.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t6": {
+    "title": "Paper 2: Research Methods",
+    "terms": [
+      {
+        "term": "Aim",
+        "meaning": "A general statement describing the purpose of a study and what the researcher intends to investigate. It sets out the focus without predicting an outcome and guides the choice of method and measures.",
+        "significance": ""
+      },
+      {
+        "term": "Hypothesis",
+        "meaning": "A precise, testable prediction about the relationship between variables. Hypotheses must be operationalised so that variables are measurable and analysable, allowing the null hypothesis to be tested using statistics.",
+        "significance": ""
+      },
+      {
+        "term": "Directional hypothesis",
+        "meaning": "Predicts the direction of an effect (e.g., one condition will score higher). It is used when prior research provides strong justification and typically leads to a one-tailed test decision.",
+        "significance": ""
+      },
+      {
+        "term": "Non-directional hypothesis",
+        "meaning": "Predicts a difference or relationship but not its direction. Used when there is limited prior evidence, typically leading to a two-tailed test.",
+        "significance": ""
+      },
+      {
+        "term": "Null hypothesis",
+        "meaning": "States there will be no significant difference or relationship and any observed effect is due to chance. Inferential testing evaluates whether the null can be rejected.",
+        "significance": ""
+      },
+      {
+        "term": "Operationalisation",
+        "meaning": "Defining variables in clear, measurable terms so they can be replicated and objectively assessed. Strong operationalisation improves reliability and reduces ambiguity, which is essential for scientific testing.",
+        "significance": ""
+      },
+      {
+        "term": "Independent variable (IV)",
+        "meaning": "The variable manipulated by the researcher to create different conditions. In experiments, the IV should be controlled precisely so that changes in the DV can be attributed to it.",
+        "significance": ""
+      },
+      {
+        "term": "Dependent variable (DV)",
+        "meaning": "The outcome measure recorded to assess the effect of the IV. The DV must be valid (measures what it intends) and reliable (consistent across time/observers).",
+        "significance": ""
+      },
+      {
+        "term": "Extraneous variable (EV)",
+        "meaning": "Any variable other than the IV that could influence the DV. EVs reduce internal validity if they are not controlled through standardisation, randomisation, or design decisions.",
+        "significance": ""
+      },
+      {
+        "term": "Confounding variable",
+        "meaning": "An extraneous variable that changes systematically with the IV, making causal conclusions impossible. If a confound exists, you cannot know whether the IV caused the effect.",
+        "significance": ""
+      },
+      {
+        "term": "Laboratory experiment",
+        "meaning": "A study conducted in a controlled environment where the IV is manipulated and EVs are minimised. This allows stronger cause-and-effect conclusions (high internal validity), but the artificial setting may reduce ecological validity.",
+        "significance": ""
+      },
+      {
+        "term": "Field experiment",
+        "meaning": "An experiment conducted in a natural setting with manipulation of the IV. It typically produces more natural behaviour (higher ecological validity) but gives the researcher less control over confounds.",
+        "significance": ""
+      },
+      {
+        "term": "Natural experiment",
+        "meaning": "A study in which the IV is naturally occurring and not manipulated by the researcher. It is useful where manipulation is unethical or impossible, but causal inference is weaker because control and random allocation are limited.",
+        "significance": ""
+      },
+      {
+        "term": "Quasi-experiment",
+        "meaning": "A design where the IV is based on pre-existing participant differences (e.g., gender, diagnosis). Lack of random allocation increases participant variables and weakens cause-and-effect conclusions.",
+        "significance": ""
+      },
+      {
+        "term": "Independent groups design",
+        "meaning": "Different participants take part in each condition. This avoids order effects but increases participant variables, so random allocation and large sample sizes are used to improve equivalence.",
+        "significance": ""
+      },
+      {
+        "term": "Repeated measures design",
+        "meaning": "The same participants take part in all conditions. This controls individual differences and needs fewer participants, but order effects (practice/fatigue) and demand characteristics must be managed (e.g., counterbalancing).",
+        "significance": ""
+      },
+      {
+        "term": "Matched pairs design",
+        "meaning": "Participants are matched on relevant variables (e.g., age, ability) and one from each pair is placed in each condition. This reduces participant variables and avoids order effects, but matching is time-consuming and imperfect.",
+        "significance": ""
+      },
+      {
+        "term": "Order effects",
+        "meaning": "Changes in performance caused by completing multiple conditions (practice improving scores or fatigue reducing them). They threaten internal validity in repeated measures designs unless controlled.",
+        "significance": ""
+      },
+      {
+        "term": "Counterbalancing",
+        "meaning": "A method for controlling order effects by varying the order of conditions across participants. If order effects are evenly distributed, they are less likely to systematically bias results.",
+        "significance": ""
+      },
+      {
+        "term": "Random allocation",
+        "meaning": "Assigning participants to conditions by chance to reduce participant variables. Random allocation improves internal validity because differences between groups are less likely to be systematic.",
+        "significance": ""
+      },
+      {
+        "term": "Target population",
+        "meaning": "The larger group the researcher wants to generalise to. Sampling methods aim to produce a sample that represents the target population as closely as possible.",
+        "significance": ""
+      },
+      {
+        "term": "Random sampling",
+        "meaning": "Selecting participants so every member of the target population has an equal chance of selection. This increases representativeness and external validity but can be difficult to carry out in practice.",
+        "significance": ""
+      },
+      {
+        "term": "Opportunity sampling",
+        "meaning": "Selecting participants who are conveniently available. It is quick but risks bias and reduces the ability to generalise findings.",
+        "significance": ""
+      },
+      {
+        "term": "Volunteer sampling",
+        "meaning": "Participants self-select in response to an advert. This can produce volunteer bias, as volunteers may differ systematically (e.g., more motivated or confident) from non-volunteers.",
+        "significance": ""
+      },
+      {
+        "term": "Observational method",
+        "meaning": "A research method involving systematic watching and recording of behaviour. Observations can be naturalistic or controlled, and data quality depends on clear behavioural categories and reliability checks.",
+        "significance": ""
+      },
+      {
+        "term": "Naturalistic observation",
+        "meaning": "Observing behaviour in a natural environment without intervention. It can produce high ecological validity but offers less control and may raise ethical issues in covert settings.",
+        "significance": ""
+      },
+      {
+        "term": "Controlled observation",
+        "meaning": "Observation in a structured environment arranged by the researcher. Control increases standardisation and reliability, but behaviour may be less natural.",
+        "significance": ""
+      },
+      {
+        "term": "Overt observation",
+        "meaning": "Participants know they are being observed. This is more ethical but can increase demand characteristics and reduce validity.",
+        "significance": ""
+      },
+      {
+        "term": "Covert observation",
+        "meaning": "Participants are unaware they are being observed. This can increase validity by reducing reactivity, but it raises ethical concerns (consent, privacy).",
+        "significance": ""
+      },
+      {
+        "term": "Behavioural categories",
+        "meaning": "Operationalised, observable behaviours used for systematic recording. Categories should be clear, mutually exclusive, and exhaustive to support reliable measurement.",
+        "significance": ""
+      },
+      {
+        "term": "Event sampling",
+        "meaning": "Recording every occurrence of a target behaviour. It captures frequency accurately but may miss important context or simultaneous behaviours.",
+        "significance": ""
+      },
+      {
+        "term": "Time sampling",
+        "meaning": "Recording behaviour at fixed intervals. It is efficient for long observations but may miss infrequent yet important behaviours.",
+        "significance": ""
+      },
+      {
+        "term": "Inter-observer reliability",
+        "meaning": "The extent to which different observers record the same behaviours in the same way. High agreement suggests behavioural categories are objective and the observation is reliable.",
+        "significance": ""
+      },
+      {
+        "term": "Self-report",
+        "meaning": "A method where participants provide information about themselves through questionnaires or interviews. It can access thoughts and feelings directly but may be affected by social desirability and demand characteristics.",
+        "significance": ""
+      },
+      {
+        "term": "Open questions",
+        "meaning": "Questions that allow free responses, producing qualitative data with depth and detail. They are harder to analyse and may reduce reliability due to varied interpretations.",
+        "significance": ""
+      },
+      {
+        "term": "Closed questions",
+        "meaning": "Questions with fixed response options, producing quantitative data that is easy to score and compare. They may limit validity by restricting what participants can express.",
+        "significance": ""
+      },
+      {
+        "term": "Likert scale",
+        "meaning": "A rating scale measuring attitudes by levels of agreement. It produces ordinal data (ranked responses) and is commonly used for questionnaires because it is easy to administer and analyse.",
+        "significance": ""
+      },
+      {
+        "term": "Social desirability bias",
+        "meaning": "When participants respond in a way that makes them look favourable rather than truthful. This threatens validity, especially for sensitive topics like prejudice, mental health, or illegal behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Correlation",
+        "meaning": "A statistical technique that measures the relationship between two co-variables. Correlation does not demonstrate causation because the direction of effect and third variables cannot be ruled out.",
+        "significance": ""
+      },
+      {
+        "term": "Positive correlation",
+        "meaning": "As one co-variable increases, the other also increases (e.g., more revision hours linked to higher test scores).",
+        "significance": ""
+      },
+      {
+        "term": "Negative correlation",
+        "meaning": "As one co-variable increases, the other decreases (e.g., higher stress linked to lower sleep).",
+        "significance": ""
+      },
+      {
+        "term": "Correlation coefficient",
+        "meaning": "A value between -1 and +1 indicating the strength and direction of a correlation. Values closer to ±1 indicate stronger relationships; 0 indicates no relationship.",
+        "significance": ""
+      },
+      {
+        "term": "Third variable problem",
+        "meaning": "The possibility that an unmeasured factor causes both co-variables to change, creating a misleading correlation. This is why correlation cannot confirm causation.",
+        "significance": ""
+      },
+      {
+        "term": "Validity",
+        "meaning": "The extent to which a study or measure assesses what it claims to assess. Validity includes internal validity (causal accuracy) and external validity (generalisation), and can be threatened by confounds, demand characteristics, and artificial tasks.",
+        "significance": ""
+      },
+      {
+        "term": "Internal validity",
+        "meaning": "The degree to which changes in the DV are caused by the IV rather than confounds. High internal validity supports cause-and-effect conclusions.",
+        "significance": ""
+      },
+      {
+        "term": "External validity",
+        "meaning": "The extent to which findings generalise beyond the study setting, task, and participants. It includes ecological validity and population validity.",
+        "significance": ""
+      },
+      {
+        "term": "Ecological validity",
+        "meaning": "The extent to which results reflect real-life behaviour because the setting is realistic.",
+        "significance": ""
+      },
+      {
+        "term": "Reliability",
+        "meaning": "The consistency of a measure or procedure across time, observers, or items. Reliable methods produce similar results under consistent conditions and are essential for scientific confidence.",
+        "significance": ""
+      },
+      {
+        "term": "Test–retest reliability",
+        "meaning": "Consistency when the same measure is administered to the same participants at different times. High test–retest reliability suggests stability, although learning or mood changes can reduce it.",
+        "significance": ""
+      },
+      {
+        "term": "Internal reliability",
+        "meaning": "Consistency within a test (e.g., items measuring the same construct). It can be checked using split-half methods to ensure the scale is coherent.",
+        "significance": ""
+      },
+      {
+        "term": "Demand characteristics",
+        "meaning": "Cues that reveal the aim of the study, leading participants to change behaviour to fit perceived expectations. This threatens validity because behaviour no longer reflects genuine responses.",
+        "significance": ""
+      },
+      {
+        "term": "Investigator effects",
+        "meaning": "Changes in participant behaviour caused by the researcher’s presence or expectations, including unconscious cues. Standardised instructions and double-blind procedures help reduce these effects.",
+        "significance": ""
+      },
+      {
+        "term": "Informed consent",
+        "meaning": "Participants should be given enough information to decide whether to take part. Consent must be voluntary and based on understanding, though full disclosure may be limited if deception is essential.",
+        "significance": ""
+      },
+      {
+        "term": "Right to withdraw",
+        "meaning": "Participants must be free to leave at any time and withdraw their data without penalty. This protects autonomy and reduces coercion.",
+        "significance": ""
+      },
+      {
+        "term": "Protection from harm",
+        "meaning": "Researchers must protect participants from physical or psychological harm beyond everyday levels. Risk must be assessed and support provided where needed.",
+        "significance": ""
+      },
+      {
+        "term": "Confidentiality",
+        "meaning": "Participants’ identities and personal data should be protected. Data should be anonymised so results cannot be traced back to individuals.",
+        "significance": ""
+      },
+      {
+        "term": "Debrief",
+        "meaning": "A full explanation given after participation, including the true aim if deception was used. Debriefing also checks participant wellbeing and allows questions.",
+        "significance": ""
+      },
+      {
+        "term": "Content analysis",
+        "meaning": "A method for analysing qualitative material (e.g., media, interviews) by coding it into categories and counting frequency. It produces quantitative summaries of themes, allowing systematic comparison across texts or sources.",
+        "significance": ""
+      },
+      {
+        "term": "Coding",
+        "meaning": "The process of assigning sections of material to predefined categories. Clear operational definitions are essential to reduce subjectivity and improve reliability.",
+        "significance": ""
+      },
+      {
+        "term": "Inter-rater reliability (content analysis)",
+        "meaning": "The extent to which different coders classify material in the same way. High agreement suggests coding categories are objective and the content analysis is reliable.",
+        "significance": ""
+      },
+      {
+        "term": "Empiricism",
+        "meaning": "A feature of science meaning conclusions are based on direct observation and measurement. Psychological claims should be supported by data rather than opinion or intuition.",
+        "significance": ""
+      },
+      {
+        "term": "Objectivity",
+        "meaning": "Minimising bias so results reflect evidence rather than researcher expectations. Objectivity is improved through standardised procedures, operationalised variables, and transparent reporting.",
+        "significance": ""
+      },
+      {
+        "term": "Replicability",
+        "meaning": "The ability for another researcher to repeat a study using the same method and obtain similar results. Detailed method reporting and standardisation support replication.",
+        "significance": ""
+      },
+      {
+        "term": "Falsifiability (Popper)",
+        "meaning": "The principle that scientific theories must be testable in a way that could potentially prove them wrong. If a theory cannot be contradicted by evidence, it is not scientific.",
+        "significance": ""
+      },
+      {
+        "term": "Peer review",
+        "meaning": "Evaluation of research by experts before publication to check quality, methodology, and conclusions. Peer review aims to maintain scientific standards but may be influenced by reviewer bias or conservatism.",
+        "significance": ""
+      },
+      {
+        "term": "Descriptive statistics",
+        "meaning": "Statistics that summarise and describe data, such as measures of central tendency and dispersion. They do not test significance but provide a clear overview of patterns.",
+        "significance": ""
+      },
+      {
+        "term": "Mean",
+        "meaning": "The arithmetic average, calculated by adding scores and dividing by the number of scores. It uses all data but is sensitive to outliers, especially in skewed distributions.",
+        "significance": ""
+      },
+      {
+        "term": "Median",
+        "meaning": "The middle score when data are ordered. It is less affected by outliers, making it useful for skewed data.",
+        "significance": ""
+      },
+      {
+        "term": "Mode",
+        "meaning": "The most frequent score. It can be used with nominal data but may be unrepresentative if multiple modes exist.",
+        "significance": ""
+      },
+      {
+        "term": "Range",
+        "meaning": "A simple measure of dispersion calculated as the highest score minus the lowest. It is quick but distorted by extreme values.",
+        "significance": ""
+      },
+      {
+        "term": "Standard deviation",
+        "meaning": "A measure of dispersion showing how spread out scores are around the mean. A higher standard deviation indicates greater variability in participant scores.",
+        "significance": ""
+      },
+      {
+        "term": "Inferential statistics",
+        "meaning": "Statistical tests used to determine whether results are likely due to chance or reflect a real effect. They allow researchers to decide whether to reject the null hypothesis using a chosen significance level.",
+        "significance": ""
+      },
+      {
+        "term": "Significance level (p ≤ 0.05)",
+        "meaning": "A threshold indicating the probability of results occurring by chance. If p is 0.05 or below, results are considered statistically significant and the null hypothesis is rejected.",
+        "significance": ""
+      },
+      {
+        "term": "Type I error",
+        "meaning": "Rejecting the null hypothesis when it is actually true (a false positive). It can occur by chance and is controlled by setting a strict significance level.",
+        "significance": ""
+      },
+      {
+        "term": "Type II error",
+        "meaning": "Failing to reject the null hypothesis when it is false (a false negative). It is more likely with small samples, unreliable measures, or weak manipulations.",
+        "significance": ""
+      },
+      {
+        "term": "Sign test",
+        "meaning": "A non-parametric test of difference used with nominal data in repeated measures or matched pairs designs. It compares the direction of change between conditions (plus/minus signs) rather than the size of differences.",
+        "significance": ""
+      },
+      {
+        "term": "Wilcoxon signed-ranks test",
+        "meaning": "A non-parametric test of difference used with ordinal data in repeated measures designs. It considers both direction and size of differences by ranking the change scores.",
+        "significance": ""
+      },
+      {
+        "term": "Mann–Whitney U test",
+        "meaning": "A non-parametric test of difference used with ordinal data in independent groups designs. It compares ranked scores between two unrelated groups.",
+        "significance": ""
+      },
+      {
+        "term": "Related t-test",
+        "meaning": "A parametric test of difference used with interval/ratio data in repeated measures or matched pairs designs. It compares the means of two related conditions, assuming normal distribution.",
+        "significance": ""
+      },
+      {
+        "term": "Unrelated t-test",
+        "meaning": "A parametric test of difference used with interval/ratio data in independent groups designs. It compares group means, assuming normal distribution and similar variance.",
+        "significance": ""
+      },
+      {
+        "term": "Chi-square test",
+        "meaning": "A test of association used with nominal data to examine whether two categorical variables are related. It compares observed frequencies with expected frequencies to determine significance.",
+        "significance": ""
+      },
+      {
+        "term": "Spearman’s rho",
+        "meaning": "A non-parametric test of correlation used with ordinal data (or interval data that violate parametric assumptions). It produces a coefficient from -1 to +1 indicating relationship strength and direction.",
+        "significance": ""
+      },
+      {
+        "term": "Pearson’s r",
+        "meaning": "A parametric test of correlation used with interval/ratio data where the relationship is linear and assumptions are met. It produces a coefficient from -1 to +1 indicating relationship strength and direction.",
+        "significance": ""
+      },
+      {
+        "term": "Critical value",
+        "meaning": "A threshold taken from statistical tables based on sample size and significance level. Test results are compared to the critical value to decide whether findings are statistically significant.",
+        "significance": ""
+      },
+      {
+        "term": "Sections of a psychological report",
+        "meaning": "A standard scientific format typically including: Abstract (brief summary), Introduction (background and hypotheses), Method (participants, design, materials, procedure), Results (descriptive and inferential statistics), Discussion (interpretation and evaluation), References, and Appendices. This structure supports clarity, replicability, and peer review.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t7": {
+    "title": "Paper 2: Biopsychology",
+    "terms": [
+      {
+        "term": "Nervous system",
+        "meaning": "The body’s communication network that transmits signals using electrical impulses and chemical messages. It allows the brain to receive sensory information, process it, and coordinate behaviour through motor output.",
+        "significance": ""
+      },
+      {
+        "term": "Central nervous system (CNS)",
+        "meaning": "The brain and spinal cord, responsible for processing information and coordinating behaviour. The CNS integrates sensory input and generates responses, including reflexes via the spinal cord.",
+        "significance": ""
+      },
+      {
+        "term": "Peripheral nervous system (PNS)",
+        "meaning": "All nerves outside the CNS that connect the brain and spinal cord to the rest of the body. It carries sensory information to the CNS and motor commands to muscles and glands.",
+        "significance": ""
+      },
+      {
+        "term": "Somatic nervous system",
+        "meaning": "A division of the PNS that controls voluntary movement and carries sensory information from the external environment. It includes sensory neurons (to CNS) and motor neurons (from CNS).",
+        "significance": ""
+      },
+      {
+        "term": "Autonomic nervous system (ANS)",
+        "meaning": "A division of the PNS that regulates involuntary functions such as heart rate and digestion. It has two branches—sympathetic and parasympathetic—that work in opposition to maintain bodily balance.",
+        "significance": ""
+      },
+      {
+        "term": "Sympathetic nervous system",
+        "meaning": "The branch of the ANS that prepares the body for action in threatening situations. It increases heart rate, redirects blood to muscles, and reduces digestion, supporting the fight-or-flight response.",
+        "significance": ""
+      },
+      {
+        "term": "Parasympathetic nervous system",
+        "meaning": "The branch of the ANS that returns the body to a resting state after arousal. It slows heart rate and promotes digestion and recovery, conserving energy.",
+        "significance": ""
+      },
+      {
+        "term": "Neuron",
+        "meaning": "A specialised nerve cell that transmits information through electrical impulses and chemical neurotransmission. Neurons form networks that underpin behaviour, cognition, and physiological regulation.",
+        "significance": ""
+      },
+      {
+        "term": "Sensory neuron",
+        "meaning": "A neuron that carries impulses from sensory receptors (e.g., skin, eyes) to the CNS. It converts sensory stimulation into neural signals for processing.",
+        "significance": ""
+      },
+      {
+        "term": "Relay neuron",
+        "meaning": "A neuron located in the CNS that connects sensory neurons to motor neurons. Relay neurons play a key role in reflex arcs and internal processing.",
+        "significance": ""
+      },
+      {
+        "term": "Motor neuron",
+        "meaning": "A neuron that carries impulses from the CNS to effectors such as muscles and glands. Motor neuron firing produces movement or glandular secretion.",
+        "significance": ""
+      },
+      {
+        "term": "Dendrites",
+        "meaning": "Branch-like structures that receive signals from other neurons and transmit them toward the cell body. More dendritic connections allow greater synaptic input.",
+        "significance": ""
+      },
+      {
+        "term": "Cell body (soma)",
+        "meaning": "Contains the nucleus and maintains the functioning of the neuron. It integrates incoming signals and supports cellular processes.",
+        "significance": ""
+      },
+      {
+        "term": "Axon",
+        "meaning": "A long fibre that carries the action potential away from the cell body to the terminal buttons. The axon enables rapid transmission of neural impulses across distances.",
+        "significance": ""
+      },
+      {
+        "term": "Myelin sheath",
+        "meaning": "A fatty insulating layer around the axon that speeds transmission by allowing impulses to ‘jump’ between nodes of Ranvier (saltatory conduction). Myelination increases neural efficiency.",
+        "significance": ""
+      },
+      {
+        "term": "Nodes of Ranvier",
+        "meaning": "Gaps in the myelin sheath where the action potential is regenerated. Saltatory conduction between nodes speeds up neural transmission.",
+        "significance": ""
+      },
+      {
+        "term": "Synapse",
+        "meaning": "The junction between two neurons where communication occurs chemically across a synaptic gap. Synapses allow excitation or inhibition, shaping neural networks.",
+        "significance": ""
+      },
+      {
+        "term": "Synaptic transmission",
+        "meaning": "The process where an action potential triggers neurotransmitter release from the presynaptic neuron into the synaptic gap. Neurotransmitters bind to receptors on the postsynaptic neuron, producing excitation or inhibition.",
+        "significance": ""
+      },
+      {
+        "term": "Neurotransmitters",
+        "meaning": "Chemical messengers released at synapses that influence whether the postsynaptic neuron fires. Different neurotransmitters are linked to different functions (e.g., serotonin in mood).",
+        "significance": ""
+      },
+      {
+        "term": "Excitation (EPSP)",
+        "meaning": "A postsynaptic effect that increases the likelihood of the neuron firing. Excitatory neurotransmitters cause depolarisation, moving the neuron closer to threshold.",
+        "significance": ""
+      },
+      {
+        "term": "Inhibition (IPSP)",
+        "meaning": "A postsynaptic effect that decreases the likelihood of firing. Inhibitory neurotransmitters hyperpolarise the neuron, moving it further from threshold.",
+        "significance": ""
+      },
+      {
+        "term": "Reuptake",
+        "meaning": "The process of neurotransmitters being reabsorbed into the presynaptic neuron after release. Reuptake regulates neurotransmitter levels and terminates synaptic action; drugs can alter it.",
+        "significance": ""
+      },
+      {
+        "term": "Endocrine system",
+        "meaning": "A communication system of glands that release hormones into the bloodstream. It is slower than the nervous system but produces longer-lasting effects on organs and behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Hormones",
+        "meaning": "Chemical messengers transported in the blood to target organs, influencing physiology and behaviour. Hormonal effects are typically slower and longer-lasting than neurotransmitter effects.",
+        "significance": ""
+      },
+      {
+        "term": "Adrenal glands",
+        "meaning": "Glands that release hormones involved in stress responses. The adrenal medulla releases adrenaline for immediate arousal, and the adrenal cortex releases cortisol for longer-term stress management.",
+        "significance": ""
+      },
+      {
+        "term": "Adrenaline",
+        "meaning": "A hormone released during sympathetic activation that increases heart rate and blood glucose, preparing the body for rapid action. It supports the immediate fight-or-flight response.",
+        "significance": ""
+      },
+      {
+        "term": "Localisation of function",
+        "meaning": "The idea that specific brain areas are responsible for specific functions (e.g., movement, vision). Evidence from brain damage and imaging supports localisation, though many functions involve networks.",
+        "significance": ""
+      },
+      {
+        "term": "Motor cortex",
+        "meaning": "A brain region responsible for controlling voluntary movement. Different parts correspond to different body areas, reflecting a motor ‘map’.",
+        "significance": ""
+      },
+      {
+        "term": "Somatosensory cortex",
+        "meaning": "A brain region that processes sensory information from the skin such as touch and temperature. Like the motor cortex, it has a sensory ‘map’ of the body.",
+        "significance": ""
+      },
+      {
+        "term": "Visual cortex",
+        "meaning": "A region in the occipital lobe responsible for processing visual information. Damage can produce visual deficits despite intact eyes.",
+        "significance": ""
+      },
+      {
+        "term": "Auditory cortex",
+        "meaning": "A region in the temporal lobe responsible for processing sound and speech features. Damage can affect hearing perception and language processing.",
+        "significance": ""
+      },
+      {
+        "term": "Broca’s area",
+        "meaning": "A region in the left frontal lobe associated with speech production. Damage can result in slow, effortful speech with relatively preserved comprehension.",
+        "significance": ""
+      },
+      {
+        "term": "Wernicke’s area",
+        "meaning": "A region in the left temporal lobe associated with language comprehension. Damage can produce fluent but meaningless speech and impaired understanding.",
+        "significance": ""
+      },
+      {
+        "term": "Hemispheric lateralisation",
+        "meaning": "The idea that the two hemispheres have specialised functions. In many people, language is lateralised to the left hemisphere, while spatial processing is stronger in the right.",
+        "significance": ""
+      },
+      {
+        "term": "Corpus callosum",
+        "meaning": "A bundle of nerve fibres connecting the two hemispheres, allowing information transfer. Severing it in split-brain patients reduces inter-hemispheric communication.",
+        "significance": ""
+      },
+      {
+        "term": "Plasticity",
+        "meaning": "The brain’s ability to change its structure and function in response to learning or damage. Plasticity includes forming new synaptic connections and reorganising functional networks.",
+        "significance": ""
+      },
+      {
+        "term": "Functional recovery",
+        "meaning": "The brain’s ability to recover functions after injury through reorganisation. Recovery can involve reassignment of functions to different areas, supported by rehabilitation and experience.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t8": {
+    "title": "Paper 3: Issues & Debates",
+    "terms": [
+      {
+        "term": "Nature",
+        "meaning": "The view that behaviour is primarily influenced by biological factors such as genes, neurochemistry, hormones and evolution. Nature explanations treat behaviour as largely innate and inherited.",
+        "significance": ""
+      },
+      {
+        "term": "Nurture",
+        "meaning": "The view that behaviour is shaped mainly by environmental influences such as learning, upbringing, culture and life experiences. Nurture explanations emphasise conditioning, socialisation and situational pressures.",
+        "significance": ""
+      },
+      {
+        "term": "Interactionist approach",
+        "meaning": "The position that behaviour is produced by the combined influence of nature and nurture. Genes may create vulnerability while environmental factors trigger or protect against outcomes, so neither nature nor nurture alone is sufficient.",
+        "significance": ""
+      },
+      {
+        "term": "Free will",
+        "meaning": "The idea that humans are able to make conscious choices and are not wholly controlled by internal or external forces. Free will implies personal responsibility for behaviour and is linked to moral and legal accountability.",
+        "significance": ""
+      },
+      {
+        "term": "Determinism",
+        "meaning": "The view that behaviour is caused by factors outside conscious control and is therefore predictable if the causes are known. Determinism can be biological, environmental or psychic, depending on the proposed source of causation.",
+        "significance": ""
+      },
+      {
+        "term": "Biological determinism",
+        "meaning": "Explaining behaviour as the inevitable result of biological causes such as genes, brain structure or neurotransmitters. This can reduce personal responsibility but may support medical interventions.",
+        "significance": ""
+      },
+      {
+        "term": "Environmental determinism",
+        "meaning": "Explaining behaviour as controlled by external forces such as reinforcement histories, modelling and social pressure. It is common in behaviourist explanations.",
+        "significance": ""
+      },
+      {
+        "term": "Psychic determinism",
+        "meaning": "Freud’s claim that behaviour is determined by unconscious conflicts and early childhood experiences, meaning actions that feel chosen may reflect hidden causes.",
+        "significance": ""
+      },
+      {
+        "term": "Soft determinism",
+        "meaning": "The view that behaviour is constrained by internal and external factors, but individuals can still make choices within those constraints. This is often treated as an interactionist compromise.",
+        "significance": ""
+      },
+      {
+        "term": "Reductionism",
+        "meaning": "Explaining behaviour by breaking it down into simpler components. Reductionism can be biological (genes/brain), environmental (learning) or cognitive (information-processing components).",
+        "significance": ""
+      },
+      {
+        "term": "Biological reductionism",
+        "meaning": "Explaining complex behaviour solely in terms of biological mechanisms such as neurotransmitters, hormones or genes. It can produce testable predictions but risks oversimplifying social meaning and experience.",
+        "significance": ""
+      },
+      {
+        "term": "Environmental reductionism",
+        "meaning": "Explaining behaviour solely as a product of learning and experience, such as conditioning or reinforcement. It supports practical interventions but may ignore biological predispositions.",
+        "significance": ""
+      },
+      {
+        "term": "Holism",
+        "meaning": "Explaining behaviour by considering the whole person and wider context, including social, emotional and cultural influences. Holism recognises that behaviour may not be understood by analysing parts in isolation.",
+        "significance": ""
+      },
+      {
+        "term": "Levels of explanation",
+        "meaning": "Different layers at which behaviour can be analysed, such as biological, cognitive and social-cultural levels. A comprehensive account often integrates multiple levels rather than relying on one.",
+        "significance": ""
+      },
+      {
+        "term": "Idiographic approach",
+        "meaning": "A focus on individuals and unique cases, often using qualitative data or case studies to gain depth of understanding. It prioritises richness and meaning over general laws.",
+        "significance": ""
+      },
+      {
+        "term": "Nomothetic approach",
+        "meaning": "A focus on general laws and broad principles based on studying large groups and using statistical analysis. It aims for prediction and generalisation.",
+        "significance": ""
+      },
+      {
+        "term": "Gender bias",
+        "meaning": "A bias where research or theory treats one gender unfairly or inaccurately, often because of male-centred assumptions or unrepresentative samples.",
+        "significance": ""
+      },
+      {
+        "term": "Alpha bias",
+        "meaning": "Exaggerating differences between males and females, which can reinforce stereotypes or justify unequal treatment.",
+        "significance": ""
+      },
+      {
+        "term": "Beta bias",
+        "meaning": "Minimising or ignoring gender differences, often by assuming findings from male participants apply equally to females.",
+        "significance": ""
+      },
+      {
+        "term": "Androcentrism",
+        "meaning": "A male-centred viewpoint where male behaviour is treated as the norm. Female behaviour may then be judged as abnormal or deficient.",
+        "significance": ""
+      },
+      {
+        "term": "Cultural bias",
+        "meaning": "Bias that occurs when research reflects the values of one culture while claiming universality. It can lead to incorrect generalisations across cultural contexts.",
+        "significance": ""
+      },
+      {
+        "term": "Ethnocentrism",
+        "meaning": "Judging other cultures by the standards of one’s own culture. Ethnocentrism can distort interpretation of behaviour and lead to unfair conclusions.",
+        "significance": ""
+      },
+      {
+        "term": "Universality",
+        "meaning": "The claim that psychological explanations apply across cultures. Demonstrating universality requires cross-cultural evidence rather than relying on WEIRD samples.",
+        "significance": ""
+      },
+      {
+        "term": "Socially sensitive research",
+        "meaning": "Research that has potential consequences for participants or groups represented, such as stigma, discrimination or policy changes. Psychologists must consider both scientific and societal impacts.",
+        "significance": ""
+      },
+      {
+        "term": "Social sensitivity (Sieber & Stanley)",
+        "meaning": "A framework highlighting that research can have implications in four areas: the research question, methodology/participants, institutional context, and interpretation/application of findings.",
+        "significance": ""
+      },
+      {
+        "term": "Scientific method",
+        "meaning": "An approach involving objective measurement, hypothesis testing, control of variables, and replication to build reliable knowledge. Scientific status is supported when methods are systematic and falsifiable.",
+        "significance": ""
+      },
+      {
+        "term": "Falsifiability (Popper)",
+        "meaning": "The principle that a scientific theory must make predictions that could be proven wrong by evidence. If no evidence could contradict a theory, it is not scientific.",
+        "significance": ""
+      },
+      {
+        "term": "Paradigm (Kuhn)",
+        "meaning": "A shared framework of assumptions and methods guiding a discipline. Psychology contains multiple paradigms rather than a single dominant one, which affects claims about unified scientific status.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t9": {
+    "title": "Paper 3: Relationships",
+    "terms": [
+      {
+        "term": "Self-disclosure",
+        "meaning": "The process of revealing personal information to another person. According to social penetration theory, relationships deepen as disclosure becomes broader and more intimate, and reciprocity helps build trust.",
+        "significance": ""
+      },
+      {
+        "term": "Social penetration theory (Altman & Taylor)",
+        "meaning": "A theory stating that relationship development occurs through gradual increases in self-disclosure. Early stages involve superficial breadth, later stages involve deeper intimacy, and mutual disclosure strengthens closeness.",
+        "significance": ""
+      },
+      {
+        "term": "Breadth of self-disclosure",
+        "meaning": "The range of topics a person shares. Increasing breadth in early relationship stages helps establish common ground and connection.",
+        "significance": ""
+      },
+      {
+        "term": "Depth of self-disclosure",
+        "meaning": "The intimacy and personal significance of information shared. Increasing depth indicates growing trust and emotional closeness.",
+        "significance": ""
+      },
+      {
+        "term": "Reciprocity",
+        "meaning": "The tendency for partners to match each other’s level of self-disclosure. Balanced reciprocity supports relationship development; imbalance can create discomfort or vulnerability.",
+        "significance": ""
+      },
+      {
+        "term": "Physical attractiveness",
+        "meaning": "A key factor in initial attraction, often influencing first impressions. Attraction may be shaped by evolutionary pressures and social learning, but appearance is only one contributor to long-term compatibility.",
+        "significance": ""
+      },
+      {
+        "term": "Matching hypothesis (Walster)",
+        "meaning": "The idea that partners are likely to have similar levels of physical attractiveness. Matching reduces rejection risk and increases perceived relationship stability because partners are seen as equally desirable.",
+        "significance": ""
+      },
+      {
+        "term": "Social exchange theory (Thibaut & Kelley)",
+        "meaning": "A theory proposing that relationship maintenance depends on perceived rewards and costs. People aim to maximise profit (rewards minus costs) and compare their outcomes to expectations and alternatives.",
+        "significance": ""
+      },
+      {
+        "term": "Rewards",
+        "meaning": "Positive outcomes that increase relationship satisfaction, such as companionship, emotional support and shared experiences.",
+        "significance": ""
+      },
+      {
+        "term": "Costs",
+        "meaning": "Negative aspects that reduce satisfaction, such as conflict, time, effort, stress or restricted freedom.",
+        "significance": ""
+      },
+      {
+        "term": "Profit (outcome)",
+        "meaning": "The net result of rewards minus costs. High profit increases satisfaction and commitment, whereas low profit may increase dissatisfaction.",
+        "significance": ""
+      },
+      {
+        "term": "Comparison level (CL)",
+        "meaning": "A standard formed from past experiences and social norms that determines what a person expects from a relationship. If outcomes exceed CL, the relationship is seen as satisfying.",
+        "significance": ""
+      },
+      {
+        "term": "Comparison level for alternatives (CLalt)",
+        "meaning": "A judgement about whether alternative relationships or being alone would provide better outcomes. If CLalt is high, people are more likely to leave a relationship.",
+        "significance": ""
+      },
+      {
+        "term": "Equity theory (Walster et al.)",
+        "meaning": "A theory stating that relationship satisfaction depends on perceived fairness rather than simply profit. People are happiest when the ratio of contributions to benefits is balanced between partners.",
+        "significance": ""
+      },
+      {
+        "term": "Equity",
+        "meaning": "A state of fairness where both partners perceive their inputs and outcomes as proportionate. Equity reduces resentment and guilt and supports long-term stability.",
+        "significance": ""
+      },
+      {
+        "term": "Inequity",
+        "meaning": "A state where one partner perceives themselves as over-benefiting or under-benefiting. Under-benefiting can cause anger; over-benefiting can cause guilt, both undermining satisfaction.",
+        "significance": ""
+      },
+      {
+        "term": "Investment model (Rusbult)",
+        "meaning": "A model proposing that commitment is determined by satisfaction level, quality of alternatives, and investment size. High commitment predicts relationship persistence even when satisfaction drops.",
+        "significance": ""
+      },
+      {
+        "term": "Investment",
+        "meaning": "Resources put into a relationship that would be lost if it ended, such as time, shared possessions, emotional energy or children. Larger investment increases commitment.",
+        "significance": ""
+      },
+      {
+        "term": "Duck’s phase model of relationship breakdown (Duck)",
+        "meaning": "A stage-based explanation describing how relationships end through intrapsychic, dyadic, social and grave-dressing phases. It emphasises the gradual shift from private dissatisfaction to public narrative and post-breakup reconstruction.",
+        "significance": ""
+      },
+      {
+        "term": "Intrapsychic phase",
+        "meaning": "The stage where one partner begins to feel dissatisfied and considers the relationship negatively. Issues are often rehearsed mentally before being openly discussed.",
+        "significance": ""
+      },
+      {
+        "term": "Dyadic phase",
+        "meaning": "The stage where partners confront problems directly and attempt to negotiate or repair the relationship. If conflict escalates and solutions fail, breakdown becomes more likely.",
+        "significance": ""
+      },
+      {
+        "term": "Social phase",
+        "meaning": "The stage where the relationship becomes publicly defined as failing, and partners seek social support or advice. Friends and family may influence decisions and narratives about blame.",
+        "significance": ""
+      },
+      {
+        "term": "Grave-dressing phase",
+        "meaning": "The stage where individuals create a coherent story about why the relationship ended to protect self-esteem. This narrative is shared socially and helps reduce distress.",
+        "significance": ""
+      },
+      {
+        "term": "Resurrection phase",
+        "meaning": "A post-breakup stage where individuals reflect on lessons learned and prepare for future relationships. This can involve personal growth and revised expectations.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t10": {
+    "title": "Paper 3: Schizophrenia",
+    "terms": [
+      {
+        "term": "Schizophrenia",
+        "meaning": "A severe mental disorder characterised by distortions in thinking, perception and emotional responsiveness. Symptoms are typically classified as positive (additions) and negative (losses), and diagnosis relies on clusters of symptoms and duration criteria.",
+        "significance": ""
+      },
+      {
+        "term": "Positive symptoms",
+        "meaning": "Additions to normal experience, such as hallucinations and delusions. They represent the presence of abnormal experiences rather than loss of functioning.",
+        "significance": ""
+      },
+      {
+        "term": "Hallucinations",
+        "meaning": "Perceptual experiences occurring without external stimuli, most commonly auditory voices. Hallucinations can be distressing and may influence behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Delusions",
+        "meaning": "Fixed, false beliefs held with strong conviction despite contradictory evidence. Delusions may be paranoid (persecution) or grandiose and can shape behaviour and emotional responses.",
+        "significance": ""
+      },
+      {
+        "term": "Thought insertion",
+        "meaning": "The belief that thoughts are being placed into one’s mind by an external force. It reflects disordered thinking and loss of agency.",
+        "significance": ""
+      },
+      {
+        "term": "Negative symptoms",
+        "meaning": "Reductions or losses in normal functioning, such as avolition and diminished emotional expression. Negative symptoms often predict poorer long-term outcomes and functional impairment.",
+        "significance": ""
+      },
+      {
+        "term": "Avolition",
+        "meaning": "A reduction in goal-directed behaviour, including lowered motivation and difficulty initiating or sustaining activities. It can appear as apathy and reduced self-care.",
+        "significance": ""
+      },
+      {
+        "term": "Speech poverty (alogia)",
+        "meaning": "Reduced speech quantity or content, reflecting impaired thinking or diminished emotional engagement.",
+        "significance": ""
+      },
+      {
+        "term": "Anhedonia",
+        "meaning": "Reduced ability to experience pleasure, often leading to withdrawal from social or rewarding activities.",
+        "significance": ""
+      },
+      {
+        "term": "DSM and ICD",
+        "meaning": "Classification systems used to diagnose mental disorders. They provide standardised criteria to improve reliability of diagnosis, although interpretation and cultural factors can still influence decisions.",
+        "significance": ""
+      },
+      {
+        "term": "Reliability of diagnosis",
+        "meaning": "The consistency of diagnostic decisions across clinicians or over time. Reliability is strengthened by standardised criteria but can be reduced by subjective judgement and symptom overlap.",
+        "significance": ""
+      },
+      {
+        "term": "Validity of diagnosis",
+        "meaning": "Whether schizophrenia is a distinct and meaningful disorder with accurate boundaries. Validity issues include comorbidity, symptom heterogeneity and cultural variation in presentation.",
+        "significance": ""
+      },
+      {
+        "term": "Comorbidity",
+        "meaning": "Co-occurrence of schizophrenia with other disorders such as depression or substance misuse. High comorbidity challenges diagnostic validity and suggests blurred category boundaries.",
+        "significance": ""
+      },
+      {
+        "term": "Dopamine hypothesis",
+        "meaning": "A biological explanation proposing that schizophrenia is linked to abnormal dopamine activity. Overactivity in subcortical regions is associated with positive symptoms, while underactivity in cortical areas may relate to negative symptoms.",
+        "significance": ""
+      },
+      {
+        "term": "Neural correlates",
+        "meaning": "Patterns of brain structure or activity associated with symptoms, such as enlarged ventricles or reduced activity in certain regions. Correlates do not prove causation but support biological involvement.",
+        "significance": ""
+      },
+      {
+        "term": "Genetic vulnerability",
+        "meaning": "The idea that inherited genes increase risk of schizophrenia. Risk rises with genetic relatedness, but concordance rates below 100% show environmental factors also matter.",
+        "significance": ""
+      },
+      {
+        "term": "Polygenic inheritance",
+        "meaning": "Schizophrenia is influenced by many genes, each with small effects. This helps explain variability and supports interactionist models rather than single-gene explanations.",
+        "significance": ""
+      },
+      {
+        "term": "Antipsychotic medication",
+        "meaning": "Drug treatment aiming to reduce symptoms by affecting dopamine transmission. Typical antipsychotics act mainly as dopamine antagonists and reduce positive symptoms.",
+        "significance": ""
+      },
+      {
+        "term": "Typical antipsychotics",
+        "meaning": "Older drugs (e.g., chlorpromazine) that primarily block dopamine receptors. They can reduce hallucinations and delusions but may cause extrapyramidal side effects.",
+        "significance": ""
+      },
+      {
+        "term": "Atypical antipsychotics",
+        "meaning": "Newer drugs (e.g., clozapine) that act on dopamine and serotonin systems. They may be effective for some treatment-resistant cases and often produce fewer movement side effects, though metabolic risks exist.",
+        "significance": ""
+      },
+      {
+        "term": "Dopamine antagonists",
+        "meaning": "Drugs that reduce dopamine action by blocking D2 receptors, decreasing dopamine transmission in synapses. This mechanism underpins many antipsychotics.",
+        "significance": ""
+      },
+      {
+        "term": "Family dysfunction",
+        "meaning": "A psychological/social explanation proposing that dysfunctional family relationships can increase schizophrenia risk. It includes theories such as double-bind communication, expressed emotion and negative family environments.",
+        "significance": ""
+      },
+      {
+        "term": "Double-bind theory (Bateson)",
+        "meaning": "The idea that repeated exposure to contradictory messages (e.g., verbal affection but non-verbal rejection) creates confusion and anxiety, contributing to disordered thinking. It is difficult to test and is not a sole cause.",
+        "significance": ""
+      },
+      {
+        "term": "Expressed emotion (EE)",
+        "meaning": "A family climate characterised by criticism, hostility and emotional over-involvement. High EE is linked to relapse, suggesting family environment can influence course and recurrence of symptoms.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive explanation",
+        "meaning": "An explanation proposing that schizophrenia symptoms arise from faulty information processing and dysfunctional beliefs. For example, hallucinations may be linked to misattributing internal thoughts to external sources.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive behaviour therapy for psychosis (CBTp)",
+        "meaning": "A therapy that helps patients identify and challenge irrational beliefs and develop coping strategies for hallucinations and delusions. CBTp aims to reduce distress and improve functioning rather than ‘cure’ the disorder.",
+        "significance": ""
+      },
+      {
+        "term": "Family therapy",
+        "meaning": "A treatment aiming to reduce relapse by improving communication, reducing expressed emotion, and supporting problem-solving within the family. It can improve adherence and reduce stress within the home environment.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t11": {
+    "title": "Paper 3: Aggression",
+    "terms": [
+      {
+        "term": "Aggression",
+        "meaning": "Behaviour intended to cause harm to another person. Aggression can be physical or verbal and may be influenced by biological, psychological and social factors.",
+        "significance": ""
+      },
+      {
+        "term": "Hostile aggression",
+        "meaning": "Impulsive, emotion-driven aggression with the primary goal of causing harm. It is linked to anger and high arousal.",
+        "significance": ""
+      },
+      {
+        "term": "Instrumental aggression",
+        "meaning": "Planned aggression used as a means to achieve a goal (e.g., status, resources). Harm is a tool rather than the primary aim.",
+        "significance": ""
+      },
+      {
+        "term": "Neural mechanisms",
+        "meaning": "Brain structures and circuits involved in aggressive behaviour. For example, the amygdala is involved in threat detection and emotional responses, while the prefrontal cortex is linked to impulse control.",
+        "significance": ""
+      },
+      {
+        "term": "Hormonal influences",
+        "meaning": "The effect of hormones on aggression. Testosterone is often linked to dominance and aggression, while cortisol is linked to stress responses; relationships can be complex and moderated by context.",
+        "significance": ""
+      },
+      {
+        "term": "Serotonin",
+        "meaning": "A neurotransmitter linked to mood regulation and impulse control. Lower serotonin activity is associated with increased impulsive aggression due to reduced inhibition.",
+        "significance": ""
+      },
+      {
+        "term": "Genetic influences",
+        "meaning": "The contribution of inherited factors to aggression. Evidence includes concordance studies and candidate genes, but genes interact with environment and do not determine behaviour alone.",
+        "significance": ""
+      },
+      {
+        "term": "MAOA gene",
+        "meaning": "A gene linked to breakdown of neurotransmitters such as serotonin and dopamine. Low-activity variants have been associated with increased risk of antisocial behaviour, particularly when combined with adverse environments.",
+        "significance": ""
+      },
+      {
+        "term": "Social learning theory (Bandura)",
+        "meaning": "An explanation that aggression is learned through observing and imitating models and through vicarious reinforcement. Aggressive scripts may be acquired from family, peers and media, and then used in later situations.",
+        "significance": ""
+      },
+      {
+        "term": "Mediational processes (Bandura)",
+        "meaning": "Cognitive factors that determine whether observed aggression is imitated: attention to the model, retention of the behaviour, ability to reproduce it, and motivation to perform it.",
+        "significance": ""
+      },
+      {
+        "term": "Deindividuation",
+        "meaning": "A state where individuals lose a sense of personal identity and responsibility, often in groups. Reduced self-awareness and anonymity can lower inhibitions and increase impulsive behaviour, including aggression.",
+        "significance": ""
+      },
+      {
+        "term": "Institutional aggression",
+        "meaning": "Aggression that occurs within institutions such as prisons, where social structures, overcrowding and deprivation may increase conflict. Explanations include importation and deprivation models.",
+        "significance": ""
+      },
+      {
+        "term": "Importation model",
+        "meaning": "The view that prisoners ‘import’ aggressive tendencies from their previous environment into prison. Individual differences (e.g., gang membership, history of violence) contribute to aggression levels.",
+        "significance": ""
+      },
+      {
+        "term": "Deprivation model",
+        "meaning": "The view that aggression is caused by the prison environment itself, including loss of liberty, boredom, and frustration. Deprivation creates stress that can produce violence.",
+        "significance": ""
+      },
+      {
+        "term": "Media violence",
+        "meaning": "Exposure to violent content that may influence aggressive behaviour through observational learning, desensitisation or priming. Effects depend on individual differences and context.",
+        "significance": ""
+      },
+      {
+        "term": "Desensitisation",
+        "meaning": "Reduced emotional responsiveness to violence following repeated exposure. Desensitisation may lower empathy and make aggressive behaviour seem more acceptable.",
+        "significance": ""
+      },
+      {
+        "term": "Cognitive priming",
+        "meaning": "The activation of aggressive thoughts and schemas after exposure to aggression-related cues. Priming can increase the likelihood of interpreting situations aggressively.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t12": {
+    "title": "Paper 3: Gender",
+    "terms": [
+      {
+        "term": "Sex",
+        "meaning": "A biological classification based on anatomy, chromosomes and hormones. Sex is typically categorised as male or female, though biological variation exists.",
+        "significance": ""
+      },
+      {
+        "term": "Gender",
+        "meaning": "A psychological and social concept referring to a person’s identity and the behaviours considered appropriate for males and females within a culture.",
+        "significance": ""
+      },
+      {
+        "term": "Gender identity",
+        "meaning": "A person’s internal sense of being male, female, both or neither. Gender identity develops through a combination of biological influences and social experience.",
+        "significance": ""
+      },
+      {
+        "term": "Gender role",
+        "meaning": "The behaviours and expectations society considers appropriate for males and females. Gender roles are learned through socialisation and reinforced by cultural norms.",
+        "significance": ""
+      },
+      {
+        "term": "Gender dysphoria",
+        "meaning": "Distress arising from incongruence between a person’s experienced gender and their assigned sex. It is associated with impairment and may lead to seeking social or medical transition.",
+        "significance": ""
+      },
+      {
+        "term": "Chromosomes and hormones",
+        "meaning": "Biological factors contributing to sex differentiation and potentially to gender development. Prenatal hormones can influence brain development and later behaviour, though social influences remain important.",
+        "significance": ""
+      },
+      {
+        "term": "Social learning theory of gender (Bandura)",
+        "meaning": "The idea that gender behaviour is learned through observation and imitation of same-sex models, as well as reinforcement and punishment. Media and parents act as key sources of gendered behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Gender schema theory (Martin & Halverson)",
+        "meaning": "A cognitive explanation proposing that children form gender schemas that organise information about gender-appropriate behaviour. Schemas guide attention and memory, producing self-socialisation into gender roles.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t13": {
+    "title": "Paper 3: Cognition & Development",
+    "terms": [
+      {
+        "term": "Piaget’s theory of cognitive development (Piaget)",
+        "meaning": "A stage theory proposing that children’s thinking develops through qualitative changes. Cognitive growth occurs as children actively construct knowledge through interaction with the environment.",
+        "significance": ""
+      },
+      {
+        "term": "Schema (Piaget)",
+        "meaning": "A mental framework representing knowledge about the world. Schemas guide behaviour and are modified as children encounter new information.",
+        "significance": ""
+      },
+      {
+        "term": "Assimilation",
+        "meaning": "Integrating new information into existing schemas without changing the schema. Assimilation allows efficient processing but may distort understanding if schemas are inappropriate.",
+        "significance": ""
+      },
+      {
+        "term": "Accommodation",
+        "meaning": "Changing existing schemas or forming new ones to incorporate new information. Accommodation produces genuine cognitive change and drives development.",
+        "significance": ""
+      },
+      {
+        "term": "Equilibration",
+        "meaning": "The process of balancing assimilation and accommodation. Cognitive conflict (disequilibrium) motivates change until a new equilibrium is achieved.",
+        "significance": ""
+      },
+      {
+        "term": "Stages of development (Piaget)",
+        "meaning": "Sensorimotor (0–2), preoperational (2–7), concrete operational (7–11), and formal operational (11+). Each stage involves distinct cognitive abilities and limitations.",
+        "significance": ""
+      },
+      {
+        "term": "Theory of mind",
+        "meaning": "The ability to attribute mental states (beliefs, desires, intentions) to oneself and others, understanding that people can have different perspectives and false beliefs.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t14": {
+    "title": "Paper 3: Eating Behaviour",
+    "terms": [
+      {
+        "term": "Eating behaviour",
+        "meaning": "The patterns of food intake shaped by biological mechanisms (e.g., hunger signals), learning, cognition and social/cultural influences.",
+        "significance": ""
+      },
+      {
+        "term": "Homeostasis",
+        "meaning": "Biological regulation that maintains stable internal states. Eating is partly controlled by mechanisms that restore energy balance when depleted.",
+        "significance": ""
+      },
+      {
+        "term": "Neural mechanisms of eating",
+        "meaning": "Brain structures involved in hunger and satiety, including the hypothalamus. Signals such as leptin and ghrelin influence appetite and feeding behaviour.",
+        "significance": ""
+      },
+      {
+        "term": "Biological explanation of anorexia nervosa",
+        "meaning": "Accounts focusing on genetic vulnerability and neurochemical factors. Biological factors may create risk, but environmental triggers and cognitive factors are usually needed for onset.",
+        "significance": ""
+      },
+      {
+        "term": "Cultural influence",
+        "meaning": "The role of cultural ideals (e.g., thinness), media exposure and social comparison in shaping body dissatisfaction and disordered eating.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t15": {
+    "title": "Paper 3: Stress",
+    "terms": [
+      {
+        "term": "Stress",
+        "meaning": "A state of psychological and physiological arousal that occurs when individuals perceive demands as exceeding their ability to cope. Stress responses involve hormonal and autonomic activation.",
+        "significance": ""
+      },
+      {
+        "term": "Stressor",
+        "meaning": "An event or situation that produces stress, such as life changes, daily hassles or chronic pressure. Stressors can be acute or long-term.",
+        "significance": ""
+      },
+      {
+        "term": "Physiological stress response",
+        "meaning": "Bodily changes during stress including sympathetic activation and endocrine responses such as adrenaline and cortisol release, preparing the body for action.",
+        "significance": ""
+      },
+      {
+        "term": "Measuring stress",
+        "meaning": "Stress can be measured using self-report scales, behavioural indicators, or physiological measures such as heart rate, blood pressure or cortisol levels.",
+        "significance": ""
+      },
+      {
+        "term": "Coping strategies",
+        "meaning": "Ways of managing stress, such as problem-focused coping (changing the stressor) and emotion-focused coping (managing feelings). Effectiveness depends on controllability and context.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  },
+  "t16": {
+    "title": "Paper 3: Forensic Psychology",
+    "terms": [
+      {
+        "term": "Forensic psychology",
+        "meaning": "The application of psychological theory and research to criminal investigation and the legal system. It includes explaining offending, improving eyewitness procedures and supporting rehabilitation.",
+        "significance": ""
+      },
+      {
+        "term": "Offender profiling",
+        "meaning": "A technique that attempts to infer characteristics of an offender from crime scene details. It aims to support investigation by narrowing suspect pools or guiding questioning.",
+        "significance": ""
+      },
+      {
+        "term": "Attribution theory",
+        "meaning": "Explanations of how people infer causes of behaviour. In offending, attributions may shape how jurors interpret motives and responsibility.",
+        "significance": ""
+      },
+      {
+        "term": "Custodial sentencing",
+        "meaning": "A legal punishment involving imprisonment. Psychological work considers how prisons can influence behaviour and how rehabilitation can reduce reoffending.",
+        "significance": ""
+      },
+      {
+        "term": "Recidivism",
+        "meaning": "Reoffending after release. Lower recidivism is a key indicator of effective rehabilitation programmes.",
+        "significance": ""
+      },
+      {
+        "term": "Anger management",
+        "meaning": "A cognitive-behavioural intervention aiming to reduce aggressive offending by teaching triggers awareness, cognitive restructuring and coping skills.",
+        "significance": ""
+      }
+    ],
+    "people": [],
+    "events": []
+  }
+};
 
 /* ==========================================================
    MCQ BANK (30 questions per topic) — fully populated
