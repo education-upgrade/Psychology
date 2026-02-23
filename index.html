@@ -3017,6 +3017,34 @@ section#games.gamePaneActive .gamesHeroCard{
 .fadeIn300{ animation:fadeIn300 .3s ease; }
 @keyframes fadeIn300{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
 
+
+
+    .examHeroTitle{margin:0;font-size:30px;font-weight:1000;color:var(--textStrong)}
+    .examExplainerTitle{font-weight:900;font-size:18px}
+    .examExplainerList{margin:8px 0 0 18px;padding:0;display:grid;gap:8px}
+    .examSectionTitle{font-size:20px;font-weight:900;margin:0 0 10px 0}
+    .examQuestionList{display:grid;gap:12px}
+    .examQuestionCard{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.88);box-shadow:var(--shadow);cursor:pointer;text-align:left;width:100%}
+    .examQuestionTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    .examMetaRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .examBadge{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:var(--accent4);font-size:12px;font-weight:800}
+    .examBadge.statusDone{background:#e9f6ef;border-color:#75b48d;color:#1f5d37}
+    .examBadge.statusRequired{background:#fdf4e9;border-color:#c0904e;color:#7a4b16}
+    .examQTextLarge{font-size:16px;font-weight:800;line-height:1.45;margin-top:10px}
+    .mapModal{position:fixed;inset:0;background:rgba(15,27,40,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:30}
+    .mapModal.hidden{display:none}
+    .mapModalCard{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+    .mapTextArea{width:100%;min-height:92px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.4}
+    .mapHelper{font-size:13px;color:var(--muted);margin-top:4px}
+    .scaffoldHeader{display:grid;gap:10px}
+    .checklistPanel,.ao2Panel,.pathwayPanel{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px}
+    .ao2Panel{background:#eef6ff;border-left:5px solid var(--accent)}
+    .pathwayTabs{display:flex;gap:8px;flex-wrap:wrap}
+    .pathwayTabBtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}
+    .pathwayTabBtn.active{background:var(--accent4);border-color:var(--accent)}
+    .plannerBox{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;margin-top:8px;font-weight:700}
+    .resetMapBtn{margin-left:auto}
+
 </style>
 </head>
 
@@ -3742,59 +3770,56 @@ section#games.gamePaneActive .gamesHeroCard{
 
   <!-- EXAM -->
   <section id="exam" class="tabpane hidden">
-    <div class="card">
-      <div class="homeTopBrandRow" style="margin-bottom:4px">
-        <div class="quizPanelTitle homeTitleChip">
-          <svg class="quizPanelTitleIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg>
-          <span class="quizPanelTitleText">Exam</span>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="row">
-        <div class="grow">
-          <label>Topic filter</label>
-          <select id="examTopicSelect"></select>
-        </div>
-        <div class="grow">
-          <label>Question</label>
-          <select id="examSelect"></select>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div style="border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff">
-        <div class="note">25-mark question</div>
-        <div class="qText" id="examQText">Pick a question to get started.</div>
-        <div class="note" id="examTag" style="margin-top:6px"></div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="note">Step-by-step exam walkthrough</div>
-      <div id="examWalkthrough" style="margin-top:10px"></div>
-
-      <div class="divider"></div>
-
-      <details id="examHelp" style="border:1px solid var(--line);border-radius:16px;padding:10px;background:#fff">
-        <summary style="cursor:pointer;font-weight:900;list-style:none">🧰 Hints (tap to reveal key knowledge)</summary>
-        <div class="divider"></div>
-        <div id="examHelpBody" class="note"></div>
-      </details>
+    <div class="card examHeroCard">
+      <h2 class="examHeroTitle">16 Mark Essay Practice (MAP)</h2>
+      <p class="note" style="margin:6px 0 0 0">Use MAP first, then unlock your scaffold pathway.</p>
     </div>
 
-    <div class="card">
-      <div style="font-weight:900">Level 5 habits</div>
-      <ul class="note" style="margin:10px 0 0 18px">
-        <li><b>Stay on the wording</b> (“half-hearted”, “mainly”, “more important than”).</li>
-        <li><b>Factor structure</b>: 3–4 factors, each weighed (reach, timing, impact).</li>
-        <li><b>Precise evidence</b>: dates + named policies + clear consequence.</li>
-        <li><b>Judgement</b>: not just “both” — explain why one matters more.</li>
+    <div class="card examExplainerCard">
+      <div class="examExplainerTitle">MAP quick guide</div>
+      <ul class="examExplainerList">
+        <li><strong>M = Meaning:</strong> what the command word demands (e.g., discuss, outline and evaluate).</li>
+        <li><strong>A = Ask:</strong> what the question is specifically asking (focus words, direction).</li>
+        <li><strong>P = Plan:</strong> plan AO1 + AO3 + (AO2 if scenario).</li>
       </ul>
     </div>
+
+    <div class="card">
+      <h3 class="examSectionTitle">Choose a question</h3>
+      <div id="examQuestionList" class="examQuestionList"></div>
+    </div>
+
+    <div id="essayScaffoldCard" class="card hidden" aria-live="polite"></div>
   </section>
 
+
+
+<div id="mapPlannerModal" class="mapModal hidden" role="dialog" aria-modal="true" aria-labelledby="mapPlannerTitle">
+  <div class="mapModalCard">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:8px">
+      <h3 id="mapPlannerTitle" class="examSectionTitle" style="margin:0">MAP Planner</h3>
+      <button id="mapPlannerClose" class="btn" type="button">Close</button>
+    </div>
+    <p id="mapPlannerQuestion" class="note" style="margin-top:8px"></p>
+
+    <label for="mapMeaningInput">Meaning (M)</label>
+    <textarea id="mapMeaningInput" class="mapTextArea" placeholder="Define the command word(s). What must you do?"></textarea>
+    <div class="mapHelper">Define the command word(s). What must you do?</div>
+
+    <label for="mapAskInput" style="margin-top:10px">Ask (A)</label>
+    <textarea id="mapAskInput" class="mapTextArea" placeholder="Underline focus: theory/variable/context. What must your answer include?"></textarea>
+    <div class="mapHelper">Underline focus: theory/variable/context. What must your answer include?</div>
+
+    <label for="mapPlanInput" style="margin-top:10px">Plan (P)</label>
+    <textarea id="mapPlanInput" class="mapTextArea" placeholder="Bullet plan: AO1 (detailed), AO3 pathway (PEEL/PEELC/PEELAC), AO2 if scenario."></textarea>
+    <div class="mapHelper">Bullet plan: AO1 (detailed), AO3 pathway (PEEL/PEELC/PEELAC), AO2 if scenario.</div>
+
+    <div id="mapProgressText" class="note" style="margin-top:10px"></div>
+    <div class="row" style="margin-top:10px;justify-content:flex-end">
+      <button id="mapUnlockBtn" class="btn primary" type="button" disabled>Unlock scaffolds</button>
+    </div>
+  </div>
+</div>
 
 </main>
 
@@ -6678,9 +6703,33 @@ const MATCH_PEOPLE_DEFAULTS = {};
 })();
 
 /* ==========================================================
-   EXAM BANK (3 questions per topic — already true here)
+   EXAMS: 16 MARK ESSAY PRACTICE (MAP)
    ========================================================== */
-const EXAM_BANK = [];
+const ESSAY_QUESTIONS = [
+  { id:"q1", topicTag:"Social Influence", commandWord:"Discuss", isScenario:false, questionText:"Discuss research into conformity." },
+  { id:"q2", topicTag:"Social Influence", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate explanations for obedience." },
+  { id:"q3", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true, questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario." },
+  { id:"q4", topicTag:"Memory", commandWord:"Discuss", isScenario:false, questionText:"Discuss explanations for forgetting." },
+  { id:"q5", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate the learning theory explanation of attachment." },
+  { id:"q6", topicTag:"Attachment", commandWord:"Discuss", isScenario:true, questionText:"Discuss the effects of institutionalisation on attachment. Refer to the scenario." },
+  { id:"q7", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate one or more psychological explanations for depression." },
+  { id:"q8", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true, questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario." },
+  { id:"q9", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false, questionText:"Discuss issues of reliability and validity in psychological research." },
+  { id:"q10", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false, questionText:"Outline and evaluate the role of the limbic system in aggression." }
+];
+
+const TOPIC_TAG_TO_ID = {
+  "Social Influence":"t1",
+  "Memory":"t2",
+  "Attachment":"t3",
+  "Psychopathology":"t4",
+  "Research Methods":"t6",
+  "Biopsychology":"t7"
+};
+
+const EXAM_BANK = ESSAY_QUESTIONS.map(q=>({ ...q, topicId:TOPIC_TAG_TO_ID[q.topicTag]||"t1" }));
+const MAP_STORAGE_KEY = "aqa_psychology_map_v1";
+const MAP_MIN_CHARS = 80;
 
 
 /* ==========================================================
@@ -8270,7 +8319,7 @@ function renderTopicDashboard(){
       try{ if(typeof refreshConnectionsTopicSelect === "function") refreshConnectionsTopicSelect(); }catch(e){}
       try{ renderTopicDashboard(); }catch(e){}
       try{ renderTopicTiles(); }catch(e){} // legacy tiles (if present)
-      try{ renderExamSelect(); }catch(e){}
+      try{ renderExamTab(); }catch(e){}
       try{ startMatchGame(); }catch(e){}
       try{ startEmojiRound(); }catch(e){}
       try{ updateDailyUI(); }catch(e){}
@@ -8294,7 +8343,7 @@ function populateTopics(){
   selQuiz.innerHTML = "";
   selMatch.innerHTML = "";
   selEmoji.innerHTML = "";
-  selExamFilter.innerHTML = "";
+  if(selExamFilter) selExamFilter.innerHTML = "";
 
   const optAll = document.createElement("option");
   optAll.value = "ALL";
@@ -8311,9 +8360,11 @@ function populateTopics(){
   addMixed(selMatch);
   addMixed(selEmoji);
 
-  const exAll = document.createElement("option");
-  exAll.value="ALL"; exAll.textContent="🌍 All topics";
-  selExamFilter.appendChild(exAll);
+  if(selExamFilter){
+    const exAll = document.createElement("option");
+    exAll.value="ALL"; exAll.textContent="🌍 All topics";
+    selExamFilter.appendChild(exAll);
+  }
 
   TOPICS.filter(t=>isTopicEnabled(t.id)).forEach(t=>{
     const o = document.createElement("option");
@@ -8333,9 +8384,11 @@ function populateTopics(){
     o4.value = t.id; o4.textContent = t.title;
     selEmoji.appendChild(o4);
 
-    const o5 = document.createElement("option");
-    o5.value = t.id; o5.textContent = t.title;
-    selExamFilter.appendChild(o5);
+    if(selExamFilter){
+      const o5 = document.createElement("option");
+      o5.value = t.id; o5.textContent = t.title;
+      selExamFilter.appendChild(o5);
+    }
   });
 }
 
@@ -8927,10 +8980,8 @@ function navigateToRoute(route){
     startQuiz();
   }else if(tab === "exam"){
     setTab("exam");
-    const filter = $("examTopicSelect");
-    if(filter){ filter.value = topicId; filter.dispatchEvent(new Event("change")); }
     const exId = getDailyExamId(topicId);
-    if(exId){ $("examSelect").value = exId; renderExamQuestion(); }
+    if(exId) openMapPlanner(exId);
   }
 }
 function renderHomeRecommendation(){
@@ -9289,10 +9340,8 @@ function goDailyExam(){
   saveState();
   trackTaskStarted("PLAN_25", d.topicId);
   setTab("exam");
-  const exFilter = $("examTopicSelect");
-  if(exFilter){ exFilter.value = d.topicId; exFilter.dispatchEvent(new Event("change")); }
   const exId = getDailyExamId(d.topicId);
-  if(exId){ $("examSelect").value = exId; renderExamQuestion(); }
+  if(exId) openMapPlanner(exId);
 }
 
 { const _b = document.getElementById('btnGoFocus'); if(_b) _b.addEventListener('click', goDailyFocus); }
@@ -10435,109 +10484,208 @@ function attemptMatch(){
 $("btnStartMatch").addEventListener("click", startMatchGame);
 
 /* ==========================================================
-   EXAM TAB UI (enforce 3 per topic)
+   EXAM TAB UI (MAP gating + scaffolds)
    ========================================================== */
-function validateExamBank(){
-  // ensures 3 per topicId (t1..t4)
-  const counts = {};
-  EXAM_BANK.forEach(q => counts[q.topicId] = (counts[q.topicId]||0)+1);
-  for(const t of TOPICS){
-    if((counts[t.id]||0) !== 3){
-      console.warn("EXAM_BANK topic not equal to 3:", t.id, counts[t.id]);
-    }
-  }
+let activeMapQuestionId = null;
+let activeScaffoldPathway = "sf";
+
+function loadMapStore(){
+  try{ return JSON.parse(localStorage.getItem(MAP_STORAGE_KEY) || "{}"); }catch(e){ return {}; }
 }
-validateExamBank();
-
-function renderExamSelect(){
-  const filter = $("examTopicSelect").value;
-  $("examSelect").innerHTML = "";
-
-  const list = EXAM_BANK.filter(q=>isTopicEnabled(q.topicId)).filter(q=>filter==="ALL" ? true : q.topicId===filter);
-
-  list.forEach(q=>{
-    const o=document.createElement("option");
-    o.value=q.id;
-    o.textContent = q.question.length>95 ? q.question.slice(0,95)+"…" : q.question;
-    $("examSelect").appendChild(o);
-  });
-
-  if(list.length){
-    $("examSelect").value=list[0].id;
-    renderExamQuestion();
-  }else{
-    $("examQText").textContent="No questions here yet. Try another topic.";
-    $("examWalkthrough").innerHTML="";
-    $("examHelpBody").innerHTML="";
-  }
+function saveMapStore(store){
+  localStorage.setItem(MAP_STORAGE_KEY, JSON.stringify(store));
 }
+function getQuestionById(id){
+  return ESSAY_QUESTIONS.find(q=>q.id===id) || null;
+}
+function getMapEntry(id){
+  const store = loadMapStore();
+  return store[id] || { meaning:"", ask:"", plan:"", completed:false, readyToWrite:false, lastEdited:null };
+}
+function upsertMapEntry(id, updates){
+  const store = loadMapStore();
+  const current = getMapEntry(id);
+  store[id] = { ...current, ...updates, lastEdited:new Date().toISOString() };
+  saveMapStore(store);
+}
+function mapStatusLabel(entry){
+  if(entry.completed) return "MAP completed";
+  if((entry.meaning||"").trim() || (entry.ask||"").trim() || (entry.plan||"").trim()) return "MAP in progress";
+  return "MAP not started";
+}
+function renderExamTab(){
+  const listEl = $("examQuestionList");
+  if(!listEl) return;
 
-function renderExamQuestion(){
-  const id = $("examSelect").value;
-  const q = EXAM_BANK.find(x=>x.id===id);
-  if(!q) return;
-
-  $("examQText").textContent = q.question;
-  const topicTitle = (TOPICS.find(t=>t.id===q.topicId)||{}).title || "—";
-  $("examTag").textContent = `Topic: ${topicTitle} • Suggested factors: ${q.factors.length}`;
-
-  const walkthrough = $("examWalkthrough");
-  walkthrough.innerHTML = "";
-
-  const factorRows = q.factors.map((factor, i)=>{
-    const linkedPlan = q.plan.find(p=>p.title.toLowerCase().includes(`factor ${i+1}`));
-    const detail = linkedPlan ? linkedPlan.body : "Use this factor as one developed analytical paragraph with precise evidence.";
-    return `<details style="border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;margin-top:8px"><summary style="cursor:pointer;font-weight:700">${i+1}. ${factor}</summary><div class="note" style="margin-top:6px;color:var(--muted)">${detail}</div></details>`;
+  listEl.innerHTML = ESSAY_QUESTIONS.map(q=>{
+    const entry = getMapEntry(q.id);
+    const statusLabel = entry.completed ? "MAP completed" : "MAP required";
+    const statusClass = entry.completed ? "statusDone" : "statusRequired";
+    return `<article class="examQuestionCard" data-open-map="${q.id}">
+      <div class="examQuestionTop">
+        <span class="examBadge">${escapeHtml(q.topicTag)}</span>
+        <span class="examBadge ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="examMetaRow">
+        <span class="examBadge">${escapeHtml(q.commandWord)}</span>
+        <span class="examBadge">${q.isScenario ? "Scenario" : "Non-scenario"}</span>
+        <span class="examBadge">${mapStatusLabel(entry)}</span>
+      </div>
+      <div class="examQTextLarge">${escapeHtml(q.questionText)}</div>
+      <div class="row" style="margin-top:12px;justify-content:space-between;gap:8px">
+        <span class="note">${entry.lastEdited ? `Last edited: ${new Date(entry.lastEdited).toLocaleString()}` : "No MAP saved yet."}</span>
+        <button class="btn" type="button" data-reset-map="${q.id}">Reset MAP</button>
+        <button class="btn primary" type="button" data-launch-map="${q.id}">Open MAP Planner</button>
+      </div>
+    </article>`;
   }).join("");
 
-  const introPlan = q.plan.find(p=>p.title.toLowerCase().includes("intro"));
-  const conclusionPlan = q.plan.find(p=>p.title.toLowerCase().includes("conclusion"));
-
-  const steps = [
-    {
-      title: "1) Write a brief introduction",
-      prompt: "State your overall line of argument in 1–2 sentences.",
-      compare: introPlan ? introPlan.body : "Check your intro sets up a direct judgement on the question wording."
-    },
-    {
-      title: "2) Write 4 factors you would include",
-      prompt: `Aim for concise factor labels. Suggested factors: ${q.factors.join(" • ")}`,
-      compare: `Compare your list with the plan's factors. Press each factor to reveal paragraph guidance.${factorRows}`
-    },
-    {
-      title: "3) Write a conclusion",
-      prompt: "Give a final judgement and explain why your strongest factor outweighs alternatives.",
-      compare: conclusionPlan ? conclusionPlan.body : "Ensure your conclusion is comparative and decisive."
-    }
-  ];
-
-  steps.forEach((step, i)=>{
-    const details = document.createElement("details");
-    details.style.border = "1px solid var(--line)";
-    details.style.borderRadius = "16px";
-    details.style.padding = "10px 12px";
-    details.style.background = "#fff";
-    details.style.marginBottom = "10px";
-
-    details.innerHTML = `
-      <summary style="cursor:pointer;font-weight:900;list-style:none">${step.title}</summary>
-      <div class="note" style="margin-top:8px">${step.prompt}</div>
-      <div class="note" style="margin-top:8px;color:var(--muted)"><b>Compare with plan:</b> ${step.compare}</div>
-    `;
-
-    if(i===0) details.open = true;
-    walkthrough.appendChild(details);
+  listEl.querySelectorAll("[data-launch-map]").forEach(btn=>{
+    btn.addEventListener("click", ()=>openMapPlanner(btn.getAttribute("data-launch-map")));
   });
-
-  $("examHelpBody").innerHTML =
-    `<ul style="margin:0 0 0 18px">${q.help.map(x=>`<li>${x}</li>`).join("")}</ul>`;
-  $("examHelp").open = false;
-
-  // Daily challenge: opening the relevant plan counts
-  recordDailyPlanOpened(q.topicId);
+  listEl.querySelectorAll("[data-open-map]").forEach(card=>{
+    card.addEventListener("dblclick", ()=>openMapPlanner(card.getAttribute("data-open-map")));
+  });
+  listEl.querySelectorAll("[data-reset-map]").forEach(btn=>{
+    btn.addEventListener("click", (ev)=>{
+      ev.stopPropagation();
+      resetMapForQuestion(btn.getAttribute("data-reset-map"));
+    });
+  });
 }
-$("examTopicSelect").addEventListener("change", renderExamSelect);
-$("examSelect").addEventListener("change", renderExamQuestion);
+
+function resetMapForQuestion(questionId){
+  const store = loadMapStore();
+  delete store[questionId];
+  saveMapStore(store);
+  if(activeMapQuestionId === questionId){ closeMapPlanner(); }
+  const scaffold = $("essayScaffoldCard");
+  if(scaffold && scaffold.dataset.questionId === questionId){ scaffold.classList.add("hidden"); scaffold.innerHTML = ""; }
+  renderExamTab();
+}
+
+function openMapPlanner(questionId){
+  const q = getQuestionById(questionId);
+  if(!q) return;
+  activeMapQuestionId = questionId;
+  const entry = getMapEntry(questionId);
+  $("mapPlannerQuestion").textContent = q.questionText;
+  $("mapMeaningInput").value = entry.meaning || "";
+  $("mapAskInput").value = entry.ask || "";
+  $("mapPlanInput").value = entry.plan || "";
+  $("mapPlannerModal").classList.remove("hidden");
+  updateMapProgress();
+}
+
+function closeMapPlanner(){
+  $("mapPlannerModal")?.classList.add("hidden");
+  activeMapQuestionId = null;
+}
+
+function updateMapProgress(){
+  if(!activeMapQuestionId) return;
+  const meaning = $("mapMeaningInput").value;
+  const ask = $("mapAskInput").value;
+  const plan = $("mapPlanInput").value;
+  const lengths = [meaning.trim().length, ask.trim().length, plan.trim().length];
+  const isReady = lengths.every(len=>len >= MAP_MIN_CHARS);
+  upsertMapEntry(activeMapQuestionId, {
+    meaning, ask, plan,
+    completed:isReady
+  });
+  $("mapUnlockBtn").disabled = !isReady;
+  $("mapProgressText").textContent = `Minimum ${MAP_MIN_CHARS} characters per box. Current: M ${lengths[0]}, A ${lengths[1]}, P ${lengths[2]}.`;
+  renderExamTab();
+}
+
+function unlockScaffold(){
+  if(!activeMapQuestionId) return;
+  const entry = getMapEntry(activeMapQuestionId);
+  if(!entry.completed) return;
+  renderEssayScaffold(activeMapQuestionId);
+  closeMapPlanner();
+}
+
+function pathwaySpec(path){
+  if(path === "amb") return { title:"Ambition", subtitle:"AO3 = PEELC x3", ao3:["PEELC 1","PEELC 2","PEELC 3"] };
+  if(path === "mas") return { title:"Mastery", subtitle:"AO3 = PEELAC x3", ao3:["PEELAC 1","PEELAC 2","PEELAC 3"] };
+  return { title:"Strong Foundations", subtitle:"AO3 = PEEL x3", ao3:["PEEL 1","PEEL 2","PEEL 3"] };
+}
+
+function renderEssayScaffold(questionId){
+  const q = getQuestionById(questionId);
+  if(!q) return;
+  const card = $("essayScaffoldCard");
+  card.dataset.questionId = questionId;
+  const spec = pathwaySpec(activeScaffoldPathway);
+
+  card.innerHTML = `
+    <div class="scaffoldHeader">
+      <h3 class="examSectionTitle" style="margin-bottom:0">Essay Scaffold</h3>
+      <div class="examQTextLarge" style="margin-top:0">${escapeHtml(q.questionText)}</div>
+      <div class="note">16-mark essays are levelled and holistic. Use MAP first, then build AO1 and AO3 clearly.</div>
+
+      <div class="checklistPanel">
+        <div style="font-weight:900">AO1 checklist (all pathways)</div>
+        <ul style="margin:8px 0 0 18px">
+          <li>Accurate, detailed theory explanation</li>
+          <li>Key terminology</li>
+          <li>Relevant research evidence</li>
+          <li>Logical organisation</li>
+        </ul>
+      </div>
+
+      ${q.isScenario ? `<div class="ao2Panel"><div style="font-weight:900">AO2 Application (separate)</div>
+        <ul style="margin:8px 0 0 18px">
+          <li>Which details of the scenario link to the theory?</li>
+          <li>How does the theory explain what is happening in the scenario?</li>
+        </ul>
+      </div>` : ""}
+
+      <div class="pathwayTabs" role="tablist" aria-label="AO3 pathway tabs">
+        <button class="pathwayTabBtn ${activeScaffoldPathway === "sf" ? "active" : ""}" type="button" data-pathway="sf">Strong Foundations</button>
+        <button class="pathwayTabBtn ${activeScaffoldPathway === "amb" ? "active" : ""}" type="button" data-pathway="amb">Ambition</button>
+        <button class="pathwayTabBtn ${activeScaffoldPathway === "mas" ? "active" : ""}" type="button" data-pathway="mas">Mastery</button>
+      </div>
+
+      <div class="pathwayPanel">
+        <div style="font-weight:900">${spec.title}</div>
+        <div class="note">${spec.subtitle}</div>
+        ${activeScaffoldPathway === "mas" ? `<div class="note" style="margin-top:8px"><strong>Aim for flow:</strong> one evaluative point leads into the next (e.g., concessive phrasing like ‘Despite…’, ‘While…’, ‘However…’), with weighting and judgement.</div>` : ""}
+        <div class="plannerBox">AO1 plan box: Explain the theory in detail</div>
+        ${spec.ao3.map(x=>`<div class="plannerBox">AO3 plan box: ${x}</div>`).join("")}
+      </div>
+
+      <div class="row" style="justify-content:space-between;margin-top:6px;gap:10px">
+        <label class="row" style="margin:0;gap:8px"><input type="checkbox" id="readyToWriteToggle" ${getMapEntry(questionId).readyToWrite ? "checked" : ""}> Ready to write</label>
+        <button class="btn" id="resetMapInlineBtn" type="button">Reset MAP</button>
+      </div>
+    </div>
+  `;
+
+  card.classList.remove("hidden");
+  card.querySelectorAll("[data-pathway]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      activeScaffoldPathway = btn.getAttribute("data-pathway");
+      renderEssayScaffold(questionId);
+    });
+  });
+  $("readyToWriteToggle")?.addEventListener("change", (ev)=>{
+    upsertMapEntry(questionId, { readyToWrite: !!ev.target.checked });
+    renderExamTab();
+  });
+  $("resetMapInlineBtn")?.addEventListener("click", ()=>resetMapForQuestion(questionId));
+
+  recordDailyPlanOpened(TOPIC_TAG_TO_ID[q.topicTag] || "t1");
+  card.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+(function initExamMapUi(){
+  $("mapPlannerClose")?.addEventListener("click", closeMapPlanner);
+  $("mapPlannerModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "mapPlannerModal") closeMapPlanner(); });
+  ["mapMeaningInput","mapAskInput","mapPlanInput"].forEach(id=>$(id)?.addEventListener("input", updateMapProgress));
+  $("mapUnlockBtn")?.addEventListener("click", unlockScaffold);
+})();
 
 if($("btnExport") && $("dataBox")){
   $("btnExport").addEventListener("click", ()=>{ $("dataBox").value = JSON.stringify(STATE); });
@@ -10586,9 +10734,7 @@ function init(){
   $("mcqTopicSelect").value = "MIXED";
   $("emojiTopicSelect").value = "MIXED";
   $("matchTopicSelect").value = "MIXED";
-  $("examTopicSelect").value = "ALL";
-
-  renderExamSelect();
+  renderExamTab();
   updateStudyLaunchCta();
   computeKpis();
 
