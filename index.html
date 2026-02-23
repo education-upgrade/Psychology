@@ -11324,10 +11324,22 @@ function hideSplashScreen(){
 function startAppWithSplash(){
   const splashMinMs = 2600;
   const startAt = performance.now();
-  init();
-  const elapsed = performance.now() - startAt;
-  const wait = Math.max(0, splashMinMs - elapsed);
-  window.setTimeout(hideSplashScreen, wait);
+  let initError = null;
+  try{
+    init();
+  }catch(err){
+    initError = err;
+    console.error("App init failed", err);
+  }finally{
+    const elapsed = performance.now() - startAt;
+    const wait = Math.max(0, splashMinMs - elapsed);
+    window.setTimeout(hideSplashScreen, wait);
+  }
+
+  if(initError){
+    // Keep the app usable even if optional startup features fail.
+    try{ setTab("home"); }catch(e){}
+  }
 }
 
 startAppWithSplash();
