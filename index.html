@@ -11115,44 +11115,155 @@ function submitEssayForFeedback(questionId){
     ["Flow indicators", sig.flow.met]
   ];
 
-  feedbackCard.innerHTML = `<h3 class="examSectionTitle">Coverage feedback</h3>
-    <div class="note">This is a skills + coverage coach, not an examiner mark or level.</div>
-    <div class="examBadge" style="display:inline-flex;margin-top:8px">Feedback mode: ${modeLabel}</div>
+  feedbackCard.innerHTML = `
+  <h3 class="examSectionTitle">Your Essay Breakdown (AQA Style)</h3>
 
-    <div class="pathwayPanel" style="margin-top:10px">
-      <div style="font-weight:900">1) AO1 detail checklist</div>
-      <div style="margin-top:6px">✅ Included</div>
-      <ul class="coverageList">${analysis.ao1Coverage.included.length ? analysis.ao1Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No AO1 elements detected yet.</li>"}</ul>
-      <div style="margin-top:8px">⚠️ Missing</div>
-      <ul class="coverageList">${analysis.ao1Coverage.missing.length ? analysis.ao1Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious AO1 gaps from this bank.</li>"}</ul>
-      <div class="coverageNote note">Next step: ${escapeHtml(analysis.ao1Coverage.nextStep || "Add participants + design + one key finding.")}</div>
-    </div>
+  <div class="note">
+    This tool checks whether your essay includes the key ingredients examiners look for.
+    It does not give a mark — but it shows which level you are currently working towards.
+  </div>
 
-    <div class="pathwayPanel" style="margin-top:10px">
-      <div style="font-weight:900">2) AO3 evaluation points (possible points, not mandatory list)</div>
-      <div class="note">Pathway target: at least ${sig.evaluationRequired} evaluation points hit.</div>
-      <div style="margin-top:6px">✅ Included</div>
-      <ul class="coverageList">${analysis.ao3Coverage.included.length ? analysis.ao3Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No evaluation points detected yet.</li>"}</ul>
-      <div style="margin-top:8px">⚠️ Missing</div>
-      <ul class="coverageList">${analysis.ao3Coverage.missing.length ? analysis.ao3Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious gaps from this eval bank.</li>"}</ul>
-    </div>
+  <div class="examBadge" style="display:inline-flex;margin-top:8px">Feedback mode: ${modeLabel}</div>
 
-    ${q.isScenario ? `<div class="pathwayPanel" style="margin-top:10px"><div style="font-weight:900">AO2 (scenario application) — separate panel</div><div style="margin-top:6px">✅ Included</div><ul class="coverageList">${(analysis.ao2Coverage?.included||[]).length ? analysis.ao2Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No AO2 scenario application signals detected yet.</li>"}</ul><div style="margin-top:8px">⚠️ Missing</div><ul class="coverageList">${(analysis.ao2Coverage?.missing||[]).length ? analysis.ao2Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("") : "<li>No obvious AO2 gaps from this bank.</li>"}</ul><div class="coverageNote note">${escapeHtml(analysis.ao2Coverage?.note || "AO2 is separate from evaluation — keep it distinct.")}</div></div>` : ""}
+  <!-- 1) AO1 -->
+  <div class="pathwayPanel" style="margin-top:12px">
+    <div style="font-weight:900">1️⃣ Knowledge (AO1 – up to 6 marks)</div>
+    <div class="note">Examiners look for accurate explanation, clear detail, and relevance to the question.</div>
 
-    <div class="pathwayPanel" style="margin-top:10px">
-      <div style="font-weight:900">3) Structure signals (${modeLabel})</div>
-      <ul class="coverageList">${structureRows.filter(([_,met],idx)=> selectedPathway === "SF" ? idx < 2 : (selectedPathway === "AMB" ? idx < 3 : true)).map(([label, met])=>`<li>${met ? "✅" : "❌"} ${escapeHtml(label)}</li>`).join("")}</ul>
-      <div class="note">Paragraph signals: ${sig.paragraphStats.paragraphs} paragraphs • evidence in ${sig.paragraphStats.evidence} • link-back in ${sig.paragraphStats.linkBack} • counter in ${sig.paragraphStats.counter} • importance/application in ${sig.paragraphStats.importance}</div>
-    </div>
+    <div style="margin-top:8px">✅ Included</div>
+    <ul class="coverageList">
+      ${analysis.ao1Coverage.included.length
+        ? analysis.ao1Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+        : "<li>Limited clear AO1 detected yet.</li>"}
+    </ul>
 
-    <div class="pathwayPanel" style="margin-top:10px">
-      <div style="font-weight:900">4) Next steps</div>
+    <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+    <ul class="coverageList">
+      ${analysis.ao1Coverage.missing.length
+        ? analysis.ao1Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+        : "<li>No obvious AO1 gaps from this bank.</li>"}
+    </ul>
+
+    <div style="margin-top:10px">⭐ How to lift AO1</div>
+    <ul class="coverageList">
+      <li>Make sure you <strong>explain</strong> the idea (not just describe the study).</li>
+      <li>Keep each paragraph <strong>focused on the question</strong>.</li>
+      <li>Define key terms (briefly) to show secure understanding.</li>
+    </ul>
+
+    <div class="coverageNote note">Next step: ${escapeHtml(analysis.ao1Coverage.nextStep || "Add one clear AO1 paragraph with a key study or theory detail.")}</div>
+  </div>
+
+  <!-- 2) AO3 -->
+  <div class="pathwayPanel" style="margin-top:12px">
+    <div style="font-weight:900">2️⃣ Evaluation (AO3 – up to 10 marks)</div>
+    <div class="note">Examiners reward developed evaluation, balance, and clear judgement.</div>
+
+    <div class="note" style="margin-top:6px">Pathway target: at least <strong>${sig.evaluationRequired}</strong> evaluation points hit.</div>
+
+    <div style="margin-top:8px">✅ Included</div>
+    <ul class="coverageList">
+      ${analysis.ao3Coverage.included.length
+        ? analysis.ao3Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+        : "<li>No clear evaluation detected yet.</li>"}
+    </ul>
+
+    <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+    <ul class="coverageList">
+      ${analysis.ao3Coverage.missing.length
+        ? analysis.ao3Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+        : "<li>No obvious gaps from this eval bank.</li>"}
+    </ul>
+
+    <div style="margin-top:10px">⭐ How to lift AO3</div>
+    <ul class="coverageList">
+      <li>After each strength/limitation, add <strong>why it matters</strong> (“This weakens… because…”).</li>
+      <li>Add a counter or alternative view (<strong>however</strong>, <strong>on the other hand</strong>).</li>
+      <li>Use judgement stems: <strong>“This suggests…”</strong> <strong>“On balance…”</strong> <strong>“Therefore…”</strong></li>
+    </ul>
+  </div>
+
+  <!-- 2b) AO2 for scenarios -->
+  ${q.isScenario ? `
+    <div class="pathwayPanel" style="margin-top:12px">
+      <div style="font-weight:900">🧩 Application (AO2 – scenario)</div>
+      <div class="note">For scenario questions, examiners reward linking your knowledge to the scenario details.</div>
+
+      <div style="margin-top:8px">✅ Included</div>
       <ul class="coverageList">
-        <li>${escapeHtml(analysis.feedbackText)}</li>
-        <li>Target at least ${sig.evaluationRequired} clear AO3 points from the question's evaluation bank.</li>
-        <li>Keep AO1 specifics concrete (participants, design, procedure, finding, named study).</li>
+        ${analysis.ao2Coverage?.included?.length
+          ? analysis.ao2Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+          : "<li>No clear scenario application detected yet.</li>"}
       </ul>
-    </div>`;
+
+      <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+      <ul class="coverageList">
+        ${analysis.ao2Coverage?.missing?.length
+          ? analysis.ao2Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
+          : "<li>No obvious AO2 gaps from this bank.</li>"}
+      </ul>
+
+      <div style="margin-top:10px">⭐ How to lift AO2</div>
+      <ul class="coverageList">
+        <li>Name a <strong>specific scenario detail</strong>, then link it to the explanation.</li>
+        <li>Use: <strong>“In the scenario…”</strong> + <strong>“This shows…”</strong></li>
+      </ul>
+    </div>
+  ` : ""}
+
+  <!-- 3) Structure -->
+  <div class="pathwayPanel" style="margin-top:12px">
+    <div style="font-weight:900">3️⃣ Structure & Argument Quality</div>
+    <div class="note">Strong essays are organised, analytical, and keep linking back to the question.</div>
+
+    <table class="miniTable" style="width:100%;margin-top:10px;border-collapse:separate;border-spacing:0 8px">
+      <tbody>
+        <tr>
+          <td style="font-weight:800">Evidence used properly</td>
+          <td class="note">You support points with a study/theory detail.</td>
+          <td style="text-align:right;font-weight:900">${sig.evidenceAnchor.met ? "✅" : "⚠️"}</td>
+        </tr>
+        <tr>
+          <td style="font-weight:800">Links back to the question</td>
+          <td class="note">You explain why the point answers the question.</td>
+          <td style="text-align:right;font-weight:900">${sig.linkBack.met ? "✅" : "⚠️"}</td>
+        </tr>
+        <tr>
+          <td style="font-weight:800">Counter-argument</td>
+          <td class="note">You consider an alternative view/limitation.</td>
+          <td style="text-align:right;font-weight:900">${sig.counterMarker.met ? "✅" : "⚠️"}</td>
+        </tr>
+        <tr>
+          <td style="font-weight:800">Overall judgement</td>
+          <td class="note">You weigh up and reach a conclusion.</td>
+          <td style="text-align:right;font-weight:900">${sig.importanceApplication.met ? "✅" : "⚠️"}</td>
+        </tr>
+        <tr>
+          <td style="font-weight:800">Flow</td>
+          <td class="note">Your writing uses connectives to build an argument.</td>
+          <td style="text-align:right;font-weight:900">${sig.flow.met ? "✅" : "⚠️"}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4) Level orientation -->
+  <div class="pathwayPanel" style="margin-top:12px">
+    <div style="font-weight:900">📊 Likely Working Level (indicator)</div>
+    <div class="note">This is an estimate based on the ingredients detected — your teacher can confirm a true level.</div>
+
+    <div class="coverageNote" style="margin-top:8px">
+      <div><strong>Likely Level 3</strong> if evaluation is brief or mostly descriptive.</div>
+      <div><strong>Likely Level 4</strong> if evaluation is developed and balanced.</div>
+      <div><strong>Level 5 territory</strong> if judgement is sustained and analytical throughout.</div>
+    </div>
+
+    <div class="note" style="margin-top:10px">
+      Quick next move:
+      ${sig.counterMarker.met ? "Add a stronger overall judgement that weighs up your points." : "Add at least one developed counter-argument (not just a phrase)."}
+    </div>
+  </div>
+`;
   feedbackCard.classList.remove("hidden");
 }
 
