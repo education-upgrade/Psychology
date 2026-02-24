@@ -11127,7 +11127,7 @@ function submitEssayForFeedback(questionId){
 
   <!-- 1) AO1 -->
   <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">1️⃣ Knowledge (AO1 – up to 6 marks)</div>
+    <div style="font-weight:900">1️⃣ Knowledge (AO1)</div>
     <div class="note">Examiners look for accurate explanation, clear detail, and relevance to the question.</div>
 
     <div style="margin-top:8px">✅ Included</div>
@@ -11137,7 +11137,7 @@ function submitEssayForFeedback(questionId){
         : "<li>Limited clear AO1 detected yet.</li>"}
     </ul>
 
-    <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+    <div style="margin-top:8px">❌ Missing / next improvements</div>
     <ul class="coverageList">
       ${analysis.ao1Coverage.missing.length
         ? analysis.ao1Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
@@ -11156,7 +11156,7 @@ function submitEssayForFeedback(questionId){
 
   <!-- 2) AO3 -->
   <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">2️⃣ Evaluation (AO3 – up to 10 marks)</div>
+    <div style="font-weight:900">2️⃣ Evaluation (AO3)</div>
     <div class="note">Examiners reward developed evaluation, balance, and clear judgement.</div>
 
     <div class="note" style="margin-top:6px">Pathway target: at least <strong>${sig.evaluationRequired}</strong> evaluation points hit.</div>
@@ -11168,7 +11168,9 @@ function submitEssayForFeedback(questionId){
         : "<li>No clear evaluation detected yet.</li>"}
     </ul>
 
-    <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+    <div style="margin-top:8px">${analysis.ao3Coverage.included.length < 3
+      ? `❌ Include ${3 - analysis.ao3Coverage.included.length} more evaluation point${3 - analysis.ao3Coverage.included.length === 1 ? "" : "s"} from the following`
+      : "❌ Missing / next improvements"}</div>
     <ul class="coverageList">
       ${analysis.ao3Coverage.missing.length
         ? analysis.ao3Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
@@ -11196,7 +11198,7 @@ function submitEssayForFeedback(questionId){
           : "<li>No clear scenario application detected yet.</li>"}
       </ul>
 
-      <div style="margin-top:8px">⚠️ Missing / next improvements</div>
+      <div style="margin-top:8px">❌ Missing / next improvements</div>
       <ul class="coverageList">
         ${analysis.ao2Coverage?.missing?.length
           ? analysis.ao2Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
@@ -11221,48 +11223,32 @@ function submitEssayForFeedback(questionId){
         <tr>
           <td style="font-weight:800">Evidence used properly</td>
           <td class="note">You support points with a study/theory detail.</td>
-          <td style="text-align:right;font-weight:900">${sig.evidenceAnchor.met ? "✅" : "⚠️"}</td>
+          <td style="text-align:right;font-weight:900">${sig.evidenceAnchor.met ? "✅" : "❌"}</td>
         </tr>
         <tr>
           <td style="font-weight:800">Links back to the question</td>
           <td class="note">You explain why the point answers the question.</td>
-          <td style="text-align:right;font-weight:900">${sig.linkBack.met ? "✅" : "⚠️"}</td>
+          <td style="text-align:right;font-weight:900">${sig.linkBack.met ? "✅" : "❌"}</td>
         </tr>
         <tr>
           <td style="font-weight:800">Counter-argument</td>
           <td class="note">You consider an alternative view/limitation.</td>
-          <td style="text-align:right;font-weight:900">${sig.counterMarker.met ? "✅" : "⚠️"}</td>
+          <td style="text-align:right;font-weight:900">${sig.counterMarker.met ? "✅" : "❌"}</td>
         </tr>
         <tr>
-          <td style="font-weight:800">Overall judgement</td>
-          <td class="note">You weigh up and reach a conclusion.</td>
-          <td style="text-align:right;font-weight:900">${sig.importanceApplication.met ? "✅" : "⚠️"}</td>
+          <td style="font-weight:800">Real world applications</td>
+          <td class="note">You provide examples of how the theory or research links to the real world.</td>
+          <td style="text-align:right;font-weight:900">${sig.importanceApplication.met ? "✅" : "❌"}</td>
         </tr>
         <tr>
           <td style="font-weight:800">Flow</td>
           <td class="note">Your writing uses connectives to build an argument.</td>
-          <td style="text-align:right;font-weight:900">${sig.flow.met ? "✅" : "⚠️"}</td>
+          <td style="text-align:right;font-weight:900">${sig.flow.met ? "✅" : "❌"}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- 4) Level orientation -->
-  <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">📊 Likely Working Level (indicator)</div>
-    <div class="note">This is an estimate based on the ingredients detected — your teacher can confirm a true level.</div>
-
-    <div class="coverageNote" style="margin-top:8px">
-      <div><strong>Likely Level 3</strong> if evaluation is brief or mostly descriptive.</div>
-      <div><strong>Likely Level 4</strong> if evaluation is developed and balanced.</div>
-      <div><strong>Level 5 territory</strong> if judgement is sustained and analytical throughout.</div>
-    </div>
-
-    <div class="note" style="margin-top:10px">
-      Quick next move:
-      ${sig.counterMarker.met ? "Add a stronger overall judgement that weighs up your points." : "Add at least one developed counter-argument (not just a phrase)."}
-    </div>
-  </div>
 `;
   feedbackCard.classList.remove("hidden");
 }
