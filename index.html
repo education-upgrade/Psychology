@@ -10787,10 +10787,12 @@ function renderQuestionScreen(card){
 
 function renderWritingScreen(card){
   const pathway = EVAL_PATHWAYS[EXAM_UI.pathwayKey] || EVAL_PATHWAYS.sf;
+  const q = getQuestionById(EXAM_UI.questionId) || pickQuestion(pathway.code === "A" ? "amb" : pathway.code === "M" ? "mas" : "sf");
   const saved = getEvalStore();
   const draft = saved.draftText || "";
   card.innerHTML = `
     <h3 class="examSectionTitle">Single Evaluation Practice</h3>
+    <div class="examPrompt"><strong>Exam question:</strong> ${escapeHtml(q.questionText)}</div>
     <div class="evalChecklist">
       ${pathway.structure.map(step=>`<div class="evalChecklistRow">⬜ ${step}</div>`).join("")}
     </div>
