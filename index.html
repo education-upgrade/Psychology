@@ -3020,38 +3020,35 @@ section#games.gamePaneActive .gamesHeroCard{
 
 
     .examHeroTitle{margin:0;font-size:30px;font-weight:1000;color:var(--textStrong)}
-    .examExplainerTitle{font-weight:900;font-size:18px}
-    .examExplainerList{margin:8px 0 0 18px;padding:0;display:grid;gap:8px}
     .examSectionTitle{font-size:20px;font-weight:900;margin:0 0 10px 0}
-    .examQuestionList{display:grid;gap:12px}
-    .examQuestionCard{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.88);box-shadow:var(--shadow);cursor:pointer;text-align:left;width:100%}
-    .examQuestionTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-    .examMetaRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .examBadge{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:var(--accent4);font-size:12px;font-weight:800}
-    .examBadge.statusDone{background:#e9f6ef;border-color:#75b48d;color:#1f5d37}
-    .examBadge.statusRequired{background:#fdf4e9;border-color:#c0904e;color:#7a4b16}
-    .examQTextLarge{font-size:16px;font-weight:800;line-height:1.45;margin-top:10px}
-    .mapModal{position:fixed;inset:0;background:rgba(15,27,40,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:30}
-    .mapModal.hidden{display:none}
-    .mapModalCard{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
-    .mapTextArea{width:100%;min-height:92px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.4}
-    .mapHelper{font-size:13px;color:var(--muted);margin-top:4px}
-    .scaffoldHeader{display:grid;gap:10px}
-    .checklistPanel,.ao2Panel,.pathwayPanel{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px}
-    .ao2Panel{background:#eef6ff;border-left:5px solid var(--accent)}
-    .pathwayTabs{display:flex;gap:8px;flex-wrap:wrap}
-    .pathwayTabBtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}
-    .pathwayTabBtn.active{background:var(--accent4);border-color:var(--accent)}
-    .plannerBox{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;margin-top:8px;font-weight:700}
-    .resetMapBtn{margin-left:auto}
-    .mapPresetBlock{border:1px solid var(--line);border-radius:12px;background:var(--accent4);padding:10px;margin-top:8px}
-    .mapPlanGrid{display:grid;gap:10px;margin-top:10px}
-    .ao3TagRow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-    .aoTag{display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:900}
-    .coverageList{margin:8px 0 0 18px;display:grid;gap:6px}
-    .coverageNote{margin-top:10px}
+    .examPathwayGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .examPathwayTile{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);text-align:left;cursor:pointer}
+    .examPathwayTile h4{margin:0;font-size:18px}
+    .examPathwayTile p{margin:6px 0 0 0}
+    .examPathwayTile.sf{border-left:6px solid #4fae74}
+    .examPathwayTile.amb{border-left:6px solid #4f87e0}
+    .examPathwayTile.mas{border-left:6px solid #8a5ad8}
+    .mapChipRow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}
+    .mapBadge{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:var(--accent4);font-size:12px;font-weight:800}
+    .mapBadge.sf{background:rgba(79,174,116,.16);border-color:rgba(79,174,116,.7);color:#1e6f3d}
+    .mapBadge.amb{background:rgba(79,135,224,.15);border-color:rgba(79,135,224,.7);color:#1f4f94}
+    .mapBadge.mas{background:rgba(138,90,216,.15);border-color:rgba(138,90,216,.7);color:#5c2fa5}
+    .examPrompt{font-size:18px;font-weight:900;margin:8px 0}
+    .examQuestionText{font-size:17px;font-weight:800;line-height:1.45;margin:4px 0 10px}
+    .evalStructure{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;font-weight:700}
+    .evalChecklist{display:grid;gap:8px;margin:10px 0}
+    .evalChecklistRow{display:flex;align-items:center;gap:8px;font-weight:700}
+    .evalTextArea{width:100%;min-height:230px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.45}
+    .counterRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 0}
+    .startersPanel{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px}
+    .startersList{margin:8px 0 0 18px;display:grid;gap:6px}
+    .feedbackGrid{display:grid;gap:12px}
+    .feedbackBlock{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px}
+    .feedbackCompact{margin:0;display:grid;gap:6px;padding-left:18px}
+    .feedbackStrength{font-size:18px;font-weight:900;margin:6px 0 0}
     .copyToast{position:fixed;right:16px;bottom:92px;background:var(--textStrong);color:#fff;padding:8px 12px;border-radius:999px;font-weight:800;z-index:35;box-shadow:var(--shadow)}
     .copyToast.hidden{display:none}
+
 
 </style>
 </head>
@@ -3116,8 +3113,8 @@ section#games.gamePaneActive .gamesHeroCard{
           <div class="checkLeft"><span class="checkDot" id="chkQuizDot"><svg class="checkIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 8-12h-6z"></path></svg></span> Topic Quiz</div>
           <div class="checkVal" id="chkQuizVal">0% / 100%</div>
         </button>
-        <button class="checkRow checkRowBtn" id="goDailyPlan" type="button" aria-label="Open the 25-mark plan for today's Daily Challenge topic">
-          <div class="checkLeft"><span class="checkDot" id="chkPlanDot"><svg class="checkIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg></span> 25-mark plan</div>
+        <button class="checkRow checkRowBtn" id="goDailyPlan" type="button" aria-label="Open exam evaluation practice for today's Daily Challenge topic">
+          <div class="checkLeft"><span class="checkDot" id="chkPlanDot"><svg class="checkIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg></span> Exam practice</div>
           <div class="checkVal" id="chkPlanVal">Not started</div>
         </button>
       </div>
@@ -3779,68 +3776,21 @@ section#games.gamePaneActive .gamesHeroCard{
   <!-- EXAM -->
   <section id="exam" class="tabpane hidden">
     <div class="card examHeroCard">
-      <h2 class="examHeroTitle">16 Mark Essay Practice (MAP)</h2>
-      <p class="note" style="margin:6px 0 0 0">Use MAP first, then unlock your scaffold pathway.</p>
+      <h2 class="examHeroTitle">Exam Practice – Build Evaluation Like an Examiner</h2>
+      <p class="note" style="margin:6px 0 0 0">AQA 16 markers are driven by evaluation.<br>Practise one high-quality evaluation at a time.</p>
     </div>
 
-    <div class="card examExplainerCard">
-      <div class="examExplainerTitle">MAP quick guide</div>
-      <ul class="examExplainerList">
-        <li><strong>M = Meaning:</strong> what the command word demands (e.g., discuss, outline and evaluate).</li>
-        <li><strong>A = Ask:</strong> what the question is specifically asking (focus words, direction).</li>
-        <li><strong>P = Plan:</strong> plan AO1 + AO3 + (AO2 if scenario).</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3 class="examSectionTitle">Choose a question</h3>
-      <div id="examQuestionList" class="examQuestionList"></div>
-    </div>
-
-    <div id="mapInlineCard" class="card hidden" aria-live="polite"></div>
-    <div id="essayWriterCard" class="card hidden" aria-live="polite"></div>
-    <div id="essayFeedbackCard" class="card hidden" aria-live="polite"></div>
-    <div id="essayScaffoldCard" class="card hidden" aria-live="polite"></div>
+    <div id="examHomeCard" class="card" aria-live="polite"></div>
+    <div id="examQuestionCard" class="card hidden" aria-live="polite"></div>
+    <div id="examWritingCard" class="card hidden" aria-live="polite"></div>
+    <div id="examFeedbackCard" class="card hidden" aria-live="polite"></div>
   </section>
 
 
 
-<div id="mapPlannerModal" class="mapModal hidden" role="dialog" aria-modal="true" aria-labelledby="mapPlannerTitle">
-  <div class="mapModalCard">
-    <div class="row" style="justify-content:space-between;align-items:center;gap:8px">
-      <h3 id="mapPlannerTitle" class="examSectionTitle" style="margin:0">MAP Planner</h3>
-      <button id="mapPlannerClose" class="btn" type="button">Close</button>
-    </div>
-    <p id="mapPlannerQuestion" class="note" style="margin-top:8px"></p>
 
-    <label for="mapMeaningInput">Meaning (M)</label>
-    <textarea id="mapMeaningInput" class="mapTextArea" placeholder="Define the command word(s). What must you do?"></textarea>
-    <div class="mapHelper">Define the command word(s). What must you do?</div>
 
-    <label for="mapAskInput" style="margin-top:10px">Ask (A)</label>
-    <textarea id="mapAskInput" class="mapTextArea" placeholder="Underline focus: theory/variable/context. What must your answer include?"></textarea>
-    <div class="mapHelper">Underline focus: theory/variable/context. What must your answer include?</div>
 
-    <label for="mapPlanInput" style="margin-top:10px">Plan (P)</label>
-    <textarea id="mapPlanInput" class="mapTextArea" placeholder="Bullet plan: AO1 (detailed), AO3 pathway (PEEL/PEELC/PEELAC), AO2 if scenario."></textarea>
-    <div class="mapHelper">Bullet plan: AO1 (detailed), AO3 pathway (PEEL/PEELC/PEELAC), AO2 if scenario.</div>
-
-    <div id="mapProgressText" class="note" style="margin-top:10px"></div>
-    <div class="row" style="margin-top:10px;justify-content:flex-end">
-      <button id="mapUnlockBtn" class="btn primary" type="button" disabled>Unlock scaffolds</button>
-    </div>
-  </div>
-</div>
-
-<div id="ao3ExampleModal" class="mapModal hidden" role="dialog" aria-modal="true" aria-labelledby="ao3ExampleTitle">
-  <div class="mapModalCard">
-    <div class="row" style="justify-content:space-between;align-items:center;gap:8px">
-      <h3 id="ao3ExampleTitle" class="examSectionTitle" style="margin:0">Annotated AO3 example</h3>
-      <button id="ao3ExampleClose" class="btn" type="button">Close</button>
-    </div>
-    <div id="ao3ExampleBody" style="margin-top:10px"></div>
-  </div>
-</div>
 
 <div id="copyToast" class="copyToast hidden" role="status" aria-live="polite">Copied ✅</div>
 
@@ -6726,7 +6676,7 @@ const MATCH_PEOPLE_DEFAULTS = {};
 })();
 
 /* ==========================================================
-   EXAMS: 16 MARK ESSAY PRACTICE (MAP)
+   EXAMS: QUESTION BANK
    ========================================================== */
 const ESSAY_QUESTIONS = [
   {
@@ -6933,7 +6883,6 @@ const TOPIC_TAG_TO_ID = {
 };
 
 const EXAM_BANK = ESSAY_QUESTIONS.map(q=>({ ...q, topicId:TOPIC_TAG_TO_ID[q.topicTag]||"t1" }));
-const MAP_STORAGE_KEY = "aqa_psychology_map_v1";
 
 
 /* ==========================================================
@@ -9262,7 +9211,7 @@ function nextDailyAction(d){
 function challengeStepName(step){
   if(step === "flash") return "Flashcards";
   if(step === "quiz") return "Topic Quiz";
-  if(step === "plan") return "25-mark plan";
+  if(step === "plan") return "exam practice";
   return "";
 }
 
@@ -10688,653 +10637,263 @@ function attemptMatch(){
 $("btnStartMatch").addEventListener("click", startMatchGame);
 
 /* ==========================================================
-   EXAM TAB UI (inline MAP planner + essay writer)
+   EXAM TAB UI (Single Evaluation Practice)
    ========================================================== */
-let activeMapQuestionId = null;
-let activeScaffoldPathway = "sf";
+const EVAL_STORAGE_KEY = "aqa_psychology_eval_practice_v1";
+const EVAL_PATHWAYS = {
+  sf:{ code:"SF", title:"Strong Foundations", short:"SF", className:"sf", structure:["Point","Evidence","Explain","Link"], desc:"Write 1 PEEL evaluation" },
+  amb:{ code:"A", title:"Ambition", short:"A", className:"amb", structure:["Point","Evidence","Explain","Link","Counter"], desc:"Write 1 PEELC evaluation" },
+  mas:{ code:"M", title:"Mastery", short:"M", className:"mas", structure:["Point","Evidence","Explain","Link","Application","Counter"], desc:"Write 1 PEELAC evaluation" }
+};
+const EVAL_SENTENCE_STARTERS = [
+  "A limitation of…",
+  "This is supported by…",
+  "This weakens the explanation because…",
+  "However, it could be argued…",
+  "This suggests that…",
+  "A strength of this explanation is…",
+  "In real life, this matters because…"
+];
+const EVAL_QUALITY_TERMS = ["weakens","strengthens","reduces validity","increases credibility","to a limited extent","arguably"];
+let EXAM_UI = { screen:"home", pathwayKey:null, questionId:null };
 
-function pathwayUiToStorage(path){
-  if(path === "amb") return "AMB";
-  if(path === "mas") return "MAS";
-  return "SF";
+function loadEvalStore(){
+  try{ return JSON.parse(localStorage.getItem(EVAL_STORAGE_KEY) || "{}"); }catch(e){ return {}; }
 }
-function pathwayStorageToUi(path){
-  if(path === "AMB") return "amb";
-  if(path === "MAS") return "mas";
-  return "sf";
-}
-
-function loadMapStore(){
-  try{ return JSON.parse(localStorage.getItem(MAP_STORAGE_KEY) || "{}"); }catch(e){ return {}; }
-}
-function saveMapStore(store){
-  localStorage.setItem(MAP_STORAGE_KEY, JSON.stringify(store));
-}
-function getQuestionById(id){
-  return ESSAY_QUESTIONS.find(q=>q.id===id) || null;
-}
-function commandMeaningPreset(commandWord){
-  if(commandWord === "Discuss") return "Explain AO1 in detail and evaluate with balanced judgement.";
-  if(commandWord === "Outline and evaluate") return "AO1 outline + AO3 evaluation with judgement.";
-  return "Explain AO1 clearly and evaluate with justified judgement.";
-}
-function defaultMapEntry(id){
-  const q = getQuestionById(id);
+function saveEvalStore(store){ localStorage.setItem(EVAL_STORAGE_KEY, JSON.stringify(store)); }
+function getEvalStore(){
+  const raw = loadEvalStore();
   return {
-    meaning: q ? commandMeaningPreset(q.commandWord) : "",
-    ask: q?.mapAskPreset || "",
-    plan:"",
-    ao1Plan:"",
-    ao2Plan:"",
-    ao3Plan1:"",
-    ao3Plan2:"",
-    ao3Plan3:"",
-    essayText:"",
-    selectedPathway:"SF",
-    lastFeedback:null,
-    completed:false,
-    readyToWrite:false,
-    lastEdited:null
+    pathwayKey: raw.pathwayKey || null,
+    questionId: raw.questionId || null,
+    draftText: raw.draftText || "",
+    feedback: raw.feedback || null,
+    deliberatePractice: raw.deliberatePractice || {}
   };
 }
-function getMapEntry(id){
-  const store = loadMapStore();
-  const current = store[id] || {};
-  return { ...defaultMapEntry(id), ...current };
+function updateEvalStore(updates){
+  const next = { ...getEvalStore(), ...updates };
+  saveEvalStore(next);
+  return next;
 }
-function upsertMapEntry(id, updates){
-  const store = loadMapStore();
-  const current = { ...defaultMapEntry(id), ...(store[id] || {}) };
-  store[id] = { ...current, ...updates, lastEdited:new Date().toISOString() };
-  saveMapStore(store);
+function getQuestionById(id){ return ESSAY_QUESTIONS.find(q=>q.id===id) || null; }
+function pickQuestion(pathwayKey){
+  const list = ESSAY_QUESTIONS;
+  const offset = pathwayKey === "amb" ? 2 : pathwayKey === "mas" ? 4 : 0;
+  const idx = (dailyIndex() + offset) % list.length;
+  return list[idx] || list[0];
 }
-function mapStatusLabel(entry){
-  if(entry.completed) return "MAP completed";
-  if((entry.ao1Plan||"").trim() || (entry.ao3Plan1||"").trim() || (entry.ao3Plan2||"").trim() || (entry.ao3Plan3||"").trim()) return "MAP in progress";
-  return "MAP not started";
-}
-function renderExamTab(){
-  const listEl = $("examQuestionList");
-  if(!listEl) return;
-
-  listEl.innerHTML = ESSAY_QUESTIONS.map(q=>{
-    const entry = getMapEntry(q.id);
-    const statusLabel = entry.completed ? "MAP completed" : "MAP required";
-    const statusClass = entry.completed ? "statusDone" : "statusRequired";
-    return `<article class="examQuestionCard" data-open-map="${q.id}">
-      <div class="examQuestionTop">
-        <span class="examBadge">${escapeHtml(q.topicTag)}</span>
-        <span class="examBadge ${statusClass}">${statusLabel}</span>
-      </div>
-      <div class="examMetaRow">
-        <span class="examBadge">${escapeHtml(q.commandWord)}</span>
-        <span class="examBadge">${q.isScenario ? "Scenario" : "Non-scenario"}</span>
-        <span class="examBadge">${mapStatusLabel(entry)}</span>
-      </div>
-      <div class="examQTextLarge">${escapeHtml(q.questionText)}</div>
-      <div class="row" style="margin-top:12px;justify-content:space-between;gap:8px">
-        <span class="note">${entry.lastEdited ? `Last edited: ${new Date(entry.lastEdited).toLocaleString()}` : "No MAP saved yet."}</span>
-        <button class="btn" type="button" data-reset-map="${q.id}">Reset MAP</button>
-      </div>
-    </article>`;
-  }).join("");
-
-  listEl.querySelectorAll("[data-open-map]").forEach(card=>{
-    card.addEventListener("click", ()=>openInlineMap(card.getAttribute("data-open-map")));
-  });
-  listEl.querySelectorAll("[data-reset-map]").forEach(btn=>{
-    btn.addEventListener("click", (ev)=>{
-      ev.stopPropagation();
-      resetMapForQuestion(btn.getAttribute("data-reset-map"));
-    });
-  });
-}
-
-function resetMapForQuestion(questionId){
-  const store = loadMapStore();
-  delete store[questionId];
-  saveMapStore(store);
-  if(activeMapQuestionId === questionId){
-    ["mapInlineCard","essayWriterCard","essayFeedbackCard"].forEach(id=>{ const el=$(id); if(el){ el.classList.add("hidden"); el.innerHTML=""; } });
-  }
+function resetExamFlow(){
+  EXAM_UI = { screen:"home", pathwayKey:null, questionId:null };
+  updateEvalStore({ pathwayKey:null, questionId:null, draftText:"", feedback:null });
   renderExamTab();
+}
+function beginPathway(pathwayKey){
+  const q = pickQuestion(pathwayKey);
+  EXAM_UI = { screen:"question", pathwayKey, questionId:q.id };
+  updateEvalStore({ pathwayKey, questionId:q.id, draftText:"", feedback:null });
+  renderExamTab();
+}
+function beginWriting(){
+  if(!EXAM_UI.pathwayKey || !EXAM_UI.questionId) return;
+  EXAM_UI.screen = "writing";
+  renderExamTab();
+}
+function openQuestionFromDaily(questionId){
+  const q = getQuestionById(questionId) || pickQuestion("sf");
+  const saved = getEvalStore();
+  const pathwayKey = saved.pathwayKey || "sf";
+  EXAM_UI = { screen:"question", pathwayKey, questionId:q.id };
+  updateEvalStore({ questionId:q.id, pathwayKey });
+  renderExamTab();
+}
+
+function detectStructure(text, q, pathwayKey){
+  const lower = text.toLowerCase();
+  const topicWords = (q?.questionText || "").toLowerCase().replace(/[^a-z\s]/g," ").split(/\s+/).filter(w=>w.length>4);
+  const hasPoint = /(a strength|a limitation|one issue|however|this suggests)/i.test(text);
+  const hasEvidence = /([A-Z][a-z]+\s?\(?(?:19|20)\d{2}\)?|\bstudy\b|\bresearch\b|found that|evidence)/.test(text);
+  const hasExplain = /(because|this means|this suggests|therefore)/i.test(text);
+  const hasLink = topicWords.some(w=>lower.includes(w));
+  const hasCounter = /(however|on the other hand|although|it could be argued)/i.test(text);
+  const hasApplication = /(in real life|in society|in education|this has implications for|for example in)/i.test(text);
+  const checks = {
+    point:hasPoint,
+    evidence:hasEvidence,
+    explain:hasExplain,
+    link:hasLink,
+    counter: pathwayKey === "sf" ? null : hasCounter,
+    application: pathwayKey === "mas" ? hasApplication : null
+  };
+  return checks;
+}
+
+function classifyEvaluationStrength(text){
+  const hitCount = EVAL_QUALITY_TERMS.reduce((count, term)=>count + (text.toLowerCase().includes(term) ? 1 : 0), 0);
+  let quality = "Basic";
+  let strength = "Developing";
+  if(hitCount >= 2){ quality = "Secure"; strength = "Secure"; }
+  if(hitCount >= 4){ quality = "Advanced"; strength = "High Ambition"; }
+  if(hitCount >= 5){ strength = "Approaching Mastery"; }
+  return { quality, strength, hitCount };
+}
+
+function buildImprovementSuggestions(checks, pathwayKey, quality){
+  const prompts = [];
+  if(!checks.link) prompts.push("Strengthen the link to the question.");
+  if(!checks.point) prompts.push("Make your judgement more explicit.");
+  if(pathwayKey !== "sf" && checks.counter === false) prompts.push("Evaluate the strength of your counter-argument.");
+  if(pathwayKey === "mas" && checks.application === false) prompts.push("Add a real-world implication.");
+  if(quality.hitCount < 2) prompts.push("Use evaluative wording like weakens/strengthens to sharpen analysis.");
+  return prompts.slice(0,2);
+}
+
+function submitEvaluation(){
+  const draft = ($("evaluationTextInput")?.value || "").trim();
+  if(!draft){ alert("Write your evaluation before submitting."); return; }
+  const q = getQuestionById(EXAM_UI.questionId);
+  const checks = detectStructure(draft, q, EXAM_UI.pathwayKey);
+  const quality = classifyEvaluationStrength(draft);
+  const suggestions = buildImprovementSuggestions(checks, EXAM_UI.pathwayKey, quality);
+  const feedback = { checks, quality, suggestions, submittedAt:new Date().toISOString() };
+  updateEvalStore({ draftText:draft, feedback });
+  EXAM_UI.screen = "feedback";
+  renderExamTab();
+}
+
+function renderExamHome(card){
+  card.innerHTML = `
+    <h3 class="examSectionTitle">Choose your pathway</h3>
+    <div class="examPathwayGrid">
+      <button class="examPathwayTile sf" type="button" data-pathway="sf"><h4>🟢 Strong Foundations</h4><p>${EVAL_PATHWAYS.sf.desc}</p></button>
+      <button class="examPathwayTile amb" type="button" data-pathway="amb"><h4>🔵 Ambition</h4><p>${EVAL_PATHWAYS.amb.desc}</p></button>
+      <button class="examPathwayTile mas" type="button" data-pathway="mas"><h4>🟣 Mastery</h4><p>${EVAL_PATHWAYS.mas.desc}</p></button>
+    </div>`;
+  card.querySelectorAll("[data-pathway]").forEach(btn=>btn.addEventListener("click", ()=>beginPathway(btn.getAttribute("data-pathway"))));
+}
+
+function renderQuestionScreen(card){
+  const pathway = EVAL_PATHWAYS[EXAM_UI.pathwayKey] || EVAL_PATHWAYS.sf;
+  const q = getQuestionById(EXAM_UI.questionId) || pickQuestion("sf");
+  card.innerHTML = `
+    <h3 class="examSectionTitle">Write ONE developed evaluation point.</h3>
+    <div class="examQuestionText">${escapeHtml(q.questionText)}</div>
+    <div class="examPrompt">Write ONE developed evaluation point.</div>
+    <div class="mapChipRow"><span class="mapBadge ${pathway.className}">Your Pathway: ${pathway.title} (${pathway.short})</span></div>
+    <div class="evalStructure" style="margin-top:10px">${pathway.structure.join(" → ")}</div>
+    <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn primary" type="button" id="beginEvaluationBtn">Begin Writing</button></div>`;
+  $("beginEvaluationBtn")?.addEventListener("click", beginWriting);
+}
+
+function renderWritingScreen(card){
+  const pathway = EVAL_PATHWAYS[EXAM_UI.pathwayKey] || EVAL_PATHWAYS.sf;
+  const saved = getEvalStore();
+  const draft = saved.draftText || "";
+  card.innerHTML = `
+    <h3 class="examSectionTitle">Single Evaluation Practice</h3>
+    <div class="evalChecklist">
+      ${pathway.structure.map(step=>`<div class="evalChecklistRow">⬜ ${step}</div>`).join("")}
+    </div>
+    <textarea id="evaluationTextInput" class="evalTextArea" placeholder="Write one developed evaluation point...">${escapeHtml(draft)}</textarea>
+    <div class="counterRow"><span class="note">Character counter</span><strong id="evaluationCharCounter">${draft.length}</strong></div>
+    <details class="startersPanel" style="margin-top:10px">
+      <summary><strong>Helpful Sentence Starters</strong></summary>
+      <ul class="startersList">${EVAL_SENTENCE_STARTERS.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul>
+    </details>
+    <div class="row" style="margin-top:12px;justify-content:space-between">
+      <button class="btn" type="button" id="backToQuestionBtn">Back</button>
+      <button class="btn primary" type="button" id="submitEvaluationBtn">Submit Evaluation</button>
+    </div>`;
+  const input = $("evaluationTextInput");
+  const count = $("evaluationCharCounter");
+  input?.addEventListener("input", ()=>{
+    const value = input.value;
+    if(count) count.textContent = String(value.length);
+    updateEvalStore({ draftText:value });
+  });
+  $("backToQuestionBtn")?.addEventListener("click", ()=>{ EXAM_UI.screen = "question"; renderExamTab(); });
+  $("submitEvaluationBtn")?.addEventListener("click", submitEvaluation);
+}
+
+function renderFeedbackScreen(card){
+  const pathway = EVAL_PATHWAYS[EXAM_UI.pathwayKey] || EVAL_PATHWAYS.sf;
+  const saved = getEvalStore();
+  const feedback = saved.feedback;
+  if(!feedback){ EXAM_UI.screen = "writing"; renderExamTab(); return; }
+  const rows = [
+    { ok:feedback.checks.point, label:"Clear evaluative point" },
+    { ok:feedback.checks.evidence, label:"Evidence included" },
+    { ok:feedback.checks.explain, label:"Explanation developed" },
+    { ok:feedback.checks.link, label:"Link to question" }
+  ];
+  if(pathway.code !== "SF") rows.push({ ok:feedback.checks.counter, label:"Counter present" });
+  if(pathway.code === "M") rows.push({ ok:feedback.checks.application, label:"Application present" });
+  card.innerHTML = `
+    <h3 class="examSectionTitle">Feedback</h3>
+    <div class="feedbackGrid">
+      <div class="feedbackBlock">
+        <strong>Structure Check</strong>
+        <ul class="feedbackCompact">${rows.map(r=>`<li>${r.ok ? "✔" : "✖"} ${r.label}</li>`).join("")}</ul>
+      </div>
+      <div class="feedbackBlock">
+        <strong>Evaluative Quality</strong>
+        <div class="note" style="margin-top:6px">Language band: ${feedback.quality.quality}</div>
+        <div class="feedbackStrength">Evaluation Strength: ${feedback.quality.strength}</div>
+      </div>
+      <div class="feedbackBlock">
+        <strong>Improvement Suggestion</strong>
+        <ul class="feedbackCompact">${feedback.suggestions.map(s=>`<li>${escapeHtml(s)}</li>`).join("") || "<li>Keep refining this point to improve precision.</li>"}</ul>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px;justify-content:space-between">
+      <button class="btn" type="button" id="retryEvaluationBtn">Rewrite Point</button>
+      <button class="btn primary" type="button" id="newPathwayBtn">Change Pathway</button>
+    </div>`;
+  $("retryEvaluationBtn")?.addEventListener("click", ()=>{ EXAM_UI.screen = "writing"; renderExamTab(); });
+  $("newPathwayBtn")?.addEventListener("click", resetExamFlow);
+}
+
+function renderExamTab(){
+  const homeCard = $("examHomeCard");
+  const questionCard = $("examQuestionCard");
+  const writingCard = $("examWritingCard");
+  const feedbackCard = $("examFeedbackCard");
+  if(!homeCard || !questionCard || !writingCard || !feedbackCard) return;
+
+  [homeCard, questionCard, writingCard, feedbackCard].forEach(el=>el.classList.add("hidden"));
+
+  if(EXAM_UI.screen === "home"){
+    homeCard.classList.remove("hidden");
+    renderExamHome(homeCard);
+  }else if(EXAM_UI.screen === "question"){
+    questionCard.classList.remove("hidden");
+    renderQuestionScreen(questionCard);
+  }else if(EXAM_UI.screen === "writing"){
+    writingCard.classList.remove("hidden");
+    renderWritingScreen(writingCard);
+  }else{
+    feedbackCard.classList.remove("hidden");
+    renderFeedbackScreen(feedbackCard);
+  }
 }
 
 function openMapPlanner(questionId){
-  openInlineMap(questionId);
+  openQuestionFromDaily(questionId);
 }
 
-function openInlineMap(questionId){
-  const q = getQuestionById(questionId);
-  if(!q) return;
-  activeMapQuestionId = questionId;
-  activeScaffoldPathway = pathwayStorageToUi(getMapEntry(questionId).selectedPathway);
-  renderInlineMap(questionId);
-  renderWriter(questionId);
-  const card = $("mapInlineCard");
-  card?.scrollIntoView({ behavior:"smooth", block:"start" });
-  recordDailyPlanOpened(TOPIC_TAG_TO_ID[q.topicTag] || "t1");
-}
-
-function pathwaySpec(path){
-  if(path === "amb") return { title:"Ambition", subtitle:"AO3 planned as PEELC x3" };
-  if(path === "mas") return { title:"Mastery", subtitle:"AO3 planned as PEELAC x3" };
-  return { title:"Strong Foundations", subtitle:"AO3 planned as PEEL x3" };
-}
-
-function renderInlineMap(questionId){
-  const q = getQuestionById(questionId);
-  const entry = getMapEntry(questionId);
-  if(!q) return;
-  const spec = pathwaySpec(activeScaffoldPathway);
-  const card = $("mapInlineCard");
-  if(!card) return;
-
-  card.innerHTML = `<div class="scaffoldHeader">
-    <h3 class="examSectionTitle" style="margin-bottom:0">MAP Planner (inline)</h3>
-    <div class="examQTextLarge" style="margin-top:0">${escapeHtml(q.questionText)}</div>
-
-    <div class="mapPresetBlock"><strong>Meaning (M)</strong><div class="note" style="margin-top:6px">${escapeHtml(commandMeaningPreset(q.commandWord))}</div></div>
-    <div class="mapPresetBlock"><strong>Ask (A)</strong><div class="note" style="margin-top:6px">${escapeHtml(q.mapAskPreset || "")}</div></div>
-
-    <div class="pathwayTabs" role="tablist" aria-label="AO3 pathway tabs">
-      <button class="pathwayTabBtn ${activeScaffoldPathway === "sf" ? "active" : ""}" type="button" data-pathway="sf">Strong Foundations</button>
-      <button class="pathwayTabBtn ${activeScaffoldPathway === "amb" ? "active" : ""}" type="button" data-pathway="amb">Ambition</button>
-      <button class="pathwayTabBtn ${activeScaffoldPathway === "mas" ? "active" : ""}" type="button" data-pathway="mas">Mastery</button>
-    </div>
-
-    <div class="pathwayPanel">
-      <div style="font-weight:900">${spec.title}</div>
-      <div class="note">${spec.subtitle}. AO1 is always expected to be detailed.</div>
-      ${activeScaffoldPathway === "mas" ? `<div class="note" style="margin-top:6px"><strong>Flow tip:</strong> use concessive phrasing (Despite..., While..., However...) to link evaluation.</div>` : ""}
-      <div class="mapPlanGrid">
-        <div>
-          <label for="ao1PlanInput">AO1 plan (required)</label>
-          <textarea id="ao1PlanInput" class="mapTextArea" placeholder="Detailed AO1 knowledge for this essay...">${escapeHtml(entry.ao1Plan || "")}</textarea>
-          <div class="mapHelper">Enter your AO1 planning points.</div>
-        </div>
-        ${q.isScenario ? `<div class="ao2Panel"><label for="ao2PlanInput"><strong>AO2 Application (separate skill)</strong></label><textarea id="ao2PlanInput" class="mapTextArea" placeholder="Apply your AO1 to the scenario details...">${escapeHtml(entry.ao2Plan || "")}</textarea><div class="mapHelper">Add scenario application notes.</div></div>` : ""}
-        <div>
-          <label for="ao3Plan1Input">AO3 Point 1 (required)</label>
-          <textarea id="ao3Plan1Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 1...">${escapeHtml(entry.ao3Plan1 || "")}</textarea>
-        </div>
-        <div>
-          <label for="ao3Plan2Input">AO3 Point 2 (required)</label>
-          <textarea id="ao3Plan2Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 2...">${escapeHtml(entry.ao3Plan2 || "")}</textarea>
-        </div>
-        <div>
-          <label for="ao3Plan3Input">AO3 Point 3 (required)</label>
-          <textarea id="ao3Plan3Input" class="mapTextArea" placeholder="PEEL/PEELC/PEELAC point 3...">${escapeHtml(entry.ao3Plan3 || "")}</textarea>
-          <div class="mapHelper">Add one clear evaluation point in each box.</div>
-        </div>
-      </div>
-      <div class="row" style="margin-top:10px;justify-content:space-between;gap:8px;flex-wrap:wrap">
-        <button class="btn" type="button" id="showAo3ExampleBtn">Show annotated AO3 example</button>
-        <button class="btn" type="button" id="resetMapInlineBtn">Reset MAP</button>
-      </div>
-      <div id="inlineMapProgressText" class="note" style="margin-top:8px"></div>
-      <div class="row" style="justify-content:flex-end;margin-top:8px">
-        <button id="inlineUnlockBtn" class="btn primary" type="button" disabled>Unlock writing</button>
-      </div>
-    </div>
-  </div>`;
-
-  card.classList.remove("hidden");
-  card.querySelectorAll("[data-pathway]").forEach(btn=>btn.addEventListener("click", ()=>{
-    activeScaffoldPathway = btn.getAttribute("data-pathway");
-    upsertMapEntry(questionId, { selectedPathway: pathwayUiToStorage(activeScaffoldPathway) });
-    renderInlineMap(questionId);
-  }));
-
-  ["ao1PlanInput","ao2PlanInput","ao3Plan1Input","ao3Plan2Input","ao3Plan3Input"].forEach(id=>$(id)?.addEventListener("input", ()=>updateInlineMapProgress(questionId)));
-  $("showAo3ExampleBtn")?.addEventListener("click", ()=>openAo3ExampleModal(activeScaffoldPathway, questionId));
-  $("inlineUnlockBtn")?.addEventListener("click", ()=>renderWriter(questionId, true));
-  $("resetMapInlineBtn")?.addEventListener("click", ()=>resetMapForQuestion(questionId));
-
-  updateInlineMapProgress(questionId);
-}
-
-function updateInlineMapProgress(questionId){
-  const q = getQuestionById(questionId);
-  if(!q) return;
-  const ao1Plan = $("ao1PlanInput")?.value || "";
-  const ao2Plan = $("ao2PlanInput")?.value || "";
-  const ao3Plan1 = $("ao3Plan1Input")?.value || "";
-  const ao3Plan2 = $("ao3Plan2Input")?.value || "";
-  const ao3Plan3 = $("ao3Plan3Input")?.value || "";
-
-  const checks = {
-    ao1: ao1Plan.trim().length > 0,
-    ao3_1: ao3Plan1.trim().length > 0,
-    ao3_2: ao3Plan2.trim().length > 0,
-    ao3_3: ao3Plan3.trim().length > 0,
-    ao2: !q.isScenario || ao2Plan.trim().length > 0
-  };
-  const ready = Object.values(checks).every(Boolean);
-  const progressText = `AO1 ${checks.ao1 ? "done" : "missing"} • AO3-1 ${checks.ao3_1 ? "done" : "missing"} • AO3-2 ${checks.ao3_2 ? "done" : "missing"} • AO3-3 ${checks.ao3_3 ? "done" : "missing"}${q.isScenario ? ` • AO2 ${checks.ao2 ? "done" : "missing"}` : ""}`;
-
-  upsertMapEntry(questionId, {
-    meaning: commandMeaningPreset(q.commandWord),
-    ask: q.mapAskPreset || "",
-    plan:[ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3].filter(Boolean).join("\n\n"),
-    ao1Plan, ao2Plan, ao3Plan1, ao3Plan2, ao3Plan3,
-    selectedPathway: pathwayUiToStorage(activeScaffoldPathway),
-    completed: ready,
-    readyToWrite: ready
-  });
-
-  $("inlineUnlockBtn").disabled = !ready;
-  $("inlineMapProgressText").textContent = ready ? `Ready to write ✅ ${progressText}` : `Complete required planning fields first. ${progressText}`;
-  renderWriter(questionId);
-  renderExamTab();
-}
-
-function renderWriter(questionId, forceOpen=false){
-  const q = getQuestionById(questionId);
-  const entry = getMapEntry(questionId);
-  const card = $("essayWriterCard");
-  if(!q || !card) return;
-
-  if(!entry.readyToWrite && !forceOpen){
-    card.classList.add("hidden");
-    card.innerHTML = "";
-    return;
-  }
-
-  card.innerHTML = `<h3 class="examSectionTitle">Write your answer</h3>
-    <div class="note">Paste or type your full 16-mark answer here.</div>
-    <textarea id="essayTextInput" class="mapTextArea" style="min-height:220px;margin-top:10px" placeholder="Write your full essay response...">${escapeHtml(entry.essayText || "")}</textarea>
-    <div class="row" style="margin-top:10px;justify-content:flex-end;gap:8px;flex-wrap:wrap">
-      <button class="btn primary" type="button" id="submitEssayBtn">Submit for feedback</button>
-      <button class="btn" type="button" id="copyEssayBtn">Copy essay</button>
-    </div>`;
-  card.classList.remove("hidden");
-
-  $("essayTextInput")?.addEventListener("input", (ev)=>upsertMapEntry(questionId, { essayText: ev.target.value }));
-  $("submitEssayBtn")?.addEventListener("click", ()=>submitEssayForFeedback(questionId));
-  $("copyEssayBtn")?.addEventListener("click", ()=>copyEssayBundle(questionId));
-}
-
-function countKeywordHits(lowerText, keywords=[]){
-  return (keywords || []).reduce((hits, kw)=>hits + (lowerText.includes(String(kw || "").toLowerCase()) ? 1 : 0), 0);
-}
-
-function extractQuestionKeywordPhrase(questionObj){
-  const qText = String(questionObj?.questionText || "").toLowerCase();
-  if(qText.includes("conformity")) return "research into conformity";
-  if(qText.includes("obedience")) return "explanations for obedience";
-  if(qText.includes("eyewitness")) return "effects of anxiety on eyewitness testimony";
-  if(qText.includes("forgetting")) return "explanations for forgetting";
-  if(qText.includes("attachment")) return "attachment";
-  if(qText.includes("depression")) return "psychological explanations for depression";
-  if(qText.includes("ocd")) return "biological explanations for ocd";
-  if(qText.includes("reliability") || qText.includes("validity")) return "reliability and validity in psychological research";
-  if(qText.includes("limbic")) return "role of the limbic system in aggression";
-  return qText.replace(/[.?]/g, "").trim();
-}
-
-function pathwaySignalTargets(selectedPathway){
-  const qPhrase = extractQuestionKeywordPhrase(getQuestionById(activeMapQuestionId) || {});
-  const base = {
-    evidenceAnchor:{
-      label:"Evidence anchor",
-      min:1,
-      matches:["research found that","study found that"]
-    },
-    linkBack:{
-      label:"Link back to question",
-      min:1,
-      matches:["therefore"],
-      questionPhrase:qPhrase
-    },
-    counterMarker:{
-      label:"Counter marker",
-      min: selectedPathway === "SF" ? 0 : 1,
-      matches:["however","although","nevertheless","despite","on the other hand"]
-    },
-    importanceApplication:{
-      label:"Importance/application",
-      min: selectedPathway === "MAS" ? 1 : 0,
-      matches:["this is important because","this matters because","justice system","jury","workplace","courts","policing","schools","nhs"]
-    }
-  };
-  return base;
-}
-
-function paragraphSignalSummary(text, signals){
-  const paragraphs = String(text || "").split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean);
-  const counts = { paragraphs: paragraphs.length, evidence:0, linkBack:0, counter:0, importance:0 };
-  paragraphs.forEach(par=>{
-    const lower = par.toLowerCase();
-    if(signals.evidenceAnchor.matches.some(m=>lower.includes(m))) counts.evidence++;
-    const hasTherefore = lower.includes("therefore");
-    const hasQPhrase = signals.linkBack.questionPhrase ? lower.includes(signals.linkBack.questionPhrase) : false;
-    if(hasTherefore && hasQPhrase) counts.linkBack++;
-    if(signals.counterMarker.matches.some(m=>lower.includes(m))) counts.counter++;
-    if(signals.importanceApplication.matches.some(m=>lower.includes(m))) counts.importance++;
-  });
-  return counts;
-}
-
-function analyzeEssay(answerText, questionObj, selectedPathway){
-  const lower = String(answerText || "").toLowerCase();
-  const pathway = ["SF","AMB","MAS"].includes(selectedPathway) ? selectedPathway : "SF";
-
-  const ao1Included = [];
-  const ao1Missing = [];
-  (questionObj.ao1Bank || []).forEach(item=>{
-    const minHits = item.minHits || 1;
-    const hits = countKeywordHits(lower, item.keywords || []);
-    (hits >= minHits ? ao1Included : ao1Missing).push(item.label);
-  });
-
-  const ao3Included = [];
-  const ao3Missing = [];
-  (questionObj.evalBank || []).forEach(item=>{
-    const minHits = item.minHits || 1;
-    const hits = countKeywordHits(lower, item.keywords || []);
-    (hits >= minHits ? ao3Included : ao3Missing).push(item.label);
-  });
-
-  const signalDefs = pathwaySignalTargets(pathway);
-  const questionPhrase = extractQuestionKeywordPhrase(questionObj);
-  signalDefs.linkBack.questionPhrase = questionPhrase;
-
-  const evidenceCount = signalDefs.evidenceAnchor.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
-  const linkBackCount = lower.includes("therefore") && lower.includes(questionPhrase) ? 1 : 0;
-  const counterCount = signalDefs.counterMarker.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
-  const importanceCount = signalDefs.importanceApplication.matches.reduce((n,m)=>n + (lower.includes(m) ? 1 : 0), 0);
-
-  const flowIndicators = ["despite","while","although","arguably","suggests","implies","therefore","consequently"];
-  const flowHits = flowIndicators.filter(w=>lower.includes(w)).length;
-
-  const evalRequired = pathway === "SF" ? 2 : 3;
-  const ao2 = questionObj.isScenario ? (questionObj.ao2Bank || []).map(item=>{
-    const hits = countKeywordHits(lower, item.keywords || []);
-    const minHits = item.minHits || 1;
-    return { label:item.label, met:hits >= minHits };
-  }) : [];
-
-  const signalReport = {
-    pathway,
-    questionPhrase,
-    evaluationRequired: evalRequired,
-    evaluationMet: ao3Included.length >= evalRequired,
-    evidenceAnchor:{ met: evidenceCount >= 1, count:evidenceCount, min:1 },
-    linkBack:{ met: linkBackCount >= 1, count:linkBackCount, min:1 },
-    counterMarker:{ met: pathway === "SF" ? true : counterCount >= 1, count:counterCount, min: pathway === "SF" ? 0 : 1 },
-    importanceApplication:{ met: pathway === "MAS" ? importanceCount >= 1 : true, count:importanceCount, min: pathway === "MAS" ? 1 : 0 },
-    flow:{ met: pathway === "MAS" ? flowHits >= 2 : true, count:flowHits, min: pathway === "MAS" ? 2 : 0 },
-    paragraphStats: paragraphSignalSummary(answerText, signalDefs)
-  };
-
-  const sfHint = "Add ‘Research found that…’ and an explicit ‘Therefore, research into X suggests…’ link.";
-  const ambHint = `${sfHint} Add one counterargument using ‘However…’`;
-  const masHint = `${ambHint} Add one real-world implication using ‘This is important because…’ and show flow using ‘Despite/While… consequently…’`;
-
-  const feedbackText = pathway === "MAS" ? masHint : (pathway === "AMB" ? ambHint : sfHint);
-
-  return {
-    ao1Coverage:{
-      included: ao1Included,
-      missing: ao1Missing,
-      nextStep: `Add ${ao1Missing.slice(0,3).join(" + ") || "participants + design + one key finding"}.`
-    },
-    ao2Coverage: questionObj.isScenario ? {
-      included: ao2.filter(x=>x.met).map(x=>x.label),
-      missing: ao2.filter(x=>!x.met).map(x=>x.label),
-      note:"AO2 is separate from evaluation — keep it distinct."
-    } : null,
-    ao3Coverage:{ included: ao3Included, missing: ao3Missing, required: evalRequired },
-    signalReport,
-    feedbackText
-  };
-}
-
-function submitEssayForFeedback(questionId){
-  const q = getQuestionById(questionId);
-  const entry = getMapEntry(questionId);
-  if(!q) return;
-  const essayText = ($("essayTextInput")?.value || entry.essayText || "").trim();
-  if(!essayText){ alert("Please type your full essay before submitting."); return; }
-  const selectedPathway = entry.selectedPathway || pathwayUiToStorage(activeScaffoldPathway);
-  const analysis = analyzeEssay(essayText, q, selectedPathway);
-
-  const feedback = { ...analysis, pathway:selectedPathway };
-  upsertMapEntry(questionId, { essayText, selectedPathway, lastFeedback: feedback });
-
-  const feedbackCard = $("essayFeedbackCard");
-  if(!feedbackCard) return;
-  const modeLabel = selectedPathway === "MAS" ? "Mastery" : (selectedPathway === "AMB" ? "Ambition" : "Strong Foundations");
-  const sig = analysis.signalReport;
-  const structureRows = [
-    ["Evidence anchor", sig.evidenceAnchor.met],
-    ["Link back", sig.linkBack.met],
-    ["Counter marker", sig.counterMarker.met],
-    ["Importance/application", sig.importanceApplication.met],
-    ["Flow indicators", sig.flow.met]
-  ];
-
-  feedbackCard.innerHTML = `
-  <h3 class="examSectionTitle">Your Essay Breakdown (AQA Style)</h3>
-
-  <div class="note">
-    This tool checks whether your essay includes the key ingredients examiners look for.
-    It does not give a mark — but it shows which level you are currently working towards.
-  </div>
-
-  <div class="examBadge" style="display:inline-flex;margin-top:8px">Feedback mode: ${modeLabel}</div>
-
-  <!-- 1) AO1 -->
-  <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">1️⃣ Knowledge (AO1)</div>
-    <div class="note">Examiners look for accurate explanation, clear detail, and relevance to the question.</div>
-
-    <div style="margin-top:8px">✅ Included</div>
-    <ul class="coverageList">
-      ${analysis.ao1Coverage.included.length
-        ? analysis.ao1Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-        : "<li>Limited clear AO1 detected yet.</li>"}
-    </ul>
-
-    <div style="margin-top:8px">❌ Missing / next improvements</div>
-    <ul class="coverageList">
-      ${analysis.ao1Coverage.missing.length
-        ? analysis.ao1Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-        : "<li>No obvious AO1 gaps from this bank.</li>"}
-    </ul>
-
-    <div style="margin-top:10px">⭐ How to lift AO1</div>
-    <ul class="coverageList">
-      <li>Make sure you <strong>explain</strong> the idea (not just describe the study).</li>
-      <li>Keep each paragraph <strong>focused on the question</strong>.</li>
-      <li>Define key terms (briefly) to show secure understanding.</li>
-    </ul>
-
-    <div class="coverageNote note">Next step: ${escapeHtml(analysis.ao1Coverage.nextStep || "Add one clear AO1 paragraph with a key study or theory detail.")}</div>
-  </div>
-
-  <!-- 2) AO3 -->
-  <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">2️⃣ Evaluation (AO3)</div>
-    <div class="note">Examiners reward developed evaluation, balance, and clear judgement.</div>
-
-    <div class="note" style="margin-top:6px">Pathway target: at least <strong>${sig.evaluationRequired}</strong> evaluation points hit.</div>
-
-    <div style="margin-top:8px">✅ Included</div>
-    <ul class="coverageList">
-      ${analysis.ao3Coverage.included.length
-        ? analysis.ao3Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-        : "<li>No clear evaluation detected yet.</li>"}
-    </ul>
-
-    <div style="margin-top:8px">${analysis.ao3Coverage.included.length < 3
-      ? `❌ Include ${3 - analysis.ao3Coverage.included.length} more evaluation point${3 - analysis.ao3Coverage.included.length === 1 ? "" : "s"} from the following`
-      : "❌ Missing / next improvements"}</div>
-    <ul class="coverageList">
-      ${analysis.ao3Coverage.missing.length
-        ? analysis.ao3Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-        : "<li>No obvious gaps from this eval bank.</li>"}
-    </ul>
-
-    <div style="margin-top:10px">⭐ How to lift AO3</div>
-    <ul class="coverageList">
-      <li>After each strength/limitation, add <strong>why it matters</strong> (“This weakens… because…”).</li>
-      <li>Add a counter or alternative view (<strong>however</strong>, <strong>on the other hand</strong>).</li>
-      <li>Use judgement stems: <strong>“This suggests…”</strong> <strong>“On balance…”</strong> <strong>“Therefore…”</strong></li>
-    </ul>
-  </div>
-
-  <!-- 2b) AO2 for scenarios -->
-  ${q.isScenario ? `
-    <div class="pathwayPanel" style="margin-top:12px">
-      <div style="font-weight:900">🧩 Application (AO2 – scenario)</div>
-      <div class="note">For scenario questions, examiners reward linking your knowledge to the scenario details.</div>
-
-      <div style="margin-top:8px">✅ Included</div>
-      <ul class="coverageList">
-        ${analysis.ao2Coverage?.included?.length
-          ? analysis.ao2Coverage.included.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-          : "<li>No clear scenario application detected yet.</li>"}
-      </ul>
-
-      <div style="margin-top:8px">❌ Missing / next improvements</div>
-      <ul class="coverageList">
-        ${analysis.ao2Coverage?.missing?.length
-          ? analysis.ao2Coverage.missing.map(item=>`<li>${escapeHtml(item)}</li>`).join("")
-          : "<li>No obvious AO2 gaps from this bank.</li>"}
-      </ul>
-
-      <div style="margin-top:10px">⭐ How to lift AO2</div>
-      <ul class="coverageList">
-        <li>Name a <strong>specific scenario detail</strong>, then link it to the explanation.</li>
-        <li>Use: <strong>“In the scenario…”</strong> + <strong>“This shows…”</strong></li>
-      </ul>
-    </div>
-  ` : ""}
-
-  <!-- 3) Structure -->
-  <div class="pathwayPanel" style="margin-top:12px">
-    <div style="font-weight:900">3️⃣ Structure & Argument Quality</div>
-    <div class="note">Strong essays are organised, analytical, and keep linking back to the question.</div>
-
-    <table class="miniTable" style="width:100%;margin-top:10px;border-collapse:separate;border-spacing:0 8px">
-      <tbody>
-        <tr>
-          <td style="font-weight:800">Evidence used properly</td>
-          <td class="note">You support points with a study/theory detail.</td>
-          <td style="text-align:right;font-weight:900">${sig.evidenceAnchor.met ? "✅" : "❌"}</td>
-        </tr>
-        <tr>
-          <td style="font-weight:800">Links back to the question</td>
-          <td class="note">You explain why the point answers the question.</td>
-          <td style="text-align:right;font-weight:900">${sig.linkBack.met ? "✅" : "❌"}</td>
-        </tr>
-        <tr>
-          <td style="font-weight:800">Counter-argument</td>
-          <td class="note">You consider an alternative view/limitation.</td>
-          <td style="text-align:right;font-weight:900">${sig.counterMarker.met ? "✅" : "❌"}</td>
-        </tr>
-        <tr>
-          <td style="font-weight:800">Real world applications</td>
-          <td class="note">You provide examples of how the theory or research links to the real world.</td>
-          <td style="text-align:right;font-weight:900">${sig.importanceApplication.met ? "✅" : "❌"}</td>
-        </tr>
-        <tr>
-          <td style="font-weight:800">Flow</td>
-          <td class="note">Your writing uses connectives to build an argument.</td>
-          <td style="text-align:right;font-weight:900">${sig.flow.met ? "✅" : "❌"}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-`;
-  feedbackCard.classList.remove("hidden");
-}
-
-function feedbackSummaryText(feedback){
-  if(!feedback) return "No feedback submitted yet.";
-  const ao1In = feedback.ao1Coverage?.included || [];
-  const ao1Miss = feedback.ao1Coverage?.missing || [];
-  const ao3In = feedback.ao3Coverage?.included || [];
-  const ao3Miss = feedback.ao3Coverage?.missing || [];
-  return `Pathway: ${feedback.pathway || "SF"}
-AO1 included: ${ao1In.join("; ") || "None"}
-AO1 missing: ${ao1Miss.join("; ") || "None"}
-AO3 included: ${ao3In.join("; ") || "None"}
-AO3 missing: ${ao3Miss.join("; ") || "None"}
-Coach note: ${feedback.feedbackText || ""}`;
-}
-
-async function copyEssayBundle(questionId){
-  const q = getQuestionById(questionId);
-  const entry = getMapEntry(questionId);
-  if(!q) return;
-  const bundle = [
-    `Question: ${q.questionText}`,
-    `Meaning: ${entry.meaning}`,
-    `Ask: ${entry.ask}`,
-    `AO1 plan: ${entry.ao1Plan || ""}`,
-    q.isScenario ? `AO2 plan: ${entry.ao2Plan || ""}` : null,
-    `AO3 plan 1: ${entry.ao3Plan1 || ""}`,
-    `AO3 plan 2: ${entry.ao3Plan2 || ""}`,
-    `AO3 plan 3: ${entry.ao3Plan3 || ""}`,
-    "",
-    "Essay:",
-    entry.essayText || "",
-    "",
-    "Feedback summary:",
-    feedbackSummaryText(entry.lastFeedback)
-  ].filter(Boolean).join("\n");
-
-  let copied = false;
-  try{
-    await navigator.clipboard.writeText(bundle);
-    copied = true;
-  }catch(e){
-    const ta = document.createElement("textarea");
-    ta.value = bundle;
-    document.body.appendChild(ta);
-    ta.select();
-    copied = document.execCommand("copy");
-    document.body.removeChild(ta);
-  }
-  if(copied){
-    const toast = $("copyToast");
-    toast?.classList.remove("hidden");
-    setTimeout(()=>toast?.classList.add("hidden"), 1300);
+function initialiseExamState(){
+  const saved = getEvalStore();
+  if(saved.pathwayKey && saved.questionId){
+    EXAM_UI = { screen: saved.feedback ? "feedback" : "question", pathwayKey:saved.pathwayKey, questionId:saved.questionId };
   }
 }
 
-function renderAnnotatedExample(pathway, questionId){
-  const q = getQuestionById(questionId);
-  const linkText = q?.questionText?.replace(/\.$/,"") || "research question";
-  if(pathway === "sf"){
-    return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span></div>
-      <p><strong>[P]</strong> One limitation is that conformity studies can be overly artificial, which may reduce how well findings represent everyday behaviour. <strong>[E]</strong> Research found that participants judged line lengths in highly controlled lab settings where social pressure was scripted. <strong>[E]</strong> This may support causal conclusions, but it can limit realism because participants know they are in an experiment. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} suggests useful evidence, but conclusions should be applied cautiously beyond the lab.</p>`;
-  }
-  if(pathway === "amb"){
-    return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span><span class="aoTag">C</span></div>
-      <p><strong>[P]</strong> A strength is that obedience findings demonstrate clear situational pressures, but interpretation should still be balanced. <strong>[E]</strong> Research found that obedience changed when authority legitimacy and proximity were manipulated. <strong>[E]</strong> This implies situational factors can strongly shape behaviour and supports the explanation. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} indicates that context can powerfully influence responses. <strong>[C]</strong> However, individual differences and moral resistance mean situational accounts are not always sufficient on their own.</p>`;
-  }
-  return `<div class="ao3TagRow"><span class="aoTag">P</span><span class="aoTag">E</span><span class="aoTag">E</span><span class="aoTag">L</span><span class="aoTag">A</span><span class="aoTag">C</span></div>
-    <p><strong>[P]</strong> Despite strong support for biological factors, a fuller judgement is needed because behaviour is rarely determined by one mechanism alone. <strong>[E]</strong> Research found that neural and genetic patterns are associated with the target behaviour across controlled studies. <strong>[E]</strong> This supports the claim by showing measurable links, while also highlighting that association is not complete causation in every case. <strong>[L]</strong> Therefore, ${escapeHtml(linkText)} suggests important biological contributions, but conclusions should remain provisional. <strong>[A]</strong> This is important because interventions in education, health, or justice should combine biological insight with social support for better outcomes. <strong>[C]</strong> However, when social and cognitive influences are considered, the evaluation flows toward an interactionist judgement rather than a purely reductionist one.</p>`;
+// Placeholder for future extension.
+function getDeliberatePracticeFilters(){
+  return ["methodological", "reductionism", "cultural bias", "determinism", "ethics"]; // TODO: wire into UI in a future release.
 }
 
-function openAo3ExampleModal(pathway, questionId){
-  const q = getQuestionById(questionId);
-  $("ao3ExampleTitle").textContent = `Annotated AO3 example (${pathwaySpec(pathway).subtitle})`;
-  $("ao3ExampleBody").innerHTML = `<div class="note" style="margin-bottom:8px">Question focus: ${escapeHtml(q?.questionText || "")}</div>${renderAnnotatedExample(pathway, questionId)}`;
-  $("ao3ExampleModal").classList.remove("hidden");
-}
-
-(function initExamMapUi(){
-  $("mapPlannerClose")?.addEventListener("click", ()=>$("mapPlannerModal")?.classList.add("hidden"));
-  $("mapPlannerModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "mapPlannerModal") $("mapPlannerModal")?.classList.add("hidden"); });
-  $("ao3ExampleClose")?.addEventListener("click", ()=>$("ao3ExampleModal")?.classList.add("hidden"));
-  $("ao3ExampleModal")?.addEventListener("click", (ev)=>{ if(ev.target?.id === "ao3ExampleModal") $("ao3ExampleModal")?.classList.add("hidden"); });
-})();
+initialiseExamState();
 
 if($("btnExport") && $("dataBox")){
   $("btnExport").addEventListener("click", ()=>{ $("dataBox").value = JSON.stringify(STATE); });
