@@ -6679,196 +6679,287 @@ const MATCH_PEOPLE_DEFAULTS = {};
    EXAMS: QUESTION BANK
    ========================================================== */
 const ESSAY_QUESTIONS = [
+  // -------------------------
+  // SOCIAL INFLUENCE
+  // -------------------------
   {
     id:"q1", topicTag:"Social Influence", commandWord:"Discuss", isScenario:false,
-    questionText:"Discuss research into conformity.",
-    mapAskPreset:"Focus on Asch’s line judgement research, variables affecting conformity, key findings, then evaluate research and explanations.",
+    questionText:"Discuss research into conformity. (16 marks)",
+    mapAskPreset:"AO1: Asch + variables affecting conformity. AO3: validity, sampling, demand characteristics, real-world relevance/limited applications.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","sample","students","undergraduates","male","american","n="], minHits:1 },
-      { label:"Design named", keywords:["lab experiment","experiment","repeated measures","independent groups","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["confederate","critical trials","unanimous","line judgement","asch"], minHits:1 },
-      { label:"Findings included", keywords:["found that","36.8","one third","75%","conformed"], minHits:1 },
-      { label:"Named study/studies", keywords:["asch","perrin","spencer"], minHits:1 }
+      { label:"Key study named", keywords:["asch","line judgement"], minHits:1 },
+      { label:"Procedure described", keywords:["confederate","unanimous","critical trials"], minHits:1 },
+      { label:"Findings included", keywords:["one third","75%","conformed"], minHits:1 }
     ],
     evalBank:[
-      { label:"Lab studies may lack ecological validity", keywords:["ecological validity","artificial","lab","mundane realism"], minHits:2 },
-      { label:"Demand characteristics / participant reactivity", keywords:["demand characteristics","guess","responded","social desirability"], minHits:1 },
-      { label:"Sampling limits generalisability", keywords:["male","american","student","generalise"], minHits:2 },
-      { label:"High control supports cause-and-effect conclusions", keywords:["control","standardised","cause","internal validity"], minHits:1 }
+      { label:"Ecological validity / realism", keywords:["ecological validity","artificial","mundane realism"], minHits:1 },
+      { label:"Demand characteristics", keywords:["demand characteristics","guess","participant reactivity"], minHits:1 },
+      { label:"Sample / generalisability", keywords:["male","american","student","generalise"], minHits:1 },
+      { label:"Control / internal validity", keywords:["control","standardised","internal validity"], minHits:1 }
     ]
   },
   {
     id:"q2", topicTag:"Social Influence", commandWord:"Outline and evaluate", isScenario:false,
-    questionText:"Outline and evaluate explanations for obedience.",
-    mapAskPreset:"Focus on agentic state and legitimacy of authority explanations, then evaluate with supporting/challenging evidence and real-world relevance.",
+    questionText:"Outline and evaluate explanations for obedience. (16 marks)",
+    mapAskPreset:"AO1: agentic state + legitimacy of authority (and brief situational factors if used). AO3: supporting research, limits, real-world evidence, ethics/method issues.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","sample","men","volunteers","male","n="], minHits:1 },
-      { label:"Design named", keywords:["lab experiment","experiment","baseline procedure","controlled"], minHits:1 },
-      { label:"Procedure detail", keywords:["learner","teacher","shock generator","prods","uniform"], minHits:1 },
-      { label:"Findings included", keywords:["65%","obedience rate","found that","450 volts"], minHits:1 },
-      { label:"Named study/studies", keywords:["milgram","bickman","hofling"], minHits:1 }
+      { label:"Explanations outlined", keywords:["agentic","legitimacy","authority"], minHits:1 },
+      { label:"Key research named", keywords:["milgram","hofling","bickman"], minHits:1 }
     ],
     evalBank:[
-      { label:"Research support from Milgram-style findings", keywords:["milgram","obedience rates","agentic","authority"], minHits:1 },
-      { label:"Limited explanation because disobedience also occurs", keywords:["disobedience","resist","autonomous state","variation"], minHits:1 },
-      { label:"Real-world events can support situational pressures", keywords:["my lai","holocaust","situational","authority pressure"], minHits:1 },
-      { label:"Ethical concerns in obedience research", keywords:["ethics","deception","distress","protection"], minHits:1 }
+      { label:"Research support", keywords:["milgram","support","evidence"], minHits:1 },
+      { label:"Limits / disobedience", keywords:["disobedience","resist","autonomous"], minHits:1 },
+      { label:"Real-world application", keywords:["real world","my lai","holocaust"], minHits:1 },
+      { label:"Ethics", keywords:["ethical","deception","distress"], minHits:1 }
     ]
   },
   {
-    id:"q3", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true,
-    questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario.",
-    mapAskPreset:"Focus on anxiety and EWT accuracy (e.g., weapon focus, Yerkes-Dodson), explain findings, then evaluate and connect directly to scenario details.",
+    id:"q3", topicTag:"Social Influence", commandWord:"Discuss", isScenario:true,
+    questionText:"Discuss minority influence. Refer to the scenario. (16 marks)",
+    mapAskPreset:"AO1: consistency, commitment, flexibility; conversion and social cryptoamnesia. AO2: apply clearly to scenario. AO3: research support/limits and real-world change.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","sample","witnesses","n="], minHits:1 },
-      { label:"Design named", keywords:["lab experiment","field study","study","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["weapon","anxiety","identification","line-up","eyewitness"], minHits:1 },
-      { label:"Findings included", keywords:["found that","accuracy","worse recall","better recall","inverted u"], minHits:1 },
-      { label:"Named study/studies", keywords:["johnson","scott","yuille","christian","deffenbacher"], minHits:1 }
+      { label:"Key processes named", keywords:["consistency","commitment","flexibility","conversion"], minHits:1 }
     ],
     ao2Bank:[
-      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
-      { label:"Scenario details linked to anxiety/EWT", keywords:["witness","suspect","crime","anxiety","identification"], minHits:2 }
+      { label:"Scenario referenced", keywords:["in the scenario","this suggests","this shows"], minHits:1 }
     ],
     evalBank:[
-      { label:"Weapon focus can reduce peripheral detail recall", keywords:["weapon focus","peripheral","johnson","scott"], minHits:1 },
-      { label:"Moderate anxiety may improve accuracy", keywords:["yerkes","dodson","moderate anxiety","inverted u"], minHits:1 },
-      { label:"Field studies increase ecological validity", keywords:["field study","real life","yuille","christian"], minHits:2 },
-      { label:"Anxiety effects are mixed and depend on context", keywords:["mixed findings","depends","context","type of anxiety"], minHits:1 }
+      { label:"Research support", keywords:["moscovici","minority influence","support"], minHits:1 },
+      { label:"Artificial tasks", keywords:["artificial","lab","mundane"], minHits:1 },
+      { label:"Real-world social change", keywords:["social change","civil rights","suffragettes"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // MEMORY
+  // -------------------------
+  {
+    id:"q4", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the multi-store model of memory. (16 marks)",
+    mapAskPreset:"AO1: sensory register, STM, LTM; features + types of coding/capacity/duration; MS model processes. AO3: supporting research + oversimplification/WMM challenge.",
+    ao1Bank:[
+      { label:"Stores outlined", keywords:["sensory","stm","ltm"], minHits:1 },
+      { label:"Features included", keywords:["capacity","duration","coding"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Research support", keywords:["glanzer","cunitz","hm","milner"], minHits:1 },
+      { label:"STM not unitary", keywords:["working memory","wmm","multiple"], minHits:1 },
+      { label:"LTM not unitary", keywords:["episodic","semantic","procedural"], minHits:1 }
     ]
   },
   {
-    id:"q4", topicTag:"Memory", commandWord:"Discuss", isScenario:false,
-    questionText:"Discuss explanations for forgetting.",
-    mapAskPreset:"Focus on interference and retrieval failure explanations, key research support, then evaluate explanatory power and limitations.",
+    id:"q5", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the working memory model. (16 marks)",
+    mapAskPreset:"AO1: central executive, phonological loop, visuospatial sketchpad, episodic buffer. AO3: dual-task, case studies, CE vagueness, real-world validity.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","sample","students","n="], minHits:1 },
-      { label:"Design named", keywords:["lab experiment","study","design","independent groups"], minHits:1 },
-      { label:"Procedure detail", keywords:["word lists","similarity","cue","context","state dependent"], minHits:1 },
-      { label:"Findings included", keywords:["found that","more interference","recalled","forgot"], minHits:1 },
-      { label:"Named study/studies", keywords:["mcgeoch","baddeley","tulving","godden","baddeley"], minHits:1 }
+      { label:"Components named", keywords:["central executive","phonological","visuospatial","episodic buffer"], minHits:1 }
     ],
     evalBank:[
-      { label:"Interference supported by lab evidence", keywords:["interference","mcgeoch","baddeley","similarity"], minHits:1 },
-      { label:"Retrieval failure linked to cue-dependent forgetting", keywords:["retrieval failure","cue","tulving","context dependent"], minHits:1 },
-      { label:"Lab tasks may lack everyday realism", keywords:["artificial","ecological validity","word lists","lab"], minHits:2 },
-      { label:"Forgetting likely has multiple interacting causes", keywords:["more than one","interaction","explanation","combination"], minHits:1 }
+      { label:"Dual-task evidence", keywords:["dual task","phonological loop","visuospatial"], minHits:1 },
+      { label:"Case study support", keywords:["kf","case study"], minHits:1 },
+      { label:"Limitations of CE", keywords:["vague","central executive"], minHits:1 }
     ]
   },
   {
-    id:"q5", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false,
-    questionText:"Outline and evaluate the learning theory explanation of attachment.",
-    mapAskPreset:"Focus on classical/operant conditioning and drive reduction account of attachment, then evaluate against evidence and alternative explanations.",
+    id:"q6", topicTag:"Memory", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss explanations for forgetting. (16 marks)",
+    mapAskPreset:"AO1: interference + retrieval failure (context/state cues). AO3: support, realism, alternative causes, interactionist conclusion.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","babies","infants","sample"], minHits:1 },
-      { label:"Design named", keywords:["observation","study","experiment","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["feeding","conditioning","drive reduction","association"], minHits:1 },
-      { label:"Findings included", keywords:["found that","attachment","contact comfort","preferred"], minHits:1 },
-      { label:"Named study/studies", keywords:["harlow","schaffer","emerson","bowlby"], minHits:1 }
+      { label:"At least one explanation", keywords:["interference","retrieval failure","cue"], minHits:1 }
     ],
     evalBank:[
-      { label:"Learning theory explains food association processes", keywords:["classical conditioning","operant conditioning","drive reduction","food"], minHits:1 },
-      { label:"Harlow challenges food as main attachment basis", keywords:["harlow","contact comfort","cloth mother","wire mother"], minHits:1 },
-      { label:"Schaffer and Emerson challenge feeding explanation", keywords:["schaffer","emerson","primary attachment","not feeder"], minHits:1 },
-      { label:"Monotropic/evolutionary theories may explain better", keywords:["bowlby","monotropy","innate","adaptive"], minHits:1 }
+      { label:"Supporting evidence", keywords:["baddeley","godden","tulving"], minHits:1 },
+      { label:"Lab task realism", keywords:["word list","artificial","ecological"], minHits:1 },
+      { label:"Multiple causes", keywords:["combination","more than one","interaction"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // ATTACHMENT
+  // -------------------------
+  {
+    id:"q7", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the learning theory explanation of attachment. (16 marks)",
+    mapAskPreset:"AO1: classical + operant conditioning; drive reduction. AO3: Harlow, Schaffer & Emerson, animal→human issues, alternative explanations.",
+    ao1Bank:[
+      { label:"Learning theory described", keywords:["classical","operant","drive reduction"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Harlow challenge", keywords:["harlow","contact comfort","cloth mother"], minHits:1 },
+      { label:"Schaffer & Emerson challenge", keywords:["schaffer","emerson","not feeder"], minHits:1 },
+      { label:"Oversimplifies attachment", keywords:["too simplistic","emotional","reciprocity"], minHits:1 }
     ]
   },
   {
-    id:"q6", topicTag:"Attachment", commandWord:"Discuss", isScenario:true,
-    questionText:"Discuss the effects of institutionalisation on attachment. Refer to the scenario.",
-    mapAskPreset:"Focus on disinhibited attachment and intellectual effects from institutional care, timing of adoption, and evaluate evidence quality with scenario links.",
+    id:"q8", topicTag:"Attachment", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate Bowlby’s monotropic theory of attachment. (16 marks)",
+    mapAskPreset:"AO1: monotropy, internal working model, social releasers, critical period, secure base, adaptive. AO3: support/limits, determinism, culture/temperament.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["children","sample","romanian orphans","n="], minHits:1 },
-      { label:"Design named", keywords:["longitudinal","study","natural experiment","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["adoption","institution","follow up","age at adoption"], minHits:1 },
-      { label:"Findings included", keywords:["found that","disinhibited","iq","catch up"], minHits:1 },
-      { label:"Named study/studies", keywords:["rutter","zea nah","bucharest"], minHits:1 }
+      { label:"Key concepts", keywords:["monotropy","internal working model","critical period","social releasers"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Support", keywords:["hazan","shaver","bailey"], minHits:1 },
+      { label:"Determinism", keywords:["deterministic","inevitable"], minHits:1 },
+      { label:"Role of temperament/culture", keywords:["temperament","culture","van ijzendoorn"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // RESEARCH METHODS / EWT (tagged as Memory to fit your existing set-up)
+  // -------------------------
+  {
+    id:"q9", topicTag:"Memory", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss misleading information as a factor affecting the accuracy of eyewitness testimony. (16 marks)",
+    mapAskPreset:"AO1: leading questions + post-event discussion; key mechanisms (memory reconstruction). AO3: research support/limits, demand characteristics, applications.",
+    ao1Bank:[
+      { label:"Misleading info types", keywords:["leading questions","post-event discussion","misinformation"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Research support", keywords:["loftus","palmer","gabbert"], minHits:1 },
+      { label:"Demand characteristics", keywords:["demand characteristics","guess"], minHits:1 },
+      { label:"Real-world usefulness", keywords:["police","interview","cognitive interview"], minHits:1 }
+    ]
+  },
+  {
+    id:"q10", topicTag:"Memory", commandWord:"Outline and evaluate", isScenario:true,
+    questionText:"Outline and evaluate the effects of anxiety on the accuracy of eyewitness testimony. Refer to the scenario. (16 marks)",
+    mapAskPreset:"AO1: weapon focus + arousal/anxiety effects; AO2: apply to scenario; AO3: mixed findings, field vs lab, ethics, measurement issues.",
+    ao1Bank:[
+      { label:"Key concepts", keywords:["weapon focus","anxiety","arousal"], minHits:1 }
     ],
     ao2Bank:[
-      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
-      { label:"Scenario details applied to institutionalisation", keywords:["care home","adoption","attachment","child","institution"], minHits:2 }
+      { label:"Scenario referenced", keywords:["in the scenario","this suggests","this shows"], minHits:1 }
     ],
     evalBank:[
-      { label:"Disinhibited attachment is a key effect", keywords:["disinhibited","indiscriminate","stranger","romania"], minHits:1 },
-      { label:"Earlier adoption predicts better outcomes", keywords:["before six months","early adoption","timing","sensitive period"], minHits:1 },
-      { label:"Some cognitive deficits reduce over time", keywords:["iq","cognitive","catch up","improve"], minHits:1 },
-      { label:"Institutional quality varies so findings may not generalise", keywords:["quality of care","not all institutions","generalise","variation"], minHits:2 }
+      { label:"Mixed evidence", keywords:["mixed","inconsistent","depends"], minHits:1 },
+      { label:"Field study realism", keywords:["field","real life","ecological"], minHits:1 },
+      { label:"Ethics/measurement", keywords:["ethical","measure","validity"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // BIOPSYCHOLOGY
+  // -------------------------
+  {
+    id:"q11", topicTag:"Biopsychology", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss localisation of function in the brain. (16 marks)",
+    mapAskPreset:"AO1: localisation vs holistic; key areas (Broca/Wernicke, motor, somatosensory, visual). AO3: case studies, neuroplasticity, modern scanning, limits.",
+    ao1Bank:[
+      { label:"Areas identified", keywords:["broca","wernicke","motor","visual","somatosensory"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Case study support", keywords:["phineas","gage","tan","patient"], minHits:1 },
+      { label:"Neuroplasticity", keywords:["plasticity","recovery","reorganise"], minHits:1 },
+      { label:"Scanning evidence", keywords:["fmri","pet","brain scan"], minHits:1 }
     ]
   },
   {
-    id:"q7", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false,
-    questionText:"Outline and evaluate one or more psychological explanations for depression.",
-    mapAskPreset:"Focus on cognitive explanations (e.g., Beck/Ellis) and/or behavioural accounts, then evaluate empirical support and treatment implications.",
+    id:"q12", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate split-brain research. (16 marks)",
+    mapAskPreset:"AO1: hemispheric lateralisation + Sperry procedure/findings. AO3: methodology, small/unique sample, generalisability, value of insights.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","patients","sample","depressed"], minHits:1 },
-      { label:"Design named", keywords:["study","clinical","experiment","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["negative triad","irrational beliefs","reinforcement","cognitive"], minHits:1 },
-      { label:"Findings included", keywords:["found that","symptoms reduced","correlation","improvement"], minHits:1 },
-      { label:"Named study/studies", keywords:["beck","ellis","lewinsohn","cbt"], minHits:1 }
+      { label:"Study described", keywords:["sperry","split brain","corpus callosum"], minHits:1 }
     ],
     evalBank:[
-      { label:"Negative schemas/cognitive triad provide mechanism", keywords:["negative schema","cognitive triad","beck","irrational beliefs"], minHits:1 },
-      { label:"CBT success supports cognitive account", keywords:["cbt","cognitive therapy","effective","ellis"], minHits:1 },
-      { label:"Depression likely has interacting biological factors", keywords:["biological","genes","serotonin","interactionist"], minHits:1 },
-      { label:"Method issues in diagnosis and self-report data", keywords:["self report","validity","diagnosis","measurement"], minHits:2 }
+      { label:"Unique sample", keywords:["epilepsy","small sample","generalise"], minHits:1 },
+      { label:"Methodological control", keywords:["controlled","lab","standardised"], minHits:1 },
+      { label:"Useful insight", keywords:["insight","hemisphere","lateralisation"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // PSYCHOPATHOLOGY
+  // -------------------------
+  {
+    id:"q13", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:false,
+    questionText:"Outline and evaluate the behavioural approach to treating phobias. (16 marks)",
+    mapAskPreset:"AO1: systematic desensitisation + flooding (and brief modelling if used). AO3: effectiveness, ethics, symptom substitution debate, appropriateness.",
+    ao1Bank:[
+      { label:"Treatments outlined", keywords:["systematic desensitisation","flooding","relaxation"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Effectiveness", keywords:["effective","success","works"], minHits:1 },
+      { label:"Ethics", keywords:["ethical","distress","traumatic"], minHits:1 },
+      { label:"Symptom substitution", keywords:["symptom substitution"], minHits:1 }
     ]
   },
   {
-    id:"q8", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true,
-    questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario.",
-    mapAskPreset:"Focus on genetic and neural explanations for OCD, supporting evidence, then evaluate reductionism/determinism and scenario application.",
+    id:"q14", topicTag:"Psychopathology", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss cognitive explanations for depression. (16 marks)",
+    mapAskPreset:"AO1: Beck’s negative triad + Ellis’ ABC model. AO3: research support, treatment implications (CBT), causality issues, interactionist view.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","patients","sample","ocd"], minHits:1 },
-      { label:"Design named", keywords:["family study","twin study","study","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["candidate gene","serotonin","brain scan","neural"], minHits:1 },
-      { label:"Findings included", keywords:["found that","higher concordance","improve with ssri","association"], minHits:1 },
-      { label:"Named study/studies", keywords:["nestadt","saxena","pauls","ocd"], minHits:1 }
+      { label:"Models named", keywords:["beck","negative triad","ellis","abc"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Support", keywords:["support","evidence","research"], minHits:1 },
+      { label:"Causality", keywords:["cause","effect","consequence"], minHits:1 },
+      { label:"Treatment link", keywords:["cbt","cognitive therapy"], minHits:1 }
+    ]
+  },
+  {
+    id:"q15", topicTag:"Psychopathology", commandWord:"Outline and evaluate", isScenario:true,
+    questionText:"Outline and evaluate biological explanations for OCD. Refer to the scenario. (16 marks)",
+    mapAskPreset:"AO1: genetic + neural explanations (serotonin/OFC/basal ganglia). AO2: apply to scenario. AO3: reductionism, diathesis-stress, treatment evidence, limits.",
+    ao1Bank:[
+      { label:"Bio explanation named", keywords:["genetic","serotonin","orbitofrontal","basal ganglia"], minHits:1 }
     ],
     ao2Bank:[
-      { label:"Scenario explicitly referenced", keywords:["scenario","in the scenario","case"], minHits:1 },
-      { label:"Scenario details linked to OCD explanation", keywords:["compulsion","obsession","ritual","distress","ocd"], minHits:2 }
+      { label:"Scenario referenced", keywords:["in the scenario","this suggests","this shows"], minHits:1 }
     ],
     evalBank:[
-      { label:"Genetic vulnerability is supported by family/twin findings", keywords:["family","twin","genetic","candidate gene"], minHits:1 },
-      { label:"Neural mechanisms include serotonin and OFC links", keywords:["serotonin","orbitofrontal","basal ganglia","neural"], minHits:1 },
-      { label:"Biological treatments lend partial support", keywords:["ssri","drug therapy","improve","response"], minHits:1 },
-      { label:"Explanations can be biologically reductionist", keywords:["reductionist","environment","learning","deterministic"], minHits:1 }
+      { label:"Treatment support", keywords:["ssri","drug","improve"], minHits:1 },
+      { label:"Reductionism", keywords:["reductionist","environment","learning"], minHits:1 },
+      { label:"Diathesis-stress", keywords:["diathesis","stress","vulnerability"], minHits:1 }
+    ]
+  },
+
+  // -------------------------
+  // RESEARCH METHODS
+  // -------------------------
+  {
+    id:"q16", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss issues of reliability and validity in psychological research. (16 marks)",
+    mapAskPreset:"AO1: what reliability/validity mean (types). AO3: threats, how to improve, trade-offs across methods, practical examples.",
+    ao1Bank:[
+      { label:"Key terms defined", keywords:["reliability","validity","internal","external","construct"], minHits:1 }
+    ],
+    evalBank:[
+      { label:"Improving reliability", keywords:["standardised","inter-rater","test-retest"], minHits:1 },
+      { label:"Improving validity", keywords:["controls","pilot","measure","operationalise"], minHits:1 },
+      { label:"Trade-offs", keywords:["trade off","ecological","control"], minHits:1 }
     ]
   },
   {
-    id:"q9", topicTag:"Research Methods", commandWord:"Discuss", isScenario:false,
-    questionText:"Discuss issues of reliability and validity in psychological research.",
-    mapAskPreset:"Focus on what reliability and validity mean, common threats and improvements, and evaluate trade-offs across research methods.",
+    id:"q17", topicTag:"Research Methods", commandWord:"Discuss", isScenario:true,
+    questionText:"Discuss the use of experimental methods in psychology. Refer to the scenario. (16 marks)",
+    mapAskPreset:"AO1: lab/field/natural/quasi; IV/DV; control; random allocation; standardisation. AO2: apply to scenario. AO3: strengths/limits, ethics, validity issues.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","sample","researchers"], minHits:1 },
-      { label:"Design named", keywords:["experiment","questionnaire","observation","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["test-retest","inter-rater","controls","standardised"], minHits:1 },
-      { label:"Findings included", keywords:["found that","higher reliability","validity improved","replicate"], minHits:1 },
-      { label:"Named study/studies", keywords:["asch","milgram","bandura","loftus"], minHits:1 }
+      { label:"Method features", keywords:["iv","dv","control","random","standardised"], minHits:1 }
+    ],
+    ao2Bank:[
+      { label:"Scenario referenced", keywords:["in the scenario","this suggests","this shows"], minHits:1 }
     ],
     evalBank:[
-      { label:"Reliability includes internal/external consistency", keywords:["test retest","inter rater","internal consistency","replicate"], minHits:1 },
-      { label:"Validity includes internal/external/ecological elements", keywords:["internal validity","external validity","ecological validity","construct validity"], minHits:2 },
-      { label:"Standardisation can improve reliability", keywords:["standardised","controls","consistent procedure","objective"], minHits:1 },
-      { label:"Highly controlled studies may reduce real-world validity", keywords:["lab","artificial","mundane realism","trade off"], minHits:2 }
+      { label:"Causality / control", keywords:["cause","effect","control","internal validity"], minHits:1 },
+      { label:"Realism", keywords:["ecological","artificial","mundane"], minHits:1 },
+      { label:"Ethics", keywords:["ethical","consent","deception"], minHits:1 }
     ]
   },
+
+  // -------------------------
+  // BIOPSYCHOLOGY (aggression link kept general)
+  // -------------------------
   {
-    id:"q10", topicTag:"Biopsychology", commandWord:"Outline and evaluate", isScenario:false,
-    questionText:"Outline and evaluate the role of the limbic system in aggression.",
-    mapAskPreset:"Focus on limbic structures (amygdala/hypothalamus) in aggression, relevant evidence, then evaluate complexity and interacting influences.",
+    id:"q18", topicTag:"Biopsychology", commandWord:"Discuss", isScenario:false,
+    questionText:"Discuss neural and hormonal mechanisms in aggression. (16 marks)",
+    mapAskPreset:"AO1: limbic system (amygdala/hypothalamus), neurotransmitters (serotonin), hormones (testosterone/cortisol). AO3: animal evidence, reductionism, interactionist conclusion.",
     ao1Bank:[
-      { label:"Participants/sample stated", keywords:["participants","animals","patients","sample"], minHits:1 },
-      { label:"Design named", keywords:["animal study","lesion study","experiment","design"], minHits:1 },
-      { label:"Procedure detail", keywords:["amygdala","hypothalamus","stimulation","lesion"], minHits:1 },
-      { label:"Findings included", keywords:["found that","aggression increased","aggression reduced","association"], minHits:1 },
-      { label:"Named study/studies", keywords:["bard","siegel","raine","limbic"], minHits:1 }
+      { label:"Mechanisms named", keywords:["amygdala","hypothalamus","serotonin","testosterone","cortisol"], minHits:1 }
     ],
     evalBank:[
-      { label:"Amygdala/hypothalamus are implicated in aggressive behaviour", keywords:["amygdala","hypothalamus","limbic","aggression"], minHits:1 },
-      { label:"Animal and lesion evidence offers support", keywords:["lesion","animal study","stimulation","neural evidence"], minHits:1 },
-      { label:"Human aggression is influenced by social context too", keywords:["social factors","environment","learning","situational"], minHits:1 },
-      { label:"Neural explanations can be deterministic/reductionist", keywords:["deterministic","reductionist","oversimplified","complex"], minHits:1 }
+      { label:"Animal evidence limits", keywords:["animal","generalise","species"], minHits:1 },
+      { label:"Reductionism", keywords:["reductionist","social","cognitive"], minHits:1 },
+      { label:"Supporting evidence", keywords:["research","study","evidence"], minHits:1 }
     ]
   }
 ];
