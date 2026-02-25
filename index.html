@@ -3036,12 +3036,12 @@ section#games.gamePaneActive .gamesHeroCard{
     .examPrompt{font-size:18px;font-weight:900;margin:8px 0}
     .examQuestionText{font-size:17px;font-weight:800;line-height:1.45;margin:4px 0 10px}
     .evalStructure{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;font-weight:700}
-    .evalChecklist{display:grid;gap:8px;margin:10px 0}
-    .evalChecklistRow{display:flex;align-items:center;gap:8px;font-weight:700}
+    .evalChecklist{display:grid;gap:10px;margin:10px 0}
+    .evalChecklistRow{display:grid;gap:4px;font-weight:700}
+    .evalChecklistLabel{display:flex;align-items:center;gap:8px}
+    .evalChecklistStarter{font-weight:500;color:var(--muted);font-size:13px;padding-left:28px}
     .evalTextArea{width:100%;min-height:230px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.45}
     .counterRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 0}
-    .startersPanel{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px}
-    .startersList{margin:8px 0 0 18px;display:grid;gap:6px}
     .feedbackGrid{display:grid;gap:12px}
     .feedbackBlock{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px}
     .feedbackCompact{margin:0;display:grid;gap:6px;padding-left:18px}
@@ -10645,15 +10645,14 @@ const EVAL_PATHWAYS = {
   amb:{ code:"A", title:"Ambition", short:"A", className:"amb", structure:["Point","Evidence","Explain","Link","Counter"], desc:"Write 1 PEELC evaluation" },
   mas:{ code:"M", title:"Mastery", short:"M", className:"mas", structure:["Point","Evidence","Explain","Link","Application","Counter"], desc:"Write 1 PEELAC evaluation" }
 };
-const EVAL_SENTENCE_STARTERS = [
-  "A limitation of…",
-  "This is supported by…",
-  "This weakens the explanation because…",
-  "However, it could be argued…",
-  "This suggests that…",
-  "A strength of this explanation is…",
-  "In real life, this matters because…"
-];
+const EVAL_STEP_STARTERS = {
+  Point: "A limitation of this approach is…",
+  Evidence: "This is supported by research from…",
+  Explain: "This weakens/strengthens the explanation because…",
+  Link: "This suggests that the issue of reliability/validity…",
+  Counter: "However, it could be argued that…",
+  Application: "In real life, this matters because…"
+};
 const EVAL_QUALITY_TERMS = ["weakens","strengthens","reduces validity","increases credibility","to a limited extent","arguably"];
 let EXAM_UI = { screen:"home", pathwayKey:null, questionId:null };
 
@@ -10794,14 +10793,10 @@ function renderWritingScreen(card){
     <h3 class="examSectionTitle">Single Evaluation Practice</h3>
     <div class="examPrompt"><strong>Exam question:</strong> ${escapeHtml(q.questionText)}</div>
     <div class="evalChecklist">
-      ${pathway.structure.map(step=>`<div class="evalChecklistRow">⬜ ${step}</div>`).join("")}
+      ${pathway.structure.map(step=>`<div class="evalChecklistRow"><div class="evalChecklistLabel">⬜ ${step}</div><div class="evalChecklistStarter">Suggested starter: ${escapeHtml(EVAL_STEP_STARTERS[step] || "")}</div></div>`).join("")}
     </div>
     <textarea id="evaluationTextInput" class="evalTextArea" placeholder="Write one developed evaluation point...">${escapeHtml(draft)}</textarea>
     <div class="counterRow"><span class="note">Character counter</span><strong id="evaluationCharCounter">${draft.length}</strong></div>
-    <details class="startersPanel" style="margin-top:10px">
-      <summary><strong>Helpful Sentence Starters</strong></summary>
-      <ul class="startersList">${EVAL_SENTENCE_STARTERS.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul>
-    </details>
     <div class="row" style="margin-top:12px;justify-content:space-between">
       <button class="btn" type="button" id="backToQuestionBtn">Back</button>
       <button class="btn primary" type="button" id="submitEvaluationBtn">Submit Evaluation</button>
