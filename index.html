@@ -3042,10 +3042,21 @@ section#games.gamePaneActive .gamesHeroCard{
     .evalChecklistStarter{font-weight:500;color:var(--muted);font-size:13px;padding-left:28px}
     .evalTextArea{width:100%;min-height:230px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.45}
     .counterRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 0}
-    .feedbackGrid{display:grid;gap:12px}
-    .feedbackBlock{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px}
-    .feedbackCompact{margin:0;display:grid;gap:6px;padding-left:18px}
-    .feedbackStrength{font-size:18px;font-weight:900;margin:6px 0 0}
+    .modelCompareLayout{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+    .comparePanel{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px;display:grid;gap:10px}
+    .comparePanel h4{margin:0;font-size:18px;font-weight:900}
+    .compareHint{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
+    .compareText{border:1px solid color-mix(in srgb, var(--line) 75%, #fff 25%);border-radius:10px;padding:10px;min-height:230px;background:rgba(246,250,255,.8);white-space:pre-wrap;line-height:1.5}
+    .compareText.empty{color:var(--muted);font-style:italic}
+    .modelStructureList{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+    .modelStructureItem{border:1px solid color-mix(in srgb, var(--line) 72%, #fff 28%);border-radius:10px;padding:8px;background:rgba(246,250,255,.75)}
+    .modelStructureLabel{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:900}
+    .modelStepIndex{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:var(--accent4);border:1px solid var(--line);font-size:12px}
+    .modelStructureExplainer{margin:6px 0 0 0;font-size:13px;color:var(--muted);line-height:1.35}
+    .compareReminder{margin:10px 0 0 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.84);font-weight:700;line-height:1.45}
+    @media (max-width: 780px){
+      .modelCompareLayout{grid-template-columns:1fr}
+    }
     .copyToast{position:fixed;right:16px;bottom:92px;background:var(--textStrong);color:#fff;padding:8px 12px;border-radius:999px;font-weight:800;z-index:35;box-shadow:var(--shadow)}
     .copyToast.hidden{display:none}
 
@@ -10745,6 +10756,14 @@ const EVAL_STEP_STARTERS = {
   Application: "In real life, this matters because…"
 };
 const EVAL_QUALITY_TERMS = ["weakens","strengthens","reduces validity","increases credibility","to a limited extent","arguably"];
+const EVAL_MODEL_STRUCTURE_HINTS = {
+  Point:"Open with a clear judgement about a strength or limitation.",
+  Evidence:"Anchor that judgement with named research, data, or findings.",
+  Explain:"Explain how the evidence affects validity, usefulness, or credibility.",
+  Link:"Link directly back to what the question is asking.",
+  Counter:"Add an alternative view and evaluate its strength.",
+  Application:"Show why this matters in a real-world context."
+};
 let EXAM_UI = { screen:"home", pathwayKey:null, questionId:null };
 
 function loadEvalStore(){
@@ -10838,6 +10857,28 @@ function buildImprovementSuggestions(checks, pathwayKey, quality){
   return prompts.slice(0,2);
 }
 
+function buildPathwayModelAnswer(pathwayKey, q){
+  const pathway = EVAL_PATHWAYS[pathwayKey] || EVAL_PATHWAYS.sf;
+  const topic = (q?.topicTag || "this topic").toLowerCase();
+  const structureText = {
+    Point:`One limitation of research on ${topic} is that many findings come from highly controlled lab studies.`,
+    Evidence:"For example, several classic studies used standardised procedures, but they often relied on artificial tasks and restricted samples.",
+    Explain:"This can weaken external validity because behaviour in controlled conditions may not fully reflect responses in real settings.",
+    Link:`Therefore, when evaluating ${topic} for a 16-mark answer, conclusions should be cautious rather than absolute.`,
+    Application:"In practice, this matters because interventions based on such findings may need adaptation for schools, workplaces, or clinical settings.",
+    Counter:"However, the same control strengthens internal validity, so these studies still provide useful evidence about causal mechanisms."
+  };
+  return pathway.structure.map(step=>({
+    step,
+    text:structureText[step] || "",
+    hint:EVAL_MODEL_STRUCTURE_HINTS[step] || ""
+  }));
+}
+
+function buildModelAnswerText(pathwayKey, q){
+  return buildPathwayModelAnswer(pathwayKey, q).map(part=>part.text).join(" ");
+}
+
 function submitEvaluation(){
   const draft = ($("evaluationTextInput")?.value || "").trim();
   if(!draft){ alert("Write your evaluation before submitting."); return; }
@@ -10907,32 +10948,37 @@ function renderFeedbackScreen(card){
   const pathway = EVAL_PATHWAYS[EXAM_UI.pathwayKey] || EVAL_PATHWAYS.sf;
   const saved = getEvalStore();
   const feedback = saved.feedback;
+  const q = getQuestionById(EXAM_UI.questionId) || pickQuestion(EXAM_UI.pathwayKey || "sf");
   if(!feedback){ EXAM_UI.screen = "writing"; renderExamTab(); return; }
-  const rows = [
-    { ok:feedback.checks.point, label:"Clear evaluative point" },
-    { ok:feedback.checks.evidence, label:"Evidence included" },
-    { ok:feedback.checks.explain, label:"Explanation developed" },
-    { ok:feedback.checks.link, label:"Link to question" }
-  ];
-  if(pathway.code !== "SF") rows.push({ ok:feedback.checks.counter, label:"Counter present" });
-  if(pathway.code === "M") rows.push({ ok:feedback.checks.application, label:"Application present" });
+
+  const userAnswer = (saved.draftText || "").trim();
+  const modelParts = buildPathwayModelAnswer(EXAM_UI.pathwayKey, q);
+  const modelAnswer = buildModelAnswerText(EXAM_UI.pathwayKey, q);
+
   card.innerHTML = `
-    <h3 class="examSectionTitle">Feedback</h3>
-    <div class="feedbackGrid">
-      <div class="feedbackBlock">
-        <strong>Structure Check</strong>
-        <ul class="feedbackCompact">${rows.map(r=>`<li>${r.ok ? "✔" : "✖"} ${r.label}</li>`).join("")}</ul>
-      </div>
-      <div class="feedbackBlock">
-        <strong>Evaluative Quality</strong>
-        <div class="note" style="margin-top:6px">Language band: ${feedback.quality.quality}</div>
-        <div class="feedbackStrength">Evaluation Strength: ${feedback.quality.strength}</div>
-      </div>
-      <div class="feedbackBlock">
-        <strong>Improvement Suggestion</strong>
-        <ul class="feedbackCompact">${feedback.suggestions.map(s=>`<li>${escapeHtml(s)}</li>`).join("") || "<li>Keep refining this point to improve precision.</li>"}</ul>
-      </div>
+    <h3 class="examSectionTitle">Compare your answer with a model answer</h3>
+    <div class="examPrompt"><strong>Exam question:</strong> ${escapeHtml(q.questionText)}</div>
+    <div class="mapChipRow"><span class="mapBadge ${pathway.className}">Pathway: ${pathway.title} (${pathway.short})</span></div>
+
+    <div class="modelCompareLayout" style="margin-top:10px">
+      <article class="comparePanel">
+        <h4>Your answer</h4>
+        <p class="compareHint">Use this side to check your own structure against the model.</p>
+        <div class="compareText ${userAnswer ? "" : "empty"}">${userAnswer ? escapeHtml(userAnswer) : "No answer saved yet. Go back and write your evaluation point."}</div>
+      </article>
+
+      <article class="comparePanel">
+        <h4>Model answer (${pathway.short} structure)</h4>
+        <p class="compareHint">This model is annotated to show the structure expected for your selected level.</p>
+        <div class="compareText">${escapeHtml(modelAnswer)}</div>
+        <ul class="modelStructureList">
+          ${modelParts.map((part, idx)=>`<li class="modelStructureItem"><div class="modelStructureLabel"><span class="modelStepIndex">${idx + 1}</span>${escapeHtml(part.step)}</div><p class="modelStructureExplainer">${escapeHtml(part.hint)}</p></li>`).join("")}
+        </ul>
+      </article>
     </div>
+
+    <p class="compareReminder">Your answer might be different and still be correct. Focus on comparing structure and line of argument, not copying the exact wording.</p>
+
     <div class="row" style="margin-top:12px;justify-content:space-between">
       <button class="btn" type="button" id="retryEvaluationBtn">Rewrite Point</button>
       <button class="btn primary" type="button" id="newPathwayBtn">Change Pathway</button>
