@@ -1,7 +1,7 @@
 /* service-worker.js
    Updated for AQA Psychology app – clean cache and correct precache paths
 */
-const CACHE_NAME = "aqa-psychology-v1";
+const CACHE_NAME = "aqa-psychology-v2";
 
 const PRECACHE_URLS = [
   "./",
@@ -56,6 +56,21 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
+
+      // Always prefer fresh HTML for page navigations so latest app changes appear immediately.
+      if (req.mode === "navigate") {
+        try {
+          const fresh = await fetch(req);
+          if (fresh && fresh.status === 200 && fresh.type === "basic") {
+            cache.put(req, fresh.clone());
+          }
+          return fresh;
+        } catch {
+          const fallback = await cache.match(req, { ignoreSearch: false });
+          return fallback || Response.error();
+        }
+      }
+
       const cached = await cache.match(req, { ignoreSearch: false });
 
       const fetchPromise = fetch(req)
