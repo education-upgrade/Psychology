@@ -3019,7 +3019,9 @@ section#games.gamePaneActive .gamesHeroCard{
 
 
 
-    .examHeroTitle{margin:0;font-size:30px;font-weight:1000;color:var(--textStrong)}
+    .examHeroEyebrow{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--line) 70%, #fff 30%);background:rgba(255,255,255,.76);font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+    .examHeroTitle{margin:0;font-size:clamp(28px,5vw,36px);font-weight:1000;line-height:1.12;color:var(--textStrong);max-width:20ch}
+    .examHeroSub{margin:10px 0 0 0;max-width:48ch;line-height:1.4}
     .examSectionTitle{font-size:20px;font-weight:900;margin:0 0 10px 0}
     .examPathwayGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
     .examPathwayTile{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);text-align:left;cursor:pointer}
@@ -3041,6 +3043,11 @@ section#games.gamePaneActive .gamesHeroCard{
     .evalChecklistLabel{display:flex;align-items:center;gap:8px}
     .evalChecklistStarter{font-weight:500;color:var(--muted);font-size:13px;padding-left:28px}
     .evalTextArea{width:100%;min-height:230px;border-radius:12px;border:1px solid var(--line);padding:10px;font:inherit;color:var(--text);background:#fff;line-height:1.45}
+    .examWritingHeader{display:grid;gap:10px;padding:12px;border:1px solid color-mix(in srgb,var(--line) 76%, #fff 24%);border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(240,247,255,.86));margin-bottom:10px}
+    .examWritingTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:flex-start}
+    .examWritingLabel{font-size:12px;font-weight:900;letter-spacing:.03em;color:var(--muted);text-transform:uppercase;margin:0}
+    .examWritingQuestion{margin:2px 0 0 0;font-size:19px;font-weight:900;line-height:1.35}
+    .examWritingInstruction{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
     .counterRow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 0}
     .modelCompareLayout{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
     .comparePanel{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px;display:grid;gap:10px}
@@ -3787,8 +3794,9 @@ section#games.gamePaneActive .gamesHeroCard{
   <!-- EXAM -->
   <section id="exam" class="tabpane hidden">
     <div class="card examHeroCard">
-      <h2 class="examHeroTitle">Exam Practice – Build Evaluation Like an Examiner</h2>
-      <p class="note" style="margin:6px 0 0 0">AQA 16 markers are driven by evaluation.<br>Practise one high-quality evaluation at a time.</p>
+      <div class="examHeroEyebrow">Exam skills · 16-mark focus</div>
+      <h2 class="examHeroTitle">Exam Practice — Build Evaluation Like an Examiner</h2>
+      <p class="note examHeroSub">AQA 16 markers are driven by evaluation. Practise one high-quality evaluation point at a time, then compare your structure with a clear model answer.</p>
     </div>
 
     <div id="examHomeCard" class="card" aria-live="polite"></div>
@@ -10924,7 +10932,16 @@ function renderWritingScreen(card){
   const draft = saved.draftText || "";
   card.innerHTML = `
     <h3 class="examSectionTitle">Single Evaluation Practice</h3>
-    <div class="examPrompt"><strong>Exam question:</strong> ${escapeHtml(q.questionText)}</div>
+    <div class="examWritingHeader">
+      <div class="examWritingTop">
+        <div>
+          <p class="examWritingLabel">Exam question</p>
+          <p class="examWritingQuestion">${escapeHtml(q.questionText)}</p>
+        </div>
+        <span class="mapBadge ${pathway.className}">Pathway: ${pathway.title} (${pathway.short})</span>
+      </div>
+      <p class="examWritingInstruction">Write one developed evaluation point using the structure prompts below. Aim for a clear chain of argument, not a long paragraph.</p>
+    </div>
     <div class="evalChecklist">
       ${pathway.structure.map(step=>`<div class="evalChecklistRow"><div class="evalChecklistLabel">⬜ ${step}</div><div class="evalChecklistStarter">Suggested starter: ${escapeHtml(EVAL_STEP_STARTERS[step] || "")}</div></div>`).join("")}
     </div>
