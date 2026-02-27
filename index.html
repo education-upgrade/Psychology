@@ -3033,6 +3033,16 @@ section#games.gamePaneActive .gamesHeroCard{
     .mapBadge.sf{background:rgba(79,174,116,.16);border-color:rgba(79,174,116,.7);color:#1e6f3d}
     .mapBadge.amb{background:rgba(79,135,224,.15);border-color:rgba(79,135,224,.7);color:#1f4f94}
     .mapBadge.mas{background:rgba(138,90,216,.15);border-color:rgba(138,90,216,.7);color:#5c2fa5}
+    .mapHelpPill{display:inline-flex;align-items:center;gap:6px;border:1px solid color-mix(in srgb, var(--line) 72%, var(--accent2) 28%);border-radius:999px;padding:6px 12px;background:#fff;color:var(--textStrong);font-size:12px;font-weight:800;cursor:pointer}
+    .mapHelpPill:active{transform:translateY(1px)}
+    .mapHelpModal{width:min(560px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 44px rgba(0,0,0,.2);padding:16px}
+    .mapHelpModal h3{margin:0;font-size:22px;color:var(--textStrong)}
+    .mapHelpQuestion{margin:8px 0 0 0;font-size:13px;line-height:1.4;color:var(--muted)}
+    .mapHelpGrid{display:grid;gap:10px;margin-top:12px}
+    .mapHelpBlock{border:1px solid color-mix(in srgb, var(--line) 74%, #fff 26%);border-radius:12px;background:rgba(246,250,255,.9);padding:10px}
+    .mapHelpLabel{margin:0;font-size:13px;font-weight:900;color:var(--textStrong);text-transform:uppercase;letter-spacing:.04em}
+    .mapHelpBody{margin:6px 0 0 0;font-size:14px;line-height:1.45;color:var(--text)}
+    .mapHelpActions{display:flex;justify-content:flex-end;margin-top:12px}
     .examPrompt{font-size:18px;font-weight:900;margin:8px 0}
     .examQuestionText{font-size:17px;font-weight:800;line-height:1.45;margin:4px 0 10px}
     .evalStructure{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;font-weight:700}
@@ -3220,6 +3230,31 @@ section#games.gamePaneActive .gamesHeroCard{
       <div id="topicArrowDialogMeta" class="topicArrowDialogMeta"></div>
       <div class="nextUpActions">
         <button type="button" id="topicArrowDialogClose" class="btn primary">Got it</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="mapHelpDialog" class="modalBackdrop hidden" role="dialog" aria-modal="true" aria-live="polite" aria-label="MAP help">
+    <div class="mapHelpModal" aria-labelledby="mapHelpTitle" aria-describedby="mapHelpQuestion">
+      <h3 id="mapHelpTitle">MAP help</h3>
+      <p id="mapHelpQuestion" class="mapHelpQuestion"></p>
+      <div class="mapHelpGrid">
+        <section class="mapHelpBlock">
+          <h4 class="mapHelpLabel">Meaning</h4>
+          <p class="mapHelpBody" id="mapHelpMeaning"></p>
+        </section>
+        <section class="mapHelpBlock">
+          <h4 class="mapHelpLabel">Ask</h4>
+          <p class="mapHelpBody" id="mapHelpAsk"></p>
+        </section>
+        <section class="mapHelpBlock">
+          <h4 class="mapHelpLabel">Plan</h4>
+          <p class="mapHelpBody" id="mapHelpPlan"></p>
+        </section>
+      </div>
+      <div class="mapHelpActions">
+        <button type="button" id="mapHelpDialogClose" class="btn primary">Got it</button>
       </div>
     </div>
   </div>
@@ -8836,6 +8871,7 @@ function computeKpis(){
 computeKpis();
 updateDailyUI();
 initTopicArrowDialog();
+initMapHelpDialog();
 
 /* Home quick buttons (legacy IDs kept for safety) */
 
@@ -10880,6 +10916,55 @@ function renderModelAnswerInline(pathwayKey, q){
   return `<div class="modelAnswerInline">${modelParts.map((part, idx)=>`<span class="modelInlineSegment">${escapeHtml(part.text)}<button class="modelInlinePointBtn" type="button" data-model-point="${idx}" aria-expanded="false">${escapeHtml(part.step)}</button><span class="modelInlineHintPill hidden" id="modelHint-${idx}">${escapeHtml(part.hint)}</span></span>`).join(" ")}</div>`;
 }
 
+
+function buildMapHelpContent(q){
+  const commandWord = q?.commandWord || "Discuss";
+  const scenarioLine = q?.isScenario ? "Because this is a scenario question, add AO2 throughout by repeatedly linking points back to details from the stem." : "This is not a scenario question, so focus your marks on clear AO1 knowledge plus developed AO3 evaluation.";
+  const askPreset = q?.mapAskPreset || "AO1: define and describe the key explanation/theory. AO3: evaluate with evidence, methods, and balanced judgement.";
+  return {
+    meaning:`${commandWord} means show accurate psychology knowledge and then evaluate it with clear judgement. ${scenarioLine}`,
+    ask:askPreset,
+    plan:[
+      "Start with one concise AO1 setup sentence that defines the key theory or explanation.",
+      "Write 2–3 developed evaluation paragraphs using evidence (named studies) plus why that evidence strengthens or weakens the explanation.",
+      "Finish each paragraph by linking back to the exact wording of the exam question so your judgement is explicit."
+    ].join(" ")
+  };
+}
+
+function openMapHelpDialog(question){
+  const overlay = $("mapHelpDialog");
+  const questionEl = $("mapHelpQuestion");
+  const meaningEl = $("mapHelpMeaning");
+  const askEl = $("mapHelpAsk");
+  const planEl = $("mapHelpPlan");
+  if(!overlay || !questionEl || !meaningEl || !askEl || !planEl) return;
+
+  const q = question || getQuestionById(EXAM_UI.questionId) || pickQuestion(EXAM_UI.pathwayKey || "sf");
+  const map = buildMapHelpContent(q);
+  questionEl.textContent = q?.questionText || "Use this MAP scaffold to structure your 16-mark response.";
+  meaningEl.textContent = map.meaning;
+  askEl.textContent = map.ask;
+  planEl.textContent = map.plan;
+  overlay.classList.remove("hidden");
+}
+
+function closeMapHelpDialog(){
+  const overlay = $("mapHelpDialog");
+  if(!overlay) return;
+  overlay.classList.add("hidden");
+}
+
+function initMapHelpDialog(){
+  const overlay = $("mapHelpDialog");
+  const closeBtn = $("mapHelpDialogClose");
+  if(!overlay || !closeBtn) return;
+  closeBtn.addEventListener("click", closeMapHelpDialog);
+  overlay.addEventListener("click", (event)=>{
+    if(event.target === overlay) closeMapHelpDialog();
+  });
+}
+
 function submitEvaluation(){
   const draft = ($("evaluationTextInput")?.value || "").trim();
   if(!draft){ alert("Write your evaluation before submitting."); return; }
@@ -10911,10 +10996,11 @@ function renderQuestionScreen(card){
     <h3 class="examSectionTitle">Write ONE developed evaluation point.</h3>
     <div class="examQuestionText">${escapeHtml(q.questionText)}</div>
     <div class="examPrompt">Write ONE developed evaluation point.</div>
-    <div class="mapChipRow"><span class="mapBadge ${pathway.className}">Your Pathway: ${pathway.title} (${pathway.short})</span></div>
+    <div class="mapChipRow"><span class="mapBadge ${pathway.className}">Your Pathway: ${pathway.title} (${pathway.short})</span><button class="mapHelpPill" type="button" id="mapHelpBtn">MAP help</button></div>
     <div class="evalStructure" style="margin-top:10px">${pathway.structure.join(" → ")}</div>
     <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn primary" type="button" id="beginEvaluationBtn">Begin Writing</button></div>`;
   $("beginEvaluationBtn")?.addEventListener("click", beginWriting);
+  $("mapHelpBtn")?.addEventListener("click", ()=>openMapHelpDialog(q));
 }
 
 function renderWritingScreen(card){
