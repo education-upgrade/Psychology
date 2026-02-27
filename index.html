@@ -3050,7 +3050,7 @@ section#games.gamePaneActive .gamesHeroCard{
     .compareText.empty{color:var(--muted);font-style:italic}
     .modelAnswerInline{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:flex-start;white-space:normal}
     .modelInlineSegment{display:inline;line-height:1.6}
-    .modelInlinePointBtn{display:inline-flex;align-items:center;justify-content:center;margin-left:6px;border:1px solid var(--line);background:var(--accent4);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;color:var(--textStrong);cursor:pointer}
+    .modelInlinePointBtn{display:inline-flex;align-items:center;justify-content:center;margin-right:6px;border:1px solid var(--line);background:var(--accent4);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;color:var(--textStrong);cursor:pointer}
     .modelInlinePointBtn:active{transform:translateY(1px)}
     .modelInlineHintPill{display:inline-flex;margin-left:6px;padding:5px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--line) 76%, #fff 24%);background:#fff;font-size:12px;font-weight:600;color:var(--muted);vertical-align:middle;max-width:100%}
     .compareReminder{margin:10px 0 0 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.84);font-weight:700;line-height:1.45}
@@ -10877,7 +10877,7 @@ function buildPathwayModelAnswer(pathwayKey, q){
 
 function renderModelAnswerInline(pathwayKey, q){
   const modelParts = buildPathwayModelAnswer(pathwayKey, q);
-  return `<div class="modelAnswerInline">${modelParts.map((part, idx)=>`<span class="modelInlineSegment">${escapeHtml(part.text)}<button class="modelInlinePointBtn" type="button" data-model-point="${idx}" aria-expanded="false">${escapeHtml(part.step)}</button><span class="modelInlineHintPill hidden" id="modelHint-${idx}">${escapeHtml(part.hint)}</span></span>`).join(" ")}</div>`;
+  return `<div class="modelAnswerInline">${modelParts.map((part, idx)=>`<span class="modelInlineSegment"><button class="modelInlinePointBtn" type="button" data-model-point="${idx}" aria-expanded="false">${escapeHtml(part.step)}</button>${escapeHtml(part.text)}<span class="modelInlineHintPill hidden" id="modelHint-${idx}">${escapeHtml(part.hint)}</span></span>`).join(" ")}</div>`;
 }
 
 function submitEvaluation(){
