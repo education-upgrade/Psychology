@@ -3048,11 +3048,11 @@ section#games.gamePaneActive .gamesHeroCard{
     .compareHint{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
     .compareText{border:1px solid color-mix(in srgb, var(--line) 75%, #fff 25%);border-radius:10px;padding:10px;min-height:230px;background:rgba(246,250,255,.8);white-space:pre-wrap;line-height:1.5}
     .compareText.empty{color:var(--muted);font-style:italic}
-    .modelStructureList{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-    .modelStructureItem{border:1px solid color-mix(in srgb, var(--line) 72%, #fff 28%);border-radius:10px;padding:8px;background:rgba(246,250,255,.75)}
-    .modelStructureLabel{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:900}
-    .modelStepIndex{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:var(--accent4);border:1px solid var(--line);font-size:12px}
-    .modelStructureExplainer{margin:6px 0 0 0;font-size:13px;color:var(--muted);line-height:1.35}
+    .modelAnswerInline{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:flex-start;white-space:normal}
+    .modelInlineSegment{display:inline;line-height:1.6}
+    .modelInlinePointBtn{display:inline-flex;align-items:center;justify-content:center;margin-left:6px;border:1px solid var(--line);background:var(--accent4);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;color:var(--textStrong);cursor:pointer}
+    .modelInlinePointBtn:active{transform:translateY(1px)}
+    .modelInlineHintPill{display:inline-flex;margin-left:6px;padding:5px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--line) 76%, #fff 24%);background:#fff;font-size:12px;font-weight:600;color:var(--muted);vertical-align:middle;max-width:100%}
     .compareReminder{margin:10px 0 0 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.84);font-weight:700;line-height:1.45}
     @media (max-width: 780px){
       .modelCompareLayout{grid-template-columns:1fr}
@@ -10875,8 +10875,9 @@ function buildPathwayModelAnswer(pathwayKey, q){
   }));
 }
 
-function buildModelAnswerText(pathwayKey, q){
-  return buildPathwayModelAnswer(pathwayKey, q).map(part=>part.text).join(" ");
+function renderModelAnswerInline(pathwayKey, q){
+  const modelParts = buildPathwayModelAnswer(pathwayKey, q);
+  return `<div class="modelAnswerInline">${modelParts.map((part, idx)=>`<span class="modelInlineSegment">${escapeHtml(part.text)}<button class="modelInlinePointBtn" type="button" data-model-point="${idx}" aria-expanded="false">${escapeHtml(part.step)}</button><span class="modelInlineHintPill hidden" id="modelHint-${idx}">${escapeHtml(part.hint)}</span></span>`).join(" ")}</div>`;
 }
 
 function submitEvaluation(){
@@ -10952,8 +10953,7 @@ function renderFeedbackScreen(card){
   if(!feedback){ EXAM_UI.screen = "writing"; renderExamTab(); return; }
 
   const userAnswer = (saved.draftText || "").trim();
-  const modelParts = buildPathwayModelAnswer(EXAM_UI.pathwayKey, q);
-  const modelAnswer = buildModelAnswerText(EXAM_UI.pathwayKey, q);
+  const modelAnswerInline = renderModelAnswerInline(EXAM_UI.pathwayKey, q);
 
   card.innerHTML = `
     <h3 class="examSectionTitle">Compare your answer with a model answer</h3>
@@ -10970,10 +10970,7 @@ function renderFeedbackScreen(card){
       <article class="comparePanel">
         <h4>Model answer (${pathway.short} structure)</h4>
         <p class="compareHint">This model is annotated to show the structure expected for your selected level.</p>
-        <div class="compareText">${escapeHtml(modelAnswer)}</div>
-        <ul class="modelStructureList">
-          ${modelParts.map((part, idx)=>`<li class="modelStructureItem"><div class="modelStructureLabel"><span class="modelStepIndex">${idx + 1}</span>${escapeHtml(part.step)}</div><p class="modelStructureExplainer">${escapeHtml(part.hint)}</p></li>`).join("")}
-        </ul>
+        <div class="compareText">${modelAnswerInline}</div>
       </article>
     </div>
 
@@ -10985,6 +10982,17 @@ function renderFeedbackScreen(card){
     </div>`;
   $("retryEvaluationBtn")?.addEventListener("click", ()=>{ EXAM_UI.screen = "writing"; renderExamTab(); });
   $("newPathwayBtn")?.addEventListener("click", resetExamFlow);
+
+  card.querySelectorAll("[data-model-point]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const pointId = btn.getAttribute("data-model-point");
+      const hint = card.querySelector(`#modelHint-${pointId}`);
+      if(!hint) return;
+      const isHidden = hint.classList.contains("hidden");
+      hint.classList.toggle("hidden", !isHidden);
+      btn.setAttribute("aria-expanded", String(isHidden));
+    });
+  });
 }
 
 function renderExamTab(){
