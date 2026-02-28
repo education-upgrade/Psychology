@@ -3014,6 +3014,28 @@ section#games.gamePaneActive .gamesHeroCard{
 #lessonsRoot .lessonPanel p,
 #lessonsRoot .lessonPanel li{ margin:0; line-height:1.45; }
 #lessonsRoot .lessonPanel ul{ margin:0; padding-left:18px; display:grid; gap:8px; }
+#lessonsRoot .lessonAccordion{ display:grid; gap:10px; margin-top:12px; }
+#lessonsRoot .lessonAccordionItem,
+#lessonsRoot .lessonTopicItem{ border:1px solid var(--line); border-radius:14px; padding:10px; background:rgba(255,255,255,.72); }
+#lessonsRoot .lessonAccordionToggle{ width:100%; justify-content:space-between; text-align:left; }
+#lessonsRoot .lessonAccordionBody{ display:grid; gap:8px; margin-top:8px; }
+#lessonsRoot .lessonStartRow{ display:flex; justify-content:space-between; align-items:center; gap:8px; border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff; }
+#lessonsRoot .lesson-continuous { display:flex; flex-direction:column; gap:20px; padding-bottom:40px; }
+#lessonsRoot .lesson-block { background: rgba(255,255,255,0.85); border: 1px solid var(--line); border-radius:16px; padding:24px; }
+#lessonsRoot .split-layout { display:grid; grid-template-columns: 1fr; gap:24px; }
+#lessonsRoot .sticky-pane { background: var(--surface); padding:20px; border-radius:12px; border-left:4px solid var(--accent); }
+@media (min-width: 768px) {
+  #lessonsRoot .split-layout { grid-template-columns: 1fr 1.2fr; }
+  #lessonsRoot .sticky-pane { position: sticky; top: 20px; align-self: start; }
+}
+#lessonsRoot .qc-options { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+#lessonsRoot .qc-btn { text-align:left; padding:14px; border-radius:12px; border:1px solid var(--line); background:#fff; cursor:pointer; font-weight:600; }
+#lessonsRoot .qc-btn:hover:not(:disabled) { border-color: var(--accent); }
+#lessonsRoot .qc-btn.correct { background: rgba(126,185,170,.15); border-color: var(--good); }
+#lessonsRoot .qc-btn.wrong { background: rgba(183,142,161,.15); border-color: var(--bad); }
+#lessonsRoot .qc-btn.selected-neutral { background: rgba(110,144,202,.15); border-color: var(--accent); }
+#lessonsRoot .qc-feedback { padding:14px; background:#fff; border-radius:12px; border-left:4px solid var(--accent); animation: fadeIn .3s ease; }
+#lessonsRoot @keyframes fadeIn { from { opacity:0; transform: translateY(-4px);} to { opacity:1; transform: translateY(0);} }
 .fadeIn300{ animation:fadeIn300 .3s ease; }
 @keyframes fadeIn300{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
 
@@ -7943,10 +7965,7 @@ function shuffleArray(list){
 
 function lessonTile(lesson){
   const progress = getLessonProgress(lesson.id);
-  const total = lesson.slides.length;
-  const done = Math.min(progress.completedSlides.length, total);
-  const pct = total ? Math.round((done/total)*100) : 0;
-  const completeLabel = progress.completed ? "Completed" : done>0 ? "In progress" : "Not started";
+  const completeLabel = progress.completed ? "Completed" : "Not started";
   return `
     <article class="lessonTile" data-open-lesson="${lesson.id}">
       <div class="lessonTileTop">
@@ -7957,149 +7976,344 @@ function lessonTile(lesson){
         <span class="lessonBadge">${lesson.difficulty}</span>
         <span class="lessonWeightTag">${lesson.examWeight}</span>
       </div>
-      <div class="lessonTileProgress">
-        <div class="lessonTileTrack"><div class="lessonTileFill" style="width:${pct}%"></div></div>
-        <div class="note">${pct}% complete</div>
-      </div>
     </article>`;
+}
+
+function getSlideKey(slide, index){
+  return slide?.id || `slide-${index}`;
+}
+
+function getLessonHeading(slide, index){
+  return slide?.title || slide?.heading || slide?.section || `Lesson block ${index+1}`;
+}
+
+function getRequiredQuestionKeys(lesson){
+  return (lesson.slides||[])
+    .map((slide, index)=>({ slide, key:getSlideKey(slide, index) }))
+    .filter(({ slide })=> slide?.type === "mcq" || slide?.type === "multiSelect" || Number(slide?.selectLimit||0) > 1)
+    .map(item=>item.key);
+}
+
+function hasAnsweredSlide(progress, key){
+  const value = progress?.answered?.[key];
+  return Array.isArray(value) ? value.length > 0 : !!value;
+}
+
+function escapeAttr(value){
+  return String(value ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
+function renderPanelContent(panel){
+  if(panel == null) return "";
+  if(typeof panel === "string") return `<p>${formatAcademic(panel)}</p>`;
+  if(Array.isArray(panel)) return `<ul>${panel.map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul>`;
+  if(typeof panel === "object"){
+    const title = panel.title || panel.heading || panel.label;
+    const text = panel.text || panel.body || panel.content;
+    const items = panel.items || panel.tasks || panel.points;
+    return `${title ? `<p><strong>${formatAcademic(title)}</strong></p>` : ""}${text ? `<p>${formatAcademic(text)}</p>` : ""}${Array.isArray(items)&&items.length ? `<ul>${items.map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul>` : ""}`;
+  }
+  return `<p>${formatAcademic(String(panel))}</p>`;
+}
+
+function getCorrectOptionIds(slide){
+  if(Array.isArray(slide?.answer)) return slide.answer.map(String);
+  if(typeof slide?.answer === "string") return [slide.answer];
+  return (slide?.options||[]).filter(opt=>opt.correct).map(opt=>String(opt.id));
+}
+
+function renderQuestionBody(slide, orderedOptions, selectedAnswer, slideKey){
+  const isMulti = slide.type === "multiSelect" || Number(slide.selectLimit||0) > 1;
+  const selectLimit = isMulti ? Math.max(1, Number(slide.selectLimit || 2)) : 1;
+  const selectedList = Array.isArray(selectedAnswer) ? selectedAnswer.map(String) : (selectedAnswer ? [String(selectedAnswer)] : []);
+  const selectedSet = new Set(selectedList);
+  const correctIds = new Set(getCorrectOptionIds(slide));
+  const locked = selectedList.length >= selectLimit;
+  const feedbackText = (()=>{
+    if(isMulti && locked){
+      const allCorrect = selectedList.length===correctIds.size && selectedList.every(id=>correctIds.has(id));
+      return allCorrect ? "Great selection. You identified the best combination." : (slide.feedback || "Review the model response and why each option fits or does not fit.");
+    }
+    if(!isMulti && selectedList[0]){
+      const selected = (slide.options||[]).find(opt=>String(opt.id)===selectedList[0]);
+      return selected?.explanation || slide.feedback || "Feedback available.";
+    }
+    return "";
+  })();
+
+  return `
+    <div class="lessonPanelStack">
+      <article class="lessonPanel"><p>${formatAcademic(slide.question || slide.prompt || "Choose the strongest response.")}</p></article>
+      <div class="qc-options" data-slide-key="${escapeAttr(slideKey)}" data-multi="${isMulti ? "1" : "0"}" data-select-limit="${selectLimit}">
+        ${orderedOptions.map(opt=>{
+          const optId = String(opt.id);
+          const isSelected = selectedSet.has(optId);
+          const correctnessClass = !locked ? "" : (correctIds.has(optId) ? "correct" : (isSelected ? "wrong" : ""));
+          const neutralClass = isMulti && isSelected && !locked ? "selected-neutral" : "";
+          return `<button class="qc-btn ${correctnessClass} ${neutralClass}" data-mcq-option="${escapeAttr(optId)}" type="button" ${locked?"disabled":""}>${opt.text}</button>`;
+        }).join("")}
+      </div>
+      <article class="lessonPanel qc-feedback ${feedbackText ? "" : "hidden"}" data-feedback-for="${escapeAttr(slideKey)}"><p><strong>Feedback:</strong> ${formatAcademic(feedbackText || "")}</p></article>
+    </div>`;
+}
+
+function renderSlideBody(slide, orderedOptions=[], selectedAnswer="", slideKey=""){
+  if(slide.type === "briefing"){
+    return `<div class="lessonPanelStack">${(slide.panels||[]).map(panel=>`<article class="lessonPanel">${renderPanelContent(panel)}</article>`).join("")}</div>`;
+  }
+
+  const hasInterpretation = slide.type === "interpretation" || !!slide.interpretationText;
+  const structuredPanels = Array.isArray(slide.panels) ? slide.panels : [];
+  const structuredSplit = slide.type === "structuredContent" && structuredPanels.length > 1;
+
+  if(hasInterpretation || structuredSplit){
+    const reading = hasInterpretation ? (slide.interpretationText || structuredPanels[0] || "") : structuredPanels[0];
+    const taskPanels = hasInterpretation
+      ? (slide.tasks?.length ? slide.tasks : structuredPanels.slice(1))
+      : structuredPanels.slice(1);
+
+    return `
+      <div class="split-layout">
+        <div class="sticky-pane">${renderPanelContent(reading)}</div>
+        <div class="lessonPanelStack">
+          ${(taskPanels||[]).map(panel=>`<article class="lessonPanel">${renderPanelContent(panel)}</article>`).join("")}
+          ${slide.question ? `<article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article>` : ""}
+        </div>
+      </div>`;
+  }
+
+  if(slide.type === "structuredContent"){
+    return `<div class="lessonPanelStack">${structuredPanels.map(panel=>`<article class="lessonPanel">${renderPanelContent(panel)}</article>`).join("")}</div>`;
+  }
+
+  if(slide.type === "mcq" || slide.type === "multiSelect" || Number(slide.selectLimit||0) > 1){
+    return renderQuestionBody(slide, orderedOptions, selectedAnswer, slideKey);
+  }
+
+  if(slide.type === "scenario"){
+    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><ul>${(slide.tasks||[]).map(task=>`<li>${formatAcademic(task)}</li>`).join("")}</ul></article></div>`;
+  }
+
+  if(slide.type === "shortAnswer"){
+    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><details><summary><strong>Hint / Model</strong></summary><p>${formatAcademic(slide.guidance || slide.model || "Use key terms, apply to the context, and explain your chain of reasoning.")}</p></details></article></div>`;
+  }
+
+  if(slide.type === "masteryExam"){
+    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article><article class="lessonPanel"><details><summary><strong>Hint / Model</strong></summary><ul>${(slide.scaffold||[]).map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul></details></article></div>`;
+  }
+
+  return `<article class="lessonPanel"><p>${formatAcademic(slide.content || "Lesson block unavailable.")}</p></article>`;
+}
+
+function renderLessonContinuous(root, current){
+  const { paper, topic, lesson } = current;
+  const progress = getLessonProgress(lesson.id);
+  const requiredKeys = getRequiredQuestionKeys(lesson);
+  const answeredCount = requiredKeys.filter(key=>hasAnsweredSlide(progress, key)).length;
+  const autoCompleted = requiredKeys.length > 0 && answeredCount === requiredKeys.length;
+  if(autoCompleted && !progress.completed){
+    updateLessonProgress(lesson.id, { ...progress, completed:true });
+  }
+
+  root.innerHTML = `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <button class="btn" id="backToLessonsList" type="button">← Back to lessons</button>
+        <span class="pill">${paper.title} · ${topic.title}</span>
+      </div>
+      <h3 style="margin-top:10px;">${lesson.title}</h3>
+      <p class="note">${answeredCount}/${requiredKeys.length} required question blocks completed.</p>
+      <div class="lesson-continuous">
+        ${(lesson.slides||[]).map((slide, index)=>{
+          const slideKey = getSlideKey(slide, index);
+          const blockKey = `${lesson.id}:${slideKey}`;
+          if((slide.type === "mcq" || slide.type === "multiSelect" || Number(slide.selectLimit||0) > 1) && !progress.mcqOrder?.[blockKey]){
+            progress.mcqOrder = progress.mcqOrder || {};
+            progress.mcqOrder[blockKey] = shuffleArray((slide.options||[]).map(opt=>opt.id));
+            updateLessonProgress(lesson.id, progress);
+          }
+          const orderedOptions = (slide.type === "mcq" || slide.type === "multiSelect" || Number(slide.selectLimit||0) > 1)
+            ? ((progress.mcqOrder?.[blockKey] || (slide.options||[]).map(opt=>opt.id)).map(id=>(slide.options||[]).find(opt=>String(opt.id)===String(id))).filter(Boolean))
+            : [];
+          const selectedAnswer = progress.answered?.[slideKey] ?? "";
+          return `
+            <section class="lesson-block" data-slide-key="${escapeAttr(slideKey)}">
+              <h4 class="slideHeading">${getLessonHeading(slide, index)}</h4>
+              ${slide.section ? `<p class="note">${slide.section}</p>` : ""}
+              ${renderSlideBody(slide, orderedOptions, selectedAnswer, slideKey)}
+            </section>`;
+        }).join("")}
+      </div>
+      <div class="row" style="justify-content:flex-end; margin-top:10px;">
+        <button class="btn primary" id="markLessonCompleteBtn" type="button">Mark lesson complete</button>
+      </div>
+    </div>`;
+
+  $("backToLessonsList")?.addEventListener("click", ()=>{
+    lessonsState.lessonId = null;
+    renderLessons();
+  });
+
+  $("markLessonCompleteBtn")?.addEventListener("click", ()=>{
+    const currentProgress = getLessonProgress(lesson.id);
+    updateLessonProgress(lesson.id, { ...currentProgress, completed:true });
+    renderLessons();
+  });
+
+  bindLessonInteractions(root, lesson.id);
+}
+
+function bindLessonInteractions(root, lessonId){
+  root.querySelectorAll('.qc-options').forEach(group=>{
+    const slideKey = group.dataset.slideKey;
+    const isMulti = group.dataset.multi === "1";
+    const limit = Number(group.dataset.selectLimit || 1);
+    const buttons = Array.from(group.querySelectorAll('[data-mcq-option]'));
+    if(!buttons.length) return;
+
+    const slideSection = group.closest('.lesson-block');
+    const slideIndex = Array.from(root.querySelectorAll('.lesson-block')).indexOf(slideSection);
+    const lesson = getLessonById(lessonId)?.lesson;
+    const slide = lesson?.slides?.[slideIndex];
+    if(!slide) return;
+
+    buttons.forEach(btn=>btn.addEventListener('click', ()=>{
+      if(btn.disabled) return;
+      const selectedId = String(btn.dataset.mcqOption);
+      const progress = getLessonProgress(lessonId);
+      const feedbackBox = root.querySelector(`[data-feedback-for="${CSS.escape(slideKey)}"]`);
+      const correctIds = new Set(getCorrectOptionIds(slide));
+
+      if(isMulti){
+        const current = Array.isArray(progress.answered?.[slideKey]) ? [...progress.answered[slideKey]].map(String) : [];
+        const idx = current.indexOf(selectedId);
+        if(idx >= 0){
+          current.splice(idx,1);
+          btn.classList.remove('selected-neutral');
+        }else if(current.length < limit){
+          current.push(selectedId);
+          btn.classList.add('selected-neutral');
+        }
+
+        if(current.length >= limit){
+          buttons.forEach(optionBtn=>{
+            const optId = String(optionBtn.dataset.mcqOption);
+            optionBtn.classList.remove('selected-neutral');
+            optionBtn.classList.toggle('correct', correctIds.has(optId));
+            optionBtn.classList.toggle('wrong', !correctIds.has(optId) && current.includes(optId));
+            optionBtn.disabled = true;
+          });
+          if(feedbackBox){
+            feedbackBox.classList.remove('hidden');
+            const allCorrect = current.length === correctIds.size && current.every(id=>correctIds.has(id));
+            const msg = allCorrect ? "Great selection. You identified the best combination." : (slide.feedback || "Review the explanations and compare with the model answer.");
+            feedbackBox.innerHTML = `<p><strong>Feedback:</strong> ${formatAcademic(msg)}</p>`;
+          }
+          updateLessonProgress(lessonId, { ...progress, answered:{ ...(progress.answered||{}), [slideKey]:current } });
+        }else{
+          updateLessonProgress(lessonId, { ...progress, answered:{ ...(progress.answered||{}), [slideKey]:current } });
+        }
+      }else{
+        buttons.forEach(optionBtn=>{
+          const optId = String(optionBtn.dataset.mcqOption);
+          optionBtn.classList.toggle('correct', optId === selectedId && correctIds.has(selectedId));
+          optionBtn.classList.toggle('wrong', optId === selectedId && !correctIds.has(selectedId));
+          optionBtn.disabled = true;
+        });
+        if(feedbackBox){
+          feedbackBox.classList.remove('hidden');
+          const selected = (slide.options||[]).find(opt=>String(opt.id)===selectedId);
+          feedbackBox.innerHTML = `<p><strong>Feedback:</strong> ${formatAcademic(selected?.explanation || slide.feedback || "Feedback available.")}</p>`;
+        }
+        updateLessonProgress(lessonId, { ...progress, answered:{ ...(progress.answered||{}), [slideKey]:selectedId } });
+      }
+
+      const latestProgress = getLessonProgress(lessonId);
+      const requiredKeys = getRequiredQuestionKeys(lesson);
+      const done = requiredKeys.length > 0 && requiredKeys.every(key=>hasAnsweredSlide(latestProgress, key));
+      if(done){
+        updateLessonProgress(lessonId, { ...latestProgress, completed:true });
+      }
+    }));
+  });
+}
+
+function renderTopicsList(root){
+  lessonsState.expandedPapers = lessonsState.expandedPapers || {};
+  lessonsState.expandedTopics = lessonsState.expandedTopics || {};
+
+  root.innerHTML = `
+    <div class="card">
+      <div class="lessonsHeader"><h2 class="lessonsTitle"><svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M6 8h12"></path><path d="M6 12h7"></path><path d="m13 19 6-6"></path><path d="m18.4 12.6 1.9 1.9"></path></svg><span>Lessons</span></h2></div>
+      <p class="note">Browse papers, open a topic, then launch any lesson in continuous view.</p>
+      <div class="lessonAccordion">
+        ${LESSONS_LIBRARY.map(paper=>{
+          const paperOpen = !!lessonsState.expandedPapers[paper.id];
+          return `
+            <section class="lessonAccordionItem">
+              <button class="btn lessonAccordionToggle" data-toggle-paper="${paper.id}" aria-expanded="${paperOpen ? "true" : "false"}" type="button">${paper.title}</button>
+              <div class="lessonAccordionBody ${paperOpen ? "" : "hidden"}" data-paper-body="${paper.id}">
+                ${(paper.topics||[]).length ? paper.topics.map(topic=>{
+                  const topicKey = `${paper.id}:${topic.id}`;
+                  const topicOpen = !!lessonsState.expandedTopics[topicKey];
+                  return `
+                    <article class="lessonTopicItem">
+                      <button class="btn lessonAccordionToggle" data-toggle-topic="${escapeAttr(topicKey)}" aria-expanded="${topicOpen ? "true" : "false"}" type="button">${topic.title}</button>
+                      <div class="lessonAccordionBody ${topicOpen ? "" : "hidden"}" data-topic-body="${escapeAttr(topicKey)}">
+                        ${(topic.lessons||[]).map(lesson=>{
+                          const progress = getLessonProgress(lesson.id);
+                          return `
+                            <div class="lessonStartRow">
+                              <div>
+                                <p style="margin:0;font-weight:800;">${lesson.title}</p>
+                                <p class="note" style="margin:4px 0 0;">${lesson.difficulty} · ${lesson.examWeight} · ${progress.completed ? "Completed" : "Not started"}</p>
+                              </div>
+                              <button class="btn primary" data-start-lesson="${lesson.id}" data-paper-id="${paper.id}" data-topic-id="${topic.id}" type="button">Start</button>
+                            </div>`;
+                        }).join("")}
+                      </div>
+                    </article>`;
+                }).join("") : `<p class="note">Content for this paper is coming soon.</p>`}
+              </div>
+            </section>`;
+        }).join("")}
+      </div>
+    </div>`;
+
+  root.querySelectorAll('[data-toggle-paper]').forEach(btn=>btn.addEventListener('click', ()=>{
+    const id = btn.dataset.togglePaper;
+    lessonsState.expandedPapers[id] = !lessonsState.expandedPapers[id];
+    renderLessons();
+  }));
+
+  root.querySelectorAll('[data-toggle-topic]').forEach(btn=>btn.addEventListener('click', ()=>{
+    const id = btn.dataset.toggleTopic;
+    lessonsState.expandedTopics[id] = !lessonsState.expandedTopics[id];
+    renderLessons();
+  }));
+
+  root.querySelectorAll('[data-start-lesson]').forEach(btn=>btn.addEventListener('click', ()=>{
+    lessonsState.lessonId = btn.dataset.startLesson;
+    lessonsState.paperId = btn.dataset.paperId;
+    lessonsState.topicId = btn.dataset.topicId;
+    renderLessons();
+  }));
 }
 
 function renderLessons(){
   const root = $("lessonsRoot");
   if(!root) return;
 
-  if(lessonsState.view === "papers"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="lessonsHeader"><h2 class="lessonsTitle"><svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M6 8h12"></path><path d="M6 12h7"></path><path d="m13 19 6-6"></path><path d="m18.4 12.6 1.9 1.9"></path></svg><span>Lessons</span></h2></div>
-        <div class="lessonsGrid">${LESSONS_LIBRARY.map(p=>`<button class="card lessonRouteCard" data-open-paper="${p.id}" type="button"><h3>${p.title}</h3><p class="note">${p.description}</p></button>`).join("")}</div>
-      </div>`;
-    root.querySelectorAll('[data-open-paper]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.paperId=btn.dataset.openPaper; lessonsState.view='paper'; renderLessons(); }));
-    return;
+  if(lessonsState.lessonId){
+    const current = getLessonById(lessonsState.lessonId);
+    if(current){
+      renderLessonContinuous(root, current);
+      return;
+    }
+    lessonsState.lessonId = null;
   }
 
-  const paper = LESSONS_LIBRARY.find(item=>item.id===lessonsState.paperId);
-  if(!paper){ lessonsState.view="papers"; return renderLessons(); }
-
-  if(lessonsState.view === "paper"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="row"><button class="btn" id="backToPapers" type="button">← Lessons</button></div>
-        <h3>${paper.title}</h3>
-        ${(paper.topics||[]).length ? `<div class="lessonsGrid">${paper.topics.map(t=>`<button class="card lessonRouteCard" data-open-topic="${t.id}" type="button"><h4>${t.title}</h4><p class="note">${t.lessons.length} lesson</p></button>`).join("")}</div>` : `<p class="note">Content for this paper is coming soon.</p>`}
-      </div>`;
-    $("backToPapers").addEventListener("click", ()=>{ lessonsState.view="papers"; lessonsState.paperId=null; renderLessons(); });
-    root.querySelectorAll('[data-open-topic]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.topicId=btn.dataset.openTopic; lessonsState.view='topic'; renderLessons(); }));
-    return;
-  }
-
-  const topic = (paper.topics||[]).find(item=>item.id===lessonsState.topicId);
-  if(!topic){ lessonsState.view="paper"; return renderLessons(); }
-
-  if(lessonsState.view === "topic"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="row"><button class="btn" id="backToPaper" type="button">← ${paper.title}</button></div>
-        <h3>${topic.title}</h3>
-        <p class="note">Select a lesson tile to continue.</p>
-        <div class="lessonsGrid">${topic.lessons.map(lessonTile).join("")}</div>
-      </div>`;
-    $("backToPaper").addEventListener("click", ()=>{ lessonsState.view="paper"; lessonsState.topicId=null; renderLessons(); });
-    root.querySelectorAll('[data-open-lesson]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.lessonId=btn.dataset.openLesson; lessonsState.view='lesson'; lessonsState.slideIndex=0; renderLessons(); }));
-    return;
-  }
-
-  const current = getLessonById(lessonsState.lessonId);
-  if(!current){ lessonsState.view="topic"; return renderLessons(); }
-
-  const lesson = current.lesson;
-  const slide = lesson.slides[lessonsState.slideIndex];
-  const progress = getLessonProgress(lesson.id);
-  const key = `${lesson.id}:${lessonsState.slideIndex}`;
-  const selectedAnswer = progress.answered[key];
-
-  if(slide.type === "mcq" && !progress.mcqOrder[key]){
-    progress.mcqOrder[key] = shuffleArray(slide.options.map(opt=>opt.id));
-    updateLessonProgress(lesson.id, progress);
-  }
-
-  const orderedOptions = slide.type === "mcq"
-    ? progress.mcqOrder[key].map(id=>slide.options.find(opt=>opt.id===id)).filter(Boolean)
-    : [];
-
-  const canAdvance = slide.type !== "mcq" || !!selectedAnswer;
-  const pct = Math.round(((lessonsState.slideIndex+1)/lesson.slides.length)*100);
-
-  root.innerHTML = `
-    <div class="card">
-      <div class="row" style="justify-content:space-between;gap:8px;align-items:center">
-        <button class="btn" id="backToTopic" type="button">← ${topic.title}</button>
-        ${slide.type === "masteryExam" ? `<button class="btn" id="toggleScaffold" type="button">Scaffold: ${lessonsState.scaffoldEnabled ? "On" : "Off"}</button>` : ""}
-      </div>
-      <div class="lessonProgressWrap" style="margin-top:10px"><div class="lessonProgressTrack"><div class="lessonProgressFill" style="width:${pct}%"></div></div><div class="lessonProgressPct">${pct}% complete</div></div>
-      <section class="lessonSlideFrame fadeIn300">
-        <div class="lessonPanelHeader"><span class="pill">${slide.section}</span><h3>${slide.heading}</h3></div>
-        ${renderSlideBody(slide, orderedOptions, selectedAnswer)}
-      </section>
-      <div class="playerFooter">
-        <button class="btn" id="lessonPrevBtn" type="button" ${lessonsState.slideIndex===0?"disabled":""}>Previous</button>
-        <button class="btn primary" id="lessonNextBtn" type="button" ${lessonsState.slideIndex===lesson.slides.length-1 || !canAdvance ? "disabled" : ""}>Next →</button>
-      </div>
-    </div>`;
-
-  $("backToTopic").addEventListener("click", ()=>{ lessonsState.view="topic"; lessonsState.lessonId=null; lessonsState.slideIndex=0; renderLessons(); });
-  $("lessonPrevBtn").addEventListener("click", ()=>{
-    if(lessonsState.slideIndex===0) return;
-    lessonsState.slideIndex -= 1;
-    renderLessons();
-  });
-  const nextBtn = $("lessonNextBtn");
-  if(nextBtn) nextBtn.addEventListener("click", ()=>{
-    if(!canAdvance) return;
-    const completedSlides = Array.from(new Set([...(progress.completedSlides||[]), lessonsState.slideIndex]));
-    const done = lessonsState.slideIndex >= lesson.slides.length-2;
-    updateLessonProgress(lesson.id, { ...progress, completedSlides, completed:done });
-    lessonsState.slideIndex += 1;
-    renderLessons();
-  });
-
-  if(slide.type === "mcq"){
-    root.querySelectorAll('[data-mcq-option]').forEach(btn=>btn.addEventListener('click', ()=>{
-      const picked = btn.dataset.mcqOption;
-      const completedSlides = Array.from(new Set([...(progress.completedSlides||[]), lessonsState.slideIndex]));
-      updateLessonProgress(lesson.id, { ...progress, answered:{ ...(progress.answered||{}), [key]:picked }, completedSlides });
-      renderLessons();
-    }));
-  }
-
-  if(slide.type === "masteryExam"){
-    $("toggleScaffold")?.addEventListener("click", ()=>{ lessonsState.scaffoldEnabled = !lessonsState.scaffoldEnabled; renderLessons(); });
-  }
-}
-
-function renderSlideBody(slide, orderedOptions=[], selectedAnswer=""){
-  if(slide.type === "briefing" || slide.type === "structuredContent"){
-    return `<div class="lessonPanelStack">${(slide.panels||[]).map(panel=>`<article class="lessonPanel"><p>${formatAcademic(panel)}</p></article>`).join("")}</div>`;
-  }
-  if(slide.type === "mcq"){
-    const selected = slide.options.find(opt=>opt.id===selectedAnswer);
-    return `
-      <div class="lessonPanelStack">
-        <article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article>
-        <div class="quickCheckOptions">${orderedOptions.map(opt=>`<button class="btn" data-mcq-option="${opt.id}" type="button" style="text-align:left;justify-content:flex-start;border-width:${selectedAnswer===opt.id?"2px":"1px"}">${opt.text}</button>`).join("")}</div>
-        ${selected ? `<article class="lessonPanel"><p><strong>Feedback:</strong> ${selected.explanation}</p></article>` : `<article class="lessonPanel"><p><strong>Select one answer</strong> to unlock the next slide.</p></article>`}
-      </div>`;
-  }
-  if(slide.type === "scenario"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><ul>${(slide.tasks||[]).map(task=>`<li>${formatAcademic(task)}</li>`).join("")}</ul></article></div>`;
-  }
-  if(slide.type === "shortAnswer"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><p><strong>Guidance:</strong> ${formatAcademic(slide.guidance||"")}</p></article></div>`;
-  }
-  if(slide.type === "masteryExam"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article>${lessonsState.scaffoldEnabled ? `<article class="lessonPanel"><p><strong>Scaffold</strong></p><ul>${(slide.scaffold||[]).map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul></article>` : ""}</div>`;
-  }
-  return `<article class="lessonPanel"><p>Slide type unavailable.</p></article>`;
+  renderTopicsList(root);
 }
 
 document.addEventListener("DOMContentLoaded", renderLessons);
