@@ -8384,9 +8384,10 @@ function buildKnowledgeCards(){
     (T.core||[]).forEach(c => push(topicId, c.q, c.a, c.tags||[]));
 
 (T.terms||[]).forEach(t=>{
-  push(topicId, `Define: ${t.term}.`, simplifyStudyText(t.meaning, { maxSentences:1, maxChars:210 }), [t.term,"definition"]);
+  const conciseDefinition = simplifyStudyText(t.meaning, { maxSentences:1, maxChars:210 });
+  push(topicId, `Define: ${t.term}.`, conciseDefinition, [t.term,"definition"]);
 
-  const definitionPrompt = simplifyStudyText(t.meaning, { maxSentences:2, maxChars:260 });
+  const definitionPrompt = conciseDefinition;
   if(definitionPrompt){
     push(topicId, "Which key term matches this definition:", t.term, [t.term,"definition-reverse"], { promptDetail: definitionPrompt });
   }
