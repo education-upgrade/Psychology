@@ -8378,6 +8378,11 @@ function buildKnowledgeCards(){
 (T.terms||[]).forEach(t=>{
   push(topicId, `Define: ${t.term}.`, simplifyStudyText(t.meaning, { maxSentences:1, maxChars:210 }), [t.term,"definition"]);
 
+  const definitionPrompt = simplifyStudyText(t.meaning, { maxSentences:2, maxChars:260 });
+  if(definitionPrompt){
+    push(topicId, `Which key term matches this definition: ${definitionPrompt}`, t.term, [t.term,"definition-reverse"]);
+  }
+
   if (t.date && String(t.date).trim() !== "") {
     push(topicId, `Date check: ${t.term} — when?`, `${t.date}.`, [t.term,"date"]);
   }
