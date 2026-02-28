@@ -7239,6 +7239,11 @@ function ensureDaily(){
   if(!STATE.daily[k]){
     STATE.daily[k] = { topicId: wantTopic, flash:0, quizBest:0, planOpened:false, completed:false };
     saveState();
+  }else if(!isTopicEnabled(STATE.daily[k].topicId)){
+    // Topic toggles should immediately affect the daily challenge feed.
+    // If today's topic was switched off, rotate to a currently enabled topic.
+    STATE.daily[k].topicId = wantTopic;
+    saveState();
   }
   return STATE.daily[k];
 }
