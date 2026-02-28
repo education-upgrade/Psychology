@@ -7232,6 +7232,31 @@ function getDailyExamId(topicId){
   return list[dailyIndex() % list.length].id;
 }
 
+function getDailyFlashPool(topicId){
+  return ALL_CARDS.filter(c=>c.topicId===topicId && isTopicEnabled(c.topicId));
+}
+
+function getDailyFlashTarget(topicId){
+  return Math.min(DAILY_FLASH_GOAL, getDailyFlashPool(topicId).length);
+}
+
+function ensureDailyFlashSet(daily){
+  if(!daily || !daily.topicId) return [];
+
+  const pool = getDailyFlashPool(daily.topicId);
+  const target = Math.min(DAILY_FLASH_GOAL, pool.length);
+  const poolIds = new Set(pool.map(c=>c.id));
+  const existing = Array.isArray(daily.flashCardIds)
+    ? daily.flashCardIds.filter(id=>poolIds.has(id))
+    : [];
+
+  if(existing.length === target) return existing;
+
+  const chosen = shuffle(pool).slice(0, target).map(c=>c.id);
+  daily.flashCardIds = chosen;
+  return chosen;
+}
+
 function ensureDaily(){
   STATE.daily ||= {};
   const k = todayKey();
@@ -7245,6 +7270,7 @@ function ensureDaily(){
     STATE.daily[k].topicId = wantTopic;
     saveState();
   }
+  ensureDailyFlashSet(STATE.daily[k]);
   return STATE.daily[k];
 }
 
@@ -7325,8 +7351,10 @@ function updateDailyUI(){
   const timePill = document.getElementById('dailyTimePill');
   if(timePill) timePill.textContent = `📅 ${todayKey()} • 10–15 mins`;
 
+  const flashGoal = getDailyFlashTarget(d.topicId);
+
   const flashProg = document.getElementById('dmFlashProg');
-  if(flashProg) flashProg.textContent = `${Math.min(d.flash, DAILY_FLASH_GOAL)}/${DAILY_FLASH_GOAL}`;
+  if(flashProg) flashProg.textContent = `${Math.min(d.flash, flashGoal)}/${flashGoal}`;
 
   const quizProg = document.getElementById('dmQuizProg');
   if(quizProg) quizProg.textContent = `${Math.min(100, d.quizBest)}% / ${DAILY_QUIZ_GOAL}%`;
@@ -7337,7 +7365,7 @@ function updateDailyUI(){
   const flashRow = document.getElementById('dmFlashRow');
   const quizRow  = document.getElementById('dmQuizRow');
   const planRow  = document.getElementById('dmPlanRow');
-  const doneFlash = d.flash >= DAILY_FLASH_GOAL;
+  const doneFlash = d.flash >= flashGoal;
   const doneQuiz = d.quizBest >= DAILY_QUIZ_GOAL;
   const donePlan = !!d.planOpened;
   if(flashRow) flashRow.style.borderColor = doneFlash ? 'rgba(126,185,170,.55)' : 'rgba(0,0,0,.10)';
@@ -7399,7 +7427,8 @@ function renderStreakHero(){
   const textEl = $("streakStatusText");
   const cd = $("streakCountdown");
 
-  const doneFlash = d.flash >= DAILY_FLASH_GOAL;
+  const flashGoal = getDailyFlashTarget(d.topicId);
+  const doneFlash = d.flash >= flashGoal;
   const doneQuiz  = d.quizBest >= DAILY_QUIZ_GOAL;
   const donePlan  = !!d.planOpened;
 
@@ -7407,7 +7436,7 @@ function renderStreakHero(){
   const quizDot  = $("chkQuizDot");  if(quizDot)  quizDot.classList.toggle("done", doneQuiz);
   const planDot  = $("chkPlanDot");  if(planDot)  planDot.classList.toggle("done", donePlan);
 
-  const flashVal = $("chkFlashVal"); if(flashVal) flashVal.textContent = `${Math.min(d.flash, DAILY_FLASH_GOAL)}/${DAILY_FLASH_GOAL}`;
+  const flashVal = $("chkFlashVal"); if(flashVal) flashVal.textContent = `${Math.min(d.flash, flashGoal)}/${flashGoal}`;
   const quizVal  = $("chkQuizVal");  if(quizVal)  quizVal.textContent = `${Math.min(100, d.quizBest)}% / ${DAILY_QUIZ_GOAL}%`;
   const planVal  = $("chkPlanVal");  if(planVal)  planVal.textContent = donePlan ? "Started" : "Not started";
 
@@ -7491,8 +7520,9 @@ function renderStreakHero(){
 
 function checkDailyComplete(){
   const d = ensureDaily();
+  const flashGoal = getDailyFlashTarget(d.topicId);
   if(d.completed) return;
-  if(d.flash >= DAILY_FLASH_GOAL && d.quizBest >= DAILY_QUIZ_GOAL && d.planOpened){
+  if(d.flash >= flashGoal && d.quizBest >= DAILY_QUIZ_GOAL && d.planOpened){
     d.completed = true;
     // Update Duolingo-style streak when a Daily Challenge is completed
     updateDailyStreakOnComplete();
@@ -7511,6 +7541,9 @@ function checkDailyComplete(){
 function recordDailyFlashcard(topicId, cardId){
   const d = ensureDaily();
   if(topicId !== d.topicId) return;
+
+  const dailyFlashSet = ensureDailyFlashSet(d);
+  if(cardId && !dailyFlashSet.includes(cardId)) return;
 
   // Only count once per card per day (prevents spamming Reveal / marking)
   if(cardId){
@@ -9391,7 +9424,8 @@ function openStudyForTopic(topicId, mode="all"){
 }
 
 function nextDailyAction(d){
-  if((d.flash||0) < DAILY_FLASH_GOAL) return "flash";
+  const flashGoal = getDailyFlashTarget(d.topicId);
+  if((d.flash||0) < flashGoal) return "flash";
   if((d.quizBest||0) < DAILY_QUIZ_GOAL) return "quiz";
   if(!d.planOpened) return "plan";
   return null;
@@ -9701,7 +9735,16 @@ $("goDailyPlan").addEventListener("click", goDailyExam);
 let CURRENT = { list:[], idx:0, card:null };
 
 function pickDailyFlashcards(topicId, count=DAILY_FLASH_GOAL){
-  const pool = ALL_CARDS.filter(c=>c.topicId===topicId && isTopicEnabled(c.topicId));
+  const d = ensureDaily();
+  const selectedIds = (d.topicId === topicId) ? ensureDailyFlashSet(d) : [];
+  if(selectedIds.length){
+    const selected = selectedIds
+      .map(id=>ALL_CARDS.find(c=>c.id===id && c.topicId===topicId && isTopicEnabled(c.topicId)))
+      .filter(Boolean);
+    return shuffle(selected).slice(0, Math.min(count, selected.length));
+  }
+
+  const pool = getDailyFlashPool(topicId);
   return shuffle(pool).slice(0, Math.min(count, pool.length));
 }
 
@@ -9735,7 +9778,7 @@ function checkDailyFlashSessionComplete(cardId){
   let done = 0;
   session.cardIds.forEach(id=>{ if(revealed.has(id)) done++; });
 
-  const reachedGoal = (d.flash||0) >= DAILY_FLASH_GOAL;
+  const reachedGoal = (d.flash||0) >= getDailyFlashTarget(session.topicId);
   if(reachedGoal && done >= session.cardIds.size && session.cardIds.size > 0){
     session.complete = true;
     d.flashCelebrated = true;
