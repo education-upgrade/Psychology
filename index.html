@@ -3014,6 +3014,22 @@ section#games.gamePaneActive .gamesHeroCard{
 #lessonsRoot .lessonPanel p,
 #lessonsRoot .lessonPanel li{ margin:0; line-height:1.45; }
 #lessonsRoot .lessonPanel ul{ margin:0; padding-left:18px; display:grid; gap:8px; }
+.lesson-continuous { display: flex; flex-direction: column; gap: 20px; padding-bottom: 40px; }
+.lesson-block { background: rgba(255,255,255,0.85); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+.split-layout { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.sticky-pane { background: var(--surface); padding: 20px; border-radius: 12px; border-left: 4px solid var(--accent); }
+@media (min-width: 768px) {
+  .split-layout { grid-template-columns: 1fr 1.2fr; }
+  .sticky-pane { position: sticky; top: 20px; align-self: start; }
+}
+.qc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.qc-btn { text-align: left; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; font-weight: 600; }
+.qc-btn:hover:not(:disabled) { border-color: var(--accent); }
+.qc-btn.correct { background: rgba(126,185,170,.15); border-color: var(--good); }
+.qc-btn.wrong { background: rgba(183,142,161,.15); border-color: var(--bad); }
+.qc-btn.selected-neutral { background: rgba(110,144,202,.15); border-color: var(--accent); }
+.qc-feedback { padding: 14px; background: #fff; border-radius: 12px; border-left: 4px solid var(--accent); animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .fadeIn300{ animation:fadeIn300 .3s ease; }
 @keyframes fadeIn300{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
 
@@ -7102,89 +7118,6 @@ function escapeHtml(v){
     .replace(/'/g, "&#39;");
 }
 
-function renderLessonTextBullets(text){
-  if(typeof text !== "string") return "";
-  const trimmed = text.trim();
-  if(!trimmed) return "";
-
-  const panelTitleRules = [
-    { title:"Trigger event", match:/\b(trigger|spark|catalyst|immediate cause|provoked|after|when|because)\b/i },
-    { title:"Policy change", match:/\b(policy|decree|reform|law|measure|program|rules|government responded|introduced)\b/i },
-    { title:"People and groups", match:/\b(workers|peasants|army|soldiers|tsar|bolsheviks|mensheviks|nobility|leaders?|figures?)\b/i },
-    { title:"Evidence and detail", match:/\b(by\s+\d{4}|in\s+\d{4}|percent|statistics?|figures?|records?|sources?|example)\b/i },
-    { title:"Consequences", match:/\b(result|led to|therefore|so that|impact|effect|outcome|consequence|followed by)\b/i },
-    { title:"Why this matters", match:/\b(significance|important|shows that|reveals|therefore this mattered|overall)\b/i },
-    { title:"Exam link", match:/\b(exam|question|judgement|evaluate|how far|explain why|source)\b/i }
-  ];
-
-  const fallbackTitles = ["Key point", "Supporting detail", "Further context", "Why this matters", "Exam link"];
-
-  const sentenceParts = trimmed
-    .replace(/\s+/g, " ")
-    .split(/(?<=[.!?])\s+(?=[A-Z0-9"“])/)
-    .map(part=>part.trim())
-    .filter(Boolean);
-
-  const panels = [];
-  const usedTitles = new Set();
-  const makeTitle = (panelText, index)=>{
-    const match = panelTitleRules.find(rule=>rule.match.test(panelText) && !usedTitles.has(rule.title));
-    if(match){
-      usedTitles.add(match.title);
-      return match.title;
-    }
-    const fallback = fallbackTitles.find(title=>!usedTitles.has(title));
-    if(fallback){
-      usedTitles.add(fallback);
-      return fallback;
-    }
-    return `Context panel ${index + 1}`;
-  };
-
-  if(sentenceParts.length > 1){
-    const count = Math.min(5, Math.max(2, sentenceParts.length));
-    for(let i=0; i<count; i++){
-      const sentence = sentenceParts[i] || sentenceParts[sentenceParts.length - 1] || trimmed;
-      panels.push({ title:makeTitle(sentence, i), text:sentence });
-    }
-  }else{
-    const bullets = trimmed
-      .split(/\n+/)
-      .map(part=>part.replace(/^[-•\s]+/, "").trim())
-      .filter(Boolean);
-
-    if(bullets.length >= 2){
-      const count = Math.min(5, Math.max(2, bullets.length));
-      for(let i=0; i<count; i++){
-        const bulletText = bullets[i] || bullets[bullets.length - 1];
-        panels.push({ title:makeTitle(bulletText, i), text:bulletText });
-      }
-    }else{
-      const words = trimmed.split(/\s+/).filter(Boolean);
-      const count = Math.min(5, Math.max(2, Math.ceil(words.length / 18)));
-      const size = Math.max(8, Math.ceil(words.length / count));
-      const chunks = [];
-      for(let i=0; i<words.length; i+=size){
-        const chunk = words.slice(i, i + size).join(" ").trim();
-        if(chunk) chunks.push(chunk);
-      }
-      while(chunks.length < 2) chunks.push(trimmed);
-      const useCount = Math.min(5, Math.max(2, chunks.length));
-      for(let i=0; i<useCount; i++){
-        const chunkText = chunks[i] || chunks[chunks.length - 1] || trimmed;
-        panels.push({ title:makeTitle(chunkText, i), text:chunkText });
-      }
-    }
-  }
-
-  return `<div class="context-card">${panels.map(panel=>`
-    <div class="context-panel">
-      <div class="context-panel-title">${escapeHtml(panel.title)}</div>
-      <div class="context-panel-body"><p>${escapeHtml(panel.text)}</p></div>
-    </div>
-  `).join("")}</div>`;
-}
-
 /* ==========================================================
    DAILY CHALLENGE (purposeful + rotating)
    ========================================================== */
@@ -7830,17 +7763,13 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
 
 /* ==========================================================
-   LESSONS (Paper → Topic → Lesson)
+   LESSONS (Accordion + continuous article layout)
    ========================================================== */
 const LESSONS_STORAGE_KEY = "LESSONS_PROGRESS_V2";
 const lessonsState = {
-  view:"papers",
-  paperId:null,
-  topicId:null,
+  activeTopicIds:{},
   lessonId:null,
-  slideIndex:0,
-  scaffoldEnabled:true,
-  responses:{}
+  scaffoldEnabled:true
 };
 
 const LESSONS_LIBRARY = [
@@ -7916,7 +7845,7 @@ function getLessonById(lessonId){
 
 function getLessonProgress(lessonId){
   const store = lessonsStorage();
-  if(!store.byLesson[lessonId]) store.byLesson[lessonId] = { completedSlides:[], answered:{}, mcqOrder:{}, completed:false, updatedAt:Date.now() };
+  if(!store.byLesson[lessonId]) store.byLesson[lessonId] = { answered:{}, completed:false, updatedAt:Date.now() };
   saveLessonsStorage(store);
   return store.byLesson[lessonId];
 }
@@ -7941,165 +7870,179 @@ function shuffleArray(list){
   return arr;
 }
 
-function lessonTile(lesson){
-  const progress = getLessonProgress(lesson.id);
-  const total = lesson.slides.length;
-  const done = Math.min(progress.completedSlides.length, total);
-  const pct = total ? Math.round((done/total)*100) : 0;
-  const completeLabel = progress.completed ? "Completed" : done>0 ? "In progress" : "Not started";
+const lessonsData = LESSONS_LIBRARY;
+
+function renderTopicsList(root){
+  root.innerHTML = `
+    <div class="card">
+      <div class="lessonsHeader"><h2 class="lessonsTitle"><svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M6 8h12"></path><path d="M6 12h7"></path><path d="m13 19 6-6"></path><path d="m18.4 12.6 1.9 1.9"></path></svg><span>Lessons</span></h2></div>
+      <p class="note">Select a topic and start any lesson.</p>
+      <div class="lessonAccordion">${lessonsData.map(paper=>(paper.topics||[]).map(topic=>{
+        const isOpen = !!lessonsState.activeTopicIds[topic.id];
+        const lessonCards = (topic.lessons||[]).map(lesson=>{
+          const progress = getLessonProgress(lesson.id);
+          const status = progress.completed ? "Completed" : "Start";
+          return `<li class="lessonItem"><div class="lessonItemTop"><div><strong>${lesson.title}</strong><div class="lessonMeta">${lesson.difficulty} • ${lesson.examWeight}</div></div><button class="btn primary" data-start-lesson="${lesson.id}" type="button">${status}</button></div></li>`;
+        }).join("");
+        return `<section class="lesson-block"><button class="btn" data-topic-toggle="${topic.id}" type="button" style="width:100%;justify-content:space-between"><span>${topic.title}</span><span>${isOpen?"−":"+"}</span></button>${isOpen?`<div style="margin-top:12px"><h4 style="margin:0 0 8px">${paper.title} Theme</h4><ul class="lessonList">${lessonCards||"<li class='note'>No lessons yet.</li>"}</ul></div>`:""}</section>`;
+      }).join("")).join("")}</div>
+    </div>`;
+
+  root.querySelectorAll('[data-topic-toggle]').forEach(btn=>btn.addEventListener('click', ()=>{
+    const id = btn.dataset.topicToggle;
+    lessonsState.activeTopicIds[id] = !lessonsState.activeTopicIds[id];
+    renderLessons();
+  }));
+  root.querySelectorAll('[data-start-lesson]').forEach(btn=>btn.addEventListener('click', ()=>{
+    lessonsState.lessonId = btn.dataset.startLesson;
+    renderLessons();
+  }));
+}
+
+function renderInterpretationBlock(pack){
+  const interpretations = pack?.interpretations || {};
+  const hasSplit = interpretations.A || interpretations.B;
+  if(!hasSplit) return "";
   return `
-    <article class="lessonTile" data-open-lesson="${lesson.id}">
-      <div class="lessonTileTop">
-        <h4>${lesson.title}</h4>
-        <span class="lessonCompletionState ${progress.completed ? "done" : "pending"}">${completeLabel}</span>
+    <div class="lesson-block split-layout">
+      <div class="sticky-pane">
+        ${interpretations.A ? `<p>${formatAcademic(interpretations.A)}</p>` : ""}
+        ${interpretations.B ? `<p>${formatAcademic(interpretations.B)}</p>` : ""}
       </div>
-      <div class="lessonTileMeta">
-        <span class="lessonBadge">${lesson.difficulty}</span>
-        <span class="lessonWeightTag">${lesson.examWeight}</span>
+      <div>
+        ${renderInteractiveTask(pack?.argIdentify, "arg-identify")}
+        ${renderInteractiveTask(pack?.evidenceSupport, "evidence-select")}
+        ${renderInteractiveTask(pack?.evidenceChallenge, "evidence-select")}
       </div>
-      <div class="lessonTileProgress">
-        <div class="lessonTileTrack"><div class="lessonTileFill" style="width:${pct}%"></div></div>
-        <div class="note">${pct}% complete</div>
+    </div>`;
+}
+
+function renderInteractiveTask(task, type){
+  if(!task || !Array.isArray(task.options)) return "";
+  const limit = Number(task.limit||task.select||1);
+  return `
+    <section class="lesson-block" data-task-type="${type}" data-select-limit="${limit}">
+      <h4 style="margin-top:0">${escapeHtml(task.prompt||"Quick check")}</h4>
+      <div class="qc-options">
+        ${task.options.map((opt,idx)=>`<button class="qc-btn" type="button" data-correct="${!!opt.correct}" data-opt-idx="${idx}">${escapeHtml(opt.text||opt.label||String(opt))}</button>`).join("")}
       </div>
-    </article>`;
+      <div class="qc-feedback hidden">${escapeHtml(task.feedback||"Review the highlighted choices.")}</div>
+    </section>`;
+}
+
+function renderSlideBlock(slide, slideIndex, lessonId, progress){
+  if(slide.type === "mcq"){
+    const key = `${lessonId}:${slideIndex}`;
+    const orderedIds = (progress.mcqOrder && progress.mcqOrder[key]) || shuffleArray(slide.options.map(opt=>opt.id));
+    progress.mcqOrder ||= {};
+    progress.mcqOrder[key] = orderedIds;
+    updateLessonProgress(lessonId, progress);
+    const orderedOptions = orderedIds.map(id=>slide.options.find(opt=>opt.id===id)).filter(Boolean);
+    return `
+      <section class="lesson-block" data-task-type="quick-check" data-select-limit="1" data-storage-key="${key}">
+        <p><strong>${formatAcademic(slide.question)}</strong></p>
+        <div class="qc-options">
+          ${orderedOptions.map(opt=>`<button class="qc-btn" type="button" data-correct="${!!opt.correct}" data-option-id="${opt.id}">${formatAcademic(opt.text)}</button>`).join("")}
+        </div>
+        <div class="qc-feedback hidden">${escapeHtml((slide.options.find(opt=>opt.id===progress.answered?.[key])||{}).explanation || "")}</div>
+      </section>`;
+  }
+  if(slide.type === "briefing" || slide.type === "structuredContent"){
+    return `<section class="lesson-block"><h4 style="margin-top:0">${slide.heading||slide.section||"Briefing"}</h4>${(slide.panels||[]).map(panel=>`<p>${formatAcademic(panel)}</p>`).join("")}</section>`;
+  }
+  if(slide.type === "scenario"){
+    return `<section class="lesson-block"><h4 style="margin-top:0">${slide.heading||"Scenario"}</h4><p>${formatAcademic(slide.prompt||"")}</p><ul>${(slide.tasks||[]).map(task=>`<li>${formatAcademic(task)}</li>`).join("")}</ul></section>`;
+  }
+  if(slide.type === "shortAnswer"){
+    return `<section class="lesson-block" data-task-type="judgement" data-select-limit="1"><h4 style="margin-top:0">${slide.heading||"Short answer"}</h4><p>${formatAcademic(slide.prompt||"")}</p>${slide.guidance?`<p><strong>Guidance:</strong> ${formatAcademic(slide.guidance)}</p>`:""}<div class="qc-feedback">Write your response before moving on.</div></section>`;
+  }
+  if(slide.type === "masteryExam"){
+    return `<section class="lesson-block"><h4 style="margin-top:0">${slide.heading||"Mastery"}</h4><p>${formatAcademic(slide.question||"")}</p>${lessonsState.scaffoldEnabled?`<ul>${(slide.scaffold||[]).map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul>`:""}</section>`;
+  }
+  return `<section class="lesson-block"><p>Slide type unavailable.</p></section>`;
+}
+
+function bindInstantFeedback(root, lessonId){
+  root.querySelectorAll('[data-task-type="quick-check"], [data-task-type="arg-identify"], [data-task-type="evidence-select"]').forEach(taskEl=>{
+    const limit = Number(taskEl.dataset.selectLimit || 1);
+    const feedbackEl = taskEl.querySelector('.qc-feedback');
+    const buttons = Array.from(taskEl.querySelectorAll('.qc-btn'));
+    const selected = new Set();
+
+    const finalize = ()=>{
+      buttons.forEach(btn=>{
+        const isCorrect = btn.dataset.correct === 'true';
+        if(selected.has(btn)) btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        btn.disabled = true;
+      });
+      feedbackEl?.classList.remove('hidden');
+      if(limit === 1){
+        const picked = buttons.find(btn=>selected.has(btn));
+        const key = taskEl.dataset.storageKey;
+        if(key && picked){
+          const progress = getLessonProgress(lessonId);
+          progress.answered ||= {};
+          progress.answered[key] = picked.dataset.optionId || picked.dataset.optIdx || "";
+          const allMcqs = root.querySelectorAll('[data-task-type="quick-check"]').length;
+          const answeredMcqs = Object.keys(progress.answered).filter(k=>k.startsWith(`${lessonId}:`)).length;
+          progress.completed = allMcqs > 0 ? answeredMcqs >= allMcqs : true;
+          updateLessonProgress(lessonId, progress);
+        }
+      }
+    };
+
+    buttons.forEach(btn=>btn.addEventListener('click', ()=>{
+      if(buttons.some(b=>b.disabled)) return;
+      if(limit === 1){
+        selected.clear();
+        selected.add(btn);
+        finalize();
+        return;
+      }
+      if(selected.has(btn)){
+        selected.delete(btn);
+        btn.classList.remove('selected-neutral');
+      }else if(selected.size < limit){
+        selected.add(btn);
+        btn.classList.add('selected-neutral');
+      }
+      if(selected.size === limit) finalize();
+    }));
+  });
+}
+
+function renderLessonPlayer(root){
+  const current = getLessonById(lessonsState.lessonId);
+  if(!current){
+    lessonsState.lessonId = null;
+    return renderTopicsList(root);
+  }
+  const { paper, topic, lesson } = current;
+  const progress = getLessonProgress(lesson.id);
+
+  root.innerHTML = `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;gap:8px;align-items:center">
+        <button class="btn" id="backToLessons" type="button">← All Topics</button>
+        <button class="btn" id="toggleScaffold" type="button">Scaffold: ${lessonsState.scaffoldEnabled ? "On" : "Off"}</button>
+      </div>
+      <div class="lessonMeta" style="margin-top:10px">${paper.title} • ${topic.title} • ${lesson.title}</div>
+      <div class="lesson-continuous">
+        ${(lesson.slides||[]).map((slide,idx)=>renderSlideBlock(slide, idx, lesson.id, progress)).join("")}
+      </div>
+      ${renderInterpretationBlock(lesson.contentPack || {})}
+    </div>`;
+
+  $("backToLessons")?.addEventListener("click", ()=>{ lessonsState.lessonId = null; renderLessons(); });
+  $("toggleScaffold")?.addEventListener("click", ()=>{ lessonsState.scaffoldEnabled = !lessonsState.scaffoldEnabled; renderLessonPlayer(root); });
+  bindInstantFeedback(root, lesson.id);
 }
 
 function renderLessons(){
   const root = $("lessonsRoot");
   if(!root) return;
-
-  if(lessonsState.view === "papers"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="lessonsHeader"><h2 class="lessonsTitle"><svg class="navIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M6 8h12"></path><path d="M6 12h7"></path><path d="m13 19 6-6"></path><path d="m18.4 12.6 1.9 1.9"></path></svg><span>Lessons</span></h2></div>
-        <div class="lessonsGrid">${LESSONS_LIBRARY.map(p=>`<button class="card lessonRouteCard" data-open-paper="${p.id}" type="button"><h3>${p.title}</h3><p class="note">${p.description}</p></button>`).join("")}</div>
-      </div>`;
-    root.querySelectorAll('[data-open-paper]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.paperId=btn.dataset.openPaper; lessonsState.view='paper'; renderLessons(); }));
-    return;
-  }
-
-  const paper = LESSONS_LIBRARY.find(item=>item.id===lessonsState.paperId);
-  if(!paper){ lessonsState.view="papers"; return renderLessons(); }
-
-  if(lessonsState.view === "paper"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="row"><button class="btn" id="backToPapers" type="button">← Lessons</button></div>
-        <h3>${paper.title}</h3>
-        ${(paper.topics||[]).length ? `<div class="lessonsGrid">${paper.topics.map(t=>`<button class="card lessonRouteCard" data-open-topic="${t.id}" type="button"><h4>${t.title}</h4><p class="note">${t.lessons.length} lesson</p></button>`).join("")}</div>` : `<p class="note">Content for this paper is coming soon.</p>`}
-      </div>`;
-    $("backToPapers").addEventListener("click", ()=>{ lessonsState.view="papers"; lessonsState.paperId=null; renderLessons(); });
-    root.querySelectorAll('[data-open-topic]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.topicId=btn.dataset.openTopic; lessonsState.view='topic'; renderLessons(); }));
-    return;
-  }
-
-  const topic = (paper.topics||[]).find(item=>item.id===lessonsState.topicId);
-  if(!topic){ lessonsState.view="paper"; return renderLessons(); }
-
-  if(lessonsState.view === "topic"){
-    root.innerHTML = `
-      <div class="card">
-        <div class="row"><button class="btn" id="backToPaper" type="button">← ${paper.title}</button></div>
-        <h3>${topic.title}</h3>
-        <p class="note">Select a lesson tile to continue.</p>
-        <div class="lessonsGrid">${topic.lessons.map(lessonTile).join("")}</div>
-      </div>`;
-    $("backToPaper").addEventListener("click", ()=>{ lessonsState.view="paper"; lessonsState.topicId=null; renderLessons(); });
-    root.querySelectorAll('[data-open-lesson]').forEach(btn=>btn.addEventListener('click', ()=>{ lessonsState.lessonId=btn.dataset.openLesson; lessonsState.view='lesson'; lessonsState.slideIndex=0; renderLessons(); }));
-    return;
-  }
-
-  const current = getLessonById(lessonsState.lessonId);
-  if(!current){ lessonsState.view="topic"; return renderLessons(); }
-
-  const lesson = current.lesson;
-  const slide = lesson.slides[lessonsState.slideIndex];
-  const progress = getLessonProgress(lesson.id);
-  const key = `${lesson.id}:${lessonsState.slideIndex}`;
-  const selectedAnswer = progress.answered[key];
-
-  if(slide.type === "mcq" && !progress.mcqOrder[key]){
-    progress.mcqOrder[key] = shuffleArray(slide.options.map(opt=>opt.id));
-    updateLessonProgress(lesson.id, progress);
-  }
-
-  const orderedOptions = slide.type === "mcq"
-    ? progress.mcqOrder[key].map(id=>slide.options.find(opt=>opt.id===id)).filter(Boolean)
-    : [];
-
-  const canAdvance = slide.type !== "mcq" || !!selectedAnswer;
-  const pct = Math.round(((lessonsState.slideIndex+1)/lesson.slides.length)*100);
-
-  root.innerHTML = `
-    <div class="card">
-      <div class="row" style="justify-content:space-between;gap:8px;align-items:center">
-        <button class="btn" id="backToTopic" type="button">← ${topic.title}</button>
-        ${slide.type === "masteryExam" ? `<button class="btn" id="toggleScaffold" type="button">Scaffold: ${lessonsState.scaffoldEnabled ? "On" : "Off"}</button>` : ""}
-      </div>
-      <div class="lessonProgressWrap" style="margin-top:10px"><div class="lessonProgressTrack"><div class="lessonProgressFill" style="width:${pct}%"></div></div><div class="lessonProgressPct">${pct}% complete</div></div>
-      <section class="lessonSlideFrame fadeIn300">
-        <div class="lessonPanelHeader"><span class="pill">${slide.section}</span><h3>${slide.heading}</h3></div>
-        ${renderSlideBody(slide, orderedOptions, selectedAnswer)}
-      </section>
-      <div class="playerFooter">
-        <button class="btn" id="lessonPrevBtn" type="button" ${lessonsState.slideIndex===0?"disabled":""}>Previous</button>
-        <button class="btn primary" id="lessonNextBtn" type="button" ${lessonsState.slideIndex===lesson.slides.length-1 || !canAdvance ? "disabled" : ""}>Next →</button>
-      </div>
-    </div>`;
-
-  $("backToTopic").addEventListener("click", ()=>{ lessonsState.view="topic"; lessonsState.lessonId=null; lessonsState.slideIndex=0; renderLessons(); });
-  $("lessonPrevBtn").addEventListener("click", ()=>{
-    if(lessonsState.slideIndex===0) return;
-    lessonsState.slideIndex -= 1;
-    renderLessons();
-  });
-  const nextBtn = $("lessonNextBtn");
-  if(nextBtn) nextBtn.addEventListener("click", ()=>{
-    if(!canAdvance) return;
-    const completedSlides = Array.from(new Set([...(progress.completedSlides||[]), lessonsState.slideIndex]));
-    const done = lessonsState.slideIndex >= lesson.slides.length-2;
-    updateLessonProgress(lesson.id, { ...progress, completedSlides, completed:done });
-    lessonsState.slideIndex += 1;
-    renderLessons();
-  });
-
-  if(slide.type === "mcq"){
-    root.querySelectorAll('[data-mcq-option]').forEach(btn=>btn.addEventListener('click', ()=>{
-      const picked = btn.dataset.mcqOption;
-      const completedSlides = Array.from(new Set([...(progress.completedSlides||[]), lessonsState.slideIndex]));
-      updateLessonProgress(lesson.id, { ...progress, answered:{ ...(progress.answered||{}), [key]:picked }, completedSlides });
-      renderLessons();
-    }));
-  }
-
-  if(slide.type === "masteryExam"){
-    $("toggleScaffold")?.addEventListener("click", ()=>{ lessonsState.scaffoldEnabled = !lessonsState.scaffoldEnabled; renderLessons(); });
-  }
-}
-
-function renderSlideBody(slide, orderedOptions=[], selectedAnswer=""){
-  if(slide.type === "briefing" || slide.type === "structuredContent"){
-    return `<div class="lessonPanelStack">${(slide.panels||[]).map(panel=>`<article class="lessonPanel"><p>${formatAcademic(panel)}</p></article>`).join("")}</div>`;
-  }
-  if(slide.type === "mcq"){
-    const selected = slide.options.find(opt=>opt.id===selectedAnswer);
-    return `
-      <div class="lessonPanelStack">
-        <article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article>
-        <div class="quickCheckOptions">${orderedOptions.map(opt=>`<button class="btn" data-mcq-option="${opt.id}" type="button" style="text-align:left;justify-content:flex-start;border-width:${selectedAnswer===opt.id?"2px":"1px"}">${opt.text}</button>`).join("")}</div>
-        ${selected ? `<article class="lessonPanel"><p><strong>Feedback:</strong> ${selected.explanation}</p></article>` : `<article class="lessonPanel"><p><strong>Select one answer</strong> to unlock the next slide.</p></article>`}
-      </div>`;
-  }
-  if(slide.type === "scenario"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><ul>${(slide.tasks||[]).map(task=>`<li>${formatAcademic(task)}</li>`).join("")}</ul></article></div>`;
-  }
-  if(slide.type === "shortAnswer"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.prompt)}</p></article><article class="lessonPanel"><p><strong>Guidance:</strong> ${formatAcademic(slide.guidance||"")}</p></article></div>`;
-  }
-  if(slide.type === "masteryExam"){
-    return `<div class="lessonPanelStack"><article class="lessonPanel"><p>${formatAcademic(slide.question)}</p></article>${lessonsState.scaffoldEnabled ? `<article class="lessonPanel"><p><strong>Scaffold</strong></p><ul>${(slide.scaffold||[]).map(item=>`<li>${formatAcademic(item)}</li>`).join("")}</ul></article>` : ""}</div>`;
-  }
-  return `<article class="lessonPanel"><p>Slide type unavailable.</p></article>`;
+  if(!lessonsState.lessonId) return renderTopicsList(root);
+  return renderLessonPlayer(root);
 }
 
 document.addEventListener("DOMContentLoaded", renderLessons);
