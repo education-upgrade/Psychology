@@ -7238,9 +7238,52 @@ function ensureDaily(){
   const wantTopic = getDailyTopicId();
   if(!STATE.daily[k]){
     STATE.daily[k] = { topicId: wantTopic, flash:0, quizBest:0, planOpened:false, completed:false };
-    saveState();
   }
+  const d = STATE.daily[k];
+  if(d.topicId !== wantTopic){
+    d.topicId = wantTopic;
+    d.flash = 0;
+    d.quizBest = 0;
+    d.planOpened = false;
+    d.completed = false;
+    d.revealedCards = [];
+    d.flashTargetCardIds = [];
+  }
+  ensureDailyFlashTargets(d);
+  saveState();
   return STATE.daily[k];
+}
+
+function dailyFlashPool(topicId){
+  return ALL_CARDS.filter(c=>c.topicId===topicId && isTopicEnabled(c.topicId));
+}
+
+function ensureDailyFlashTargets(daily){
+  if(!daily?.topicId) return;
+  const pool = dailyFlashPool(daily.topicId);
+  const poolIds = new Set(pool.map(c=>c.id));
+  const strictTargeting = pool.length >= DAILY_FLASH_GOAL;
+  const targetCount = strictTargeting ? DAILY_FLASH_GOAL : Math.min(DAILY_FLASH_GOAL, pool.length);
+
+  const existingTargets = Array.isArray(daily.flashTargetCardIds)
+    ? daily.flashTargetCardIds.filter(id=>poolIds.has(id))
+    : [];
+  if(existingTargets.length !== targetCount){
+    daily.flashTargetCardIds = shuffle(pool).slice(0, targetCount).map(c=>c.id);
+  }else{
+    daily.flashTargetCardIds = existingTargets;
+  }
+
+  const revealed = Array.isArray(daily.revealedCards)
+    ? daily.revealedCards.filter(id=>poolIds.has(id))
+    : [];
+  daily.revealedCards = [...new Set(revealed)];
+
+  const targetSet = new Set(daily.flashTargetCardIds);
+  const eligible = strictTargeting
+    ? daily.revealedCards.filter(id=>targetSet.has(id))
+    : daily.revealedCards;
+  daily.flash = eligible.length;
 }
 
 function normalizeDailyStreak(){
@@ -7506,6 +7549,11 @@ function checkDailyComplete(){
 function recordDailyFlashcard(topicId, cardId){
   const d = ensureDaily();
   if(topicId !== d.topicId) return;
+  ensureDailyFlashTargets(d);
+
+  const targetIds = new Set(Array.isArray(d.flashTargetCardIds) ? d.flashTargetCardIds : []);
+  const strictTargeting = dailyFlashPool(topicId).length >= DAILY_FLASH_GOAL;
+  if(strictTargeting && cardId && !targetIds.has(cardId)) return;
 
   // Only count once per card per day (prevents spamming Reveal / marking)
   if(cardId){
@@ -7514,7 +7562,7 @@ function recordDailyFlashcard(topicId, cardId){
     d.revealedCards.push(cardId);
   }
 
-  d.flash = (d.flash||0) + 1;
+  ensureDailyFlashTargets(d);
   saveState();
   buildDailyCoachRecommendation();
   updateDailyUI();
@@ -9696,7 +9744,13 @@ $("goDailyPlan").addEventListener("click", goDailyExam);
 let CURRENT = { list:[], idx:0, card:null };
 
 function pickDailyFlashcards(topicId, count=DAILY_FLASH_GOAL){
-  const pool = ALL_CARDS.filter(c=>c.topicId===topicId && isTopicEnabled(c.topicId));
+  const d = ensureDaily();
+  if(d.topicId === topicId && Array.isArray(d.flashTargetCardIds) && d.flashTargetCardIds.length){
+    const byId = new Map(dailyFlashPool(topicId).map(c=>[c.id, c]));
+    const targets = d.flashTargetCardIds.map(id=>byId.get(id)).filter(Boolean);
+    if(targets.length) return targets;
+  }
+  const pool = dailyFlashPool(topicId);
   return shuffle(pool).slice(0, Math.min(count, pool.length));
 }
 
