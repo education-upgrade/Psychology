@@ -887,6 +887,12 @@
     }
     .flashcardFrame .qText{ font-size:clamp(26px, 2.9vw, 34px); line-height:1.35; }
     .flashcardFrame .aBox{ border-top:1px dashed var(--line); padding-top:16px; margin-top:0; font-size:clamp(19px, 2.2vw, 26px); line-height:1.55; }
+    .flashcardFrame .qDetail{
+      display:block;
+      font-weight:550;
+      color:#242424;
+      letter-spacing:-.1px;
+    }
 
 
     /* =========================
@@ -3308,6 +3314,7 @@ section#games.gamePaneActive .gamesHeroCard{
 
         <div class="flashcardFrame fixedCard" id="flashcardFrame">
 <p class="qText" id="qText" aria-live="polite">Pick a topic, then tap “Reveal”.</p>
+          <div id="qDetail" class="aBox qDetail hidden" aria-live="polite"></div>
 
           <div id="aBox" class="aBox hidden">
             <div id="aText"></div>
@@ -8325,9 +8332,10 @@ document.addEventListener("DOMContentLoaded", renderLessons);
 function buildKnowledgeCards(){
   const out = [];
   let n = 1;
-  const push = (topicId,q,a,tags=[]) => out.push({
+  const push = (topicId,q,a,tags=[], extras={}) => out.push({
     id:`c${String(n++).padStart(4,"0")}`,
-    topicId, q, a, tags, kind:"knowledge"
+    topicId, q, a, tags, kind:"knowledge",
+    ...extras
   });
   const simplifyStudyText = (text, { maxSentences = 2, maxChars = 220 } = {}) => {
     const raw = (text ?? "").toString().trim();
@@ -8380,7 +8388,7 @@ function buildKnowledgeCards(){
 
   const definitionPrompt = simplifyStudyText(t.meaning, { maxSentences:2, maxChars:260 });
   if(definitionPrompt){
-    push(topicId, `Which key term matches this definition: ${definitionPrompt}`, t.term, [t.term,"definition-reverse"]);
+    push(topicId, "Which key term matches this definition:", t.term, [t.term,"definition-reverse"], { promptDetail: definitionPrompt });
   }
 
   if (t.date && String(t.date).trim() !== "") {
@@ -10141,6 +10149,11 @@ function loadNextCard(){
 
   if(!CURRENT.card){
     $("qText").textContent = "No cards match these filters. Try switching topic or clearing search.";
+    const qDetailEl = $("qDetail");
+    if(qDetailEl){
+      qDetailEl.textContent = "";
+      qDetailEl.classList.add("hidden");
+    }
     $("aBox").classList.add("hidden");
     const rb = document.getElementById("btnRevealBand") || document.getElementById("btnReveal");
     if(rb) rb.innerHTML = BUTTON_ICON_LABELS.reveal;
@@ -10153,7 +10166,19 @@ function loadNextCard(){
 }
 function renderCard(){
   const c = CURRENT.card;
+  const qDetailEl = $("qDetail");
+
   $("qText").textContent = c.q;
+  if(qDetailEl){
+    if(c.promptDetail){
+      qDetailEl.textContent = c.promptDetail;
+      qDetailEl.classList.remove("hidden");
+    }else{
+      qDetailEl.textContent = "";
+      qDetailEl.classList.add("hidden");
+    }
+  }
+
   $("aText").textContent = c.a;
   $("aBox").classList.add("hidden");
 
