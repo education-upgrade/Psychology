@@ -8077,6 +8077,41 @@ function buildKnowledgeCards(){
     id:`c${String(n++).padStart(4,"0")}`,
     topicId, q, a, tags, kind:"knowledge"
   });
+  const simplifyStudyText = (text, { maxSentences = 2, maxChars = 220 } = {}) => {
+    const raw = (text ?? "").toString().trim();
+    if(!raw) return "";
+
+    const sentenceChunks = raw
+      .replace(/\s+/g, " ")
+      .split(/(?<=[.!?])\s+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    let shortened = sentenceChunks.slice(0, maxSentences).join(" ");
+    if(!shortened) shortened = raw;
+
+    const simplePhrases = [
+      [/\bin which\b/gi, "where"],
+      [/\btherefore\b/gi, "so"],
+      [/\bapproximately\b/gi, "about"],
+      [/\bindividuals\b/gi, "people"],
+      [/\butilised\b/gi, "used"],
+      [/\bdemonstrates\b/gi, "shows"],
+      [/\bdisproportionate\b/gi, "too strong"],
+      [/\bmaladaptive\b/gi, "unhelpful"],
+      [/\bsubsequently\b/gi, "then"]
+    ];
+    simplePhrases.forEach(([pattern, replacement]) => {
+      shortened = shortened.replace(pattern, replacement);
+    });
+
+    if(shortened.length > maxChars){
+      const clipped = shortened.slice(0, maxChars);
+      shortened = clipped.slice(0, clipped.lastIndexOf(" ") > 80 ? clipped.lastIndexOf(" ") : clipped.length).trimEnd() + "…";
+    }
+
+    return shortened;
+  };
   const significanceQuestion = (subject, { preferArticle = false } = {}) => {
     const raw = (subject ?? "").toString().trim();
     if(!raw) return "what was significant about: it";
@@ -8089,7 +8124,7 @@ function buildKnowledgeCards(){
     (T.core||[]).forEach(c => push(topicId, c.q, c.a, c.tags||[]));
 
 (T.terms||[]).forEach(t=>{
-  push(topicId, `Define: ${t.term}.`, t.meaning, [t.term,"definition"]);
+  push(topicId, `Define: ${t.term}.`, simplifyStudyText(t.meaning, { maxSentences:2, maxChars:210 }), [t.term,"definition"]);
 
   if (t.date && String(t.date).trim() !== "") {
     push(topicId, `Date check: ${t.term} — when?`, `${t.date}.`, [t.term,"date"]);
@@ -8097,7 +8132,7 @@ function buildKnowledgeCards(){
 
   const sig = (t.significance ?? "").toString().trim();
   if(sig){
-    push(topicId, significanceQuestion(t.term, { preferArticle:true }), sig, [t.term,"significance"]);
+    push(topicId, significanceQuestion(t.term, { preferArticle:true }), simplifyStudyText(sig, { maxSentences:2, maxChars:210 }), [t.term,"significance"]);
   }
 });
 
@@ -8105,7 +8140,7 @@ function buildKnowledgeCards(){
       push(topicId, `Who was ${p.name}?`, p.role, [p.name,"people"]);
       const psig = (p.significance ?? "").toString().trim();
       if(psig){
-        push(topicId, significanceQuestion(p.name), psig, [p.name,"significance"]);
+        push(topicId, significanceQuestion(p.name), simplifyStudyText(psig, { maxSentences:2, maxChars:210 }), [p.name,"significance"]);
       }
       // (Removed) "Link to ONE policy/event" cards removed per request
 });
@@ -8117,7 +8152,7 @@ function buildKnowledgeCards(){
     push(topicId, `Date check: ${e.name} — when?`, `${e.date}.`, [e.name,"date"]);
   }
 
-  push(topicId, significanceQuestion(e.name, { preferArticle:true }), e.whyMatters, [e.name,"significance"]);
+  push(topicId, significanceQuestion(e.name, { preferArticle:true }), simplifyStudyText(e.whyMatters, { maxSentences:2, maxChars:210 }), [e.name,"significance"]);
   push(topicId, `Give two consequences of ${e.name}.`, `1) …  2) … (be specific)`, [e.name,"consequences"]);
 });
   }
