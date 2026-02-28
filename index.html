@@ -8124,7 +8124,7 @@ function buildKnowledgeCards(){
     (T.core||[]).forEach(c => push(topicId, c.q, c.a, c.tags||[]));
 
 (T.terms||[]).forEach(t=>{
-  push(topicId, `Define: ${t.term}.`, simplifyStudyText(t.meaning, { maxSentences:2, maxChars:210 }), [t.term,"definition"]);
+  push(topicId, `Define: ${t.term}.`, simplifyStudyText(t.meaning, { maxSentences:1, maxChars:210 }), [t.term,"definition"]);
 
   if (t.date && String(t.date).trim() !== "") {
     push(topicId, `Date check: ${t.term} — when?`, `${t.date}.`, [t.term,"date"]);
