@@ -1,7 +1,7 @@
 /* service-worker.js
    Updated for AQA Psychology app – clean cache and correct precache paths
 */
-const CACHE_NAME = "aqa-psychology-v2";
+const CACHE_NAME = "aqa-psychology-v3";
 
 const PRECACHE_URLS = [
   "./",
@@ -13,7 +13,8 @@ const PRECACHE_URLS = [
   "./icon-512.png",
   "./icon-512-maskable.png",
   "./header-bg.jpg",
-  "./background-bg.jpg"
+  "./background-bg.jpg",
+  "./gemini_generated_video_EA512AAF.mp4"
 ];
 
 // Install: pre-cache core assets
