@@ -389,10 +389,10 @@
 .journeyNodeImg{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   object-position:center;
   display:block;
-  transform:scale(1.08);
+  padding:8px;
 }
 .journeyMilestone{
   border:1px solid var(--line);
@@ -18663,12 +18663,12 @@ function renderTopicDashboard(){
   const el = document.getElementById('topicDash');
   if(!el) return;
 
-  const topicLineImages = {
-    t1: "./Lesson infographics/Topic 1 line .PNG",
-    t2: "./Lesson infographics/Topic 2 line .PNG",
-    t3: "./Lesson infographics/Topic 3 line .PNG",
-    t4: "./Lesson infographics/Topic 4 line .PNG"
-  };
+  const topicLineImages = Object.fromEntries(
+    TOPICS.map((topic, idx) => [
+      topic.id,
+      `./Icons/${idx === 2 ? "topic3" : `Topic${idx + 1}`}.png`
+    ])
+  );
 
   const currentTopicId = getCurrentJourneyTopicId();
   renderJourneyMapStops(currentTopicId);
