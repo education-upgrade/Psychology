@@ -20273,104 +20273,144 @@ function buildMcqBank(){
   const TERMS = allTerms();
   const PEOPLE = allPeople();
   const EVENTS = allEvents();
+  const topicTitleMap = Object.fromEntries(TOPICS.map(topic=>[topic.id, topic.title]));
+  const topicTermsMap = Object.fromEntries(TOPICS.map(topic=>[topic.id, TERMS.filter(term=>term.topicId===topic.id)]));
+  const lessonTopicMap = Object.fromEntries((lessonsData||[]).map(topic=>[topic.id, topic]));
 
-  const termDates = TERMS.filter(t=>t.date && String(t.date).trim()!=="").map(t=>String(t.date));
-  const termMeans = TERMS.map(t=>String(t.meaning));
-  const termSigs  = TERMS.map(t=>String(t.significance));
-  const peopleRoles = PEOPLE.map(p=>String(p.role));
-  const peopleSigs  = PEOPLE.map(p=>String(p.significance));
-  const eventDates = EVENTS.filter(e=>e.date && String(e.date).trim()!=="").map(e=>String(e.date));
-  const eventWhats  = EVENTS.map(e=>String(e.what));
-  const eventWhy    = EVENTS.map(e=>String(e.whyMatters));
+  const allMeanings = unique(TERMS.map(t=>String(t.meaning||"").trim()).filter(Boolean));
+  const allTermNames = unique(TERMS.map(t=>String(t.term||"").trim()).filter(Boolean));
+  const allTopicTitles = TOPICS.map(topic=>topic.title);
+  const peopleRoles = unique(PEOPLE.map(p=>String(p.role||"").trim()).filter(Boolean));
+  const peopleSigs = unique(PEOPLE.map(p=>String(p.significance||"").trim()).filter(Boolean));
+  const eventDates = unique(EVENTS.filter(e=>e.date && String(e.date).trim()!=="").map(e=>String(e.date)));
+  const eventWhats = unique(EVENTS.map(e=>String(e.what||"").trim()).filter(Boolean));
 
   function push(topicId,q,choices,answer,explain){
-    bank.push({ topicId, q, choices, answer, explain });
+    const normalizedChoices = unique((choices||[]).map(choice=>String(choice||"").trim()).filter(Boolean));
+    const normalizedAnswer = String(answer||"").trim();
+    if(!topicId || !q || !normalizedAnswer) return;
+    if(normalizedChoices.length < 2 || !normalizedChoices.includes(normalizedAnswer)) return;
+    if(normalizedChoices.length > 4){
+      const trimmed = [normalizedAnswer, ...normalizedChoices.filter(choice=>choice!==normalizedAnswer).slice(0,3)];
+      bank.push({ topicId, q, choices:shuffle(trimmed), answer:normalizedAnswer, explain });
+      return;
+    }
+    bank.push({ topicId, q, choices:shuffle(normalizedChoices), answer:normalizedAnswer, explain });
   }
 
-  TERMS.forEach(t=>{
-    if (t.date && String(t.date).trim() !== "") {
-  const wrongDates = shuffle(
-    termDates.filter(d => d !== String(t.date))
-  ).slice(0, 3);
+  function pickDistractors(pool, answer, count=3, fallbackPrefix="Option"){
+    const cleaned = unique((pool||[]).map(item=>String(item||"").trim()).filter(Boolean));
+    const distractors = shuffle(cleaned.filter(item=>item!==answer)).slice(0, count);
+    let i = 1;
+    while(distractors.length < count){
+      const filler = `${fallbackPrefix} ${i++}`;
+      if(filler !== answer && !distractors.includes(filler)) distractors.push(filler);
+    }
+    return distractors;
+  }
 
-  push(
-    t.topicId,
-    `When was: ${t.term}?`,
-    shuffle([String(t.date), ...wrongDates]),
-    String(t.date),
-    `Correct: ${t.date}. Why it matters: ${t.significance}`
-  );
-}
+  function topicChoices(topicId){
+    return pickDistractors(allTopicTitles, topicTitleMap[topicId], 3, "Topic");
+  }
 
-    const wrongDefs = shuffle(termMeans.filter(m=>m!==String(t.meaning))).slice(0,3);
-    push(t.topicId, `Which definition best matches: ${t.term}?`, shuffle([String(t.meaning), ...wrongDefs]), String(t.meaning),
-      `Correct: ${t.meaning}`);
+  TERMS.forEach(term=>{
+    const termName = String(term.term||"").trim();
+    const meaning = String(term.meaning||"").trim();
+    if(!termName || !meaning) return;
+    push(term.topicId, `Which definition best matches: ${termName}?`, [meaning, ...pickDistractors(allMeanings, meaning, 3, "Definition")], meaning, `Correct: ${meaning}`);
+    push(term.topicId, `Which term best matches this definition? “${meaning}”`, [termName, ...pickDistractors(allTermNames, termName, 3, "Term")], termName, `Correct: ${termName}.`);
+    push(term.topicId, `Which topic does ${termName} belong to?`, [topicTitleMap[term.topicId], ...topicChoices(term.topicId)], topicTitleMap[term.topicId], `Correct: ${topicTitleMap[term.topicId]}.`);
 
-    const sigText = (t.significance ?? "").toString().trim();
-    if(sigText){
-      const wrongSigs = shuffle(termSigs.filter(s=>s!==sigText)).slice(0,3);
-      push(t.topicId, `Which significance best fits: ${t.term}?`, shuffle([sigText, ...wrongSigs]), sigText,
-        `Correct: ${sigText}`);
+    const sameTopicTerms = (topicTermsMap[term.topicId]||[]).map(item=>String(item.term||"").trim()).filter(Boolean);
+    const sameTopicWrong = pickDistractors(allTermNames.filter(name=>!sameTopicTerms.includes(name)), termName, 3, "Concept");
+    push(term.topicId, `Which concept is part of ${topicTitleMap[term.topicId]}?`, [termName, ...sameTopicWrong], termName, `Correct: ${termName} is revised in ${topicTitleMap[term.topicId]}.`);
 
-      const sigPrompt = sigText;
-      const distractorTerms = shuffle(TERMS.filter(x=>x.term!==t.term).map(x=>x.term)).slice(0,3);
-      push(t.topicId, `Which term matches this? “${sigPrompt}”`, shuffle([t.term, ...distractorTerms]), t.term,
-        `Correct: ${t.term}${(t.date && String(t.date).trim()!=="") ? ` (${t.date})` : ""}.`);
+    const significance = String(term.significance||"").trim();
+    if(significance){
+      push(term.topicId, `Which significance best fits: ${termName}?`, [significance, ...pickDistractors(TERMS.map(item=>String(item.significance||"").trim()).filter(Boolean), significance, 3, "Significance")], significance, `Correct: ${significance}`);
     }
   });
 
-  PEOPLE.forEach(p=>{
-    const wrongRoles = shuffle(peopleRoles.filter(r=>r!==String(p.role))).slice(0,3);
-    push(p.topicId, `Which role best matches: ${p.name}?`, shuffle([String(p.role), ...wrongRoles]), String(p.role),
-      `Correct: ${p.role}.`);
-
-    const psigText = (p.significance ?? "").toString().trim();
-    if(psigText){
-      const wrongSig = shuffle(peopleSigs.filter(s=>s!==psigText)).slice(0,3);
-      push(p.topicId, `Which significance best fits: ${p.name}?`, shuffle([psigText, ...wrongSig]), psigText,
-        `Correct: ${psigText}`);
-
-      const desc = psigText;
-      const distractors = shuffle(PEOPLE.filter(x=>x.name!==p.name).map(x=>x.name)).slice(0,3);
-      push(p.topicId, `Who is described? “${desc}”`, shuffle([p.name, ...distractors]), p.name,
-        `Correct: ${p.name} (${p.role}).`);
+  PEOPLE.forEach(person=>{
+    const role = String(person.role||"").trim();
+    const significance = String(person.significance||"").trim();
+    if(role){
+      push(person.topicId, `Which role best matches: ${person.name}?`, [role, ...pickDistractors(peopleRoles, role, 3, "Role")], role, `Correct: ${person.role}.`);
+    }
+    if(significance){
+      push(person.topicId, `Which significance best fits: ${person.name}?`, [significance, ...pickDistractors(peopleSigs, significance, 3, "Significance")], significance, `Correct: ${significance}`);
     }
   });
 
-EVENTS.forEach(e=>{
- if (e.date && String(e.date).trim() !== "") {
-  const wrongDates = shuffle(
-    eventDates.filter(d => d !== String(e.date))
-  ).slice(0, 3);
+  EVENTS.forEach(event=>{
+    const what = String(event.what||"").trim();
+    if(event.date && String(event.date).trim() !== ""){
+      push(event.topicId, `Date check: ${event.name} — when?`, [String(event.date), ...pickDistractors(eventDates, String(event.date), 3, "Date")], String(event.date), `Correct: ${event.date}. Why it matters: ${event.whyMatters}`);
+    }
+    if(what){
+      push(event.topicId, `What happened in: ${event.name}?`, [what, ...pickDistractors(eventWhats, what, 3, "Event")], what, `Correct: ${what}`);
+    }
+  });
 
-  push(
-    e.topicId,
-    `Date check: ${e.name} — when?`,
-    shuffle([String(e.date), ...wrongDates]),
-    String(e.date),
-    `Correct: ${e.date}. Why it matters: ${e.whyMatters}`
-  );
-}
+  TOPICS.forEach(topic=>{
+    const existingCount = bank.filter(item=>item.topicId===topic.id).length;
+    if(existingCount >= 30) return;
 
-    const wrongWhat = shuffle(eventWhats.filter(w=>w!==String(e.what))).slice(0,3);
-    push(e.topicId, `What happened in: ${e.name}?`, shuffle([String(e.what), ...wrongWhat]), String(e.what),
-      `Correct: ${e.what}`);
+    const topicLessons = lessonTopicMap[topic.id]?.themes?.flatMap(theme=>theme.lessons||[]) || [];
+    const lessonTitles = unique(topicLessons.map(lesson=>String(lesson.title||"").trim()).filter(Boolean));
+    const keyQuestions = unique(topicLessons.map(lesson=>String(lesson.keyQuestionTitle||"").trim()).filter(Boolean));
+    const themeNames = unique((lessonTopicMap[topic.id]?.themes||[]).map(theme=>String(theme.title||"").trim()).filter(Boolean));
+    const examWants = unique((lessonTopicMap[topic.id]?.topicOverview?.examWants||[]).map(item=>String(item||"").trim()).filter(Boolean));
+    const pathway = unique((lessonTopicMap[topic.id]?.topicOverview?.pathway||[]).map(item=>String(item||"").trim()).filter(Boolean));
+    const topicSpecificTerms = unique((topicTermsMap[topic.id]||[]).map(item=>String(item.term||"").trim()).filter(Boolean));
+    const fallbackFocus = unique([...topicSpecificTerms, ...lessonTitles, ...keyQuestions, ...themeNames, ...examWants, ...pathway, topic.title]);
 
-    const whyPrompt = String(e.whyMatters);
-    const distractorEvents = shuffle(EVENTS.filter(x=>x.name!==e.name).map(x=>x.name)).slice(0,3);
-    push(
-      e.topicId,
-      `Which event matches this impact? “${whyPrompt}”`,
-      shuffle([e.name, ...distractorEvents]),
-      e.name,
-      `Correct: ${e.name}${(e.date && String(e.date).trim()!=="") ? ` (${e.date})` : ""}.`
-    );
+    topicLessons.forEach((lesson, lessonIndex)=>{
+      const lessonTitle = String(lesson.title||"").trim();
+      const themeTitle = String(lesson.theme||lessonTopicMap[topic.id]?.themes?.[lessonIndex]?.title||"").trim();
+      if(lessonTitle){
+        push(topic.id, `Which lesson belongs to ${topic.title}?`, [lessonTitle, ...pickDistractors(lessonTitles, lessonTitle, 3, "Lesson")], lessonTitle, `Correct: ${lessonTitle}.`);
+      }
+      if(lessonTitle && themeTitle){
+        push(topic.id, `Which theme does the lesson “${lessonTitle}” sit in?`, [themeTitle, ...pickDistractors(themeNames, themeTitle, 3, "Theme")], themeTitle, `Correct: ${themeTitle}.`);
+      }
+      const quickCheck = lesson.contentPack?.sf?.quickCheck;
+      if(quickCheck && Array.isArray(quickCheck.options) && quickCheck.options.length){
+        const answer = quickCheck.options[Number(quickCheck.answerIndex||0)] || quickCheck.options[0];
+        push(topic.id, quickCheck.question, quickCheck.options, answer, quickCheck.feedbackCorrect || `Correct: ${answer}`);
+      }
+    });
+
+    examWants.forEach(want=>{
+      push(topic.id, `Which exam focus is listed for ${topic.title}?`, [want, ...pickDistractors(examWants, want, 3, "Exam focus")], want, `Correct: ${want}`);
+    });
+
+    pathway.forEach(step=>{
+      push(topic.id, `Which pathway step appears in ${topic.title}?`, [step, ...pickDistractors(pathway, step, 3, "Pathway")], step, `Correct: ${step}.`);
+    });
+
+    const topicPool = bank.filter(item=>item.topicId===topic.id);
+    let fillerIndex = 0;
+    while(topicPool.length < 30){
+      const answer = fallbackFocus[fillerIndex % Math.max(1, fallbackFocus.length)] || topic.title;
+      const alternatePool = unique(fallbackFocus.filter(item=>item!==answer));
+      push(topic.id, `Which revision focus belongs to ${topic.title}?`, [answer, ...pickDistractors(alternatePool, answer, 3, "Focus")], answer, `Correct: ${answer} is part of ${topic.title}.`);
+      const updatedTopicPool = bank.filter(item=>item.topicId===topic.id);
+      if(updatedTopicPool.length === topicPool.length) break;
+      topicPool.length = 0;
+      topicPool.push(...updatedTopicPool);
+      fillerIndex += 1;
+    }
   });
 
   return bank;
 }
+
+var MCQ_BANK_CACHE = null;
 function getMcqBank(){
-  return MCQ_BANK_MANUAL;
+  if(Array.isArray(MCQ_BANK_MANUAL) && MCQ_BANK_MANUAL.length) return MCQ_BANK_MANUAL;
+  if(!MCQ_BANK_CACHE) MCQ_BANK_CACHE = buildMcqBank();
+  return MCQ_BANK_CACHE;
 }
 
 function getQuizPool(topicId){
