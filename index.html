@@ -3009,14 +3009,19 @@ section#games.gamePaneActive .gamesHeroCard{
       position:fixed;
       inset:0;
       z-index:10070;
-      background:radial-gradient(1200px 680px at 50% 10%, rgba(110,144,202,.2), transparent 60%), linear-gradient(180deg, #f3f7fb 0%, #e7eff9 100%);
+      background:
+        radial-gradient(1200px 680px at 50% 10%, rgba(110,144,202,.18), transparent 60%),
+        linear-gradient(180deg, rgba(243,247,251,.96) 0%, rgba(231,239,249,.985) 100%);
       display:grid;
       place-items:center;
       padding:24px;
-      transition:opacity .45s ease;
+      opacity:1;
+      visibility:visible;
+      transition:opacity .45s ease, visibility 0s linear .45s;
     }
     .welcomeSplashScreen.is-fading{
       opacity:0;
+      visibility:hidden;
     }
     .welcomeSplashCard{
       width:min(1100px, 100%);
@@ -3026,7 +3031,7 @@ section#games.gamePaneActive .gamesHeroCard{
       padding:18px;
       border-radius:24px;
       border:1px solid rgba(30,60,100,.14);
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.82);
       box-shadow:0 24px 50px rgba(24,48,76,.16);
       backdrop-filter:blur(14px) saturate(118%);
     }
@@ -3035,14 +3040,29 @@ section#games.gamePaneActive .gamesHeroCard{
       overflow:hidden;
       border-radius:18px;
       aspect-ratio:16 / 9;
-      background:linear-gradient(180deg, rgba(20,30,50,.08), rgba(20,30,50,.22));
+      background:linear-gradient(180deg, rgba(12,20,34,.92), rgba(24,38,60,.82));
+      isolation:isolate;
     }
     .welcomeVideoWrap::after{
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(180deg, rgba(9,18,32,.08) 0%, rgba(9,18,32,.1) 45%, rgba(9,18,32,.4) 100%);
+      background:linear-gradient(180deg, rgba(8,16,28,.08) 0%, rgba(8,16,28,.08) 42%, rgba(8,16,28,.44) 100%);
       pointer-events:none;
+      z-index:1;
+    }
+    .welcomeVideoWrap::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at center, rgba(255,255,255,.06), transparent 58%);
+      opacity:0;
+      transition:opacity .28s ease;
+      pointer-events:none;
+      z-index:0;
+    }
+    .welcomeVideoWrap.is-loading::before{
+      opacity:1;
     }
     .welcomeVideoPlayer{
       width:100%;
@@ -3051,11 +3071,18 @@ section#games.gamePaneActive .gamesHeroCard{
       border:none;
       outline:none;
       box-shadow:none;
-      background:#fff;
-      object-fit:cover;
+      background:#0d1520;
+      object-fit:contain;
       object-position:center;
-      transform:scale(1.02);
+      image-rendering:auto;
       -webkit-appearance:none;
+      opacity:1;
+      transition:opacity .24s ease;
+      position:relative;
+      z-index:0;
+    }
+    .welcomeVideoWrap.is-loading .welcomeVideoPlayer{
+      opacity:.18;
     }
     .welcomeSplashCopy{
       position:absolute;
@@ -3717,10 +3744,13 @@ section#games.gamePaneActive .gamesHeroCard{
             class="welcomeVideoPlayer"
             src="./gemini_generated_video_EA512AAF.mp4"
             playsinline
+            webkit-playsinline="true"
             autoplay
             muted
+            disablepictureinpicture
             controlslist="nodownload noplaybackrate noremoteplayback"
             preload="auto"
+            poster="./background-bg.jpg"
           ></video>
           <div class="welcomeSplashCopy" aria-hidden="true">
             <div class="welcomeSplashEyebrow">AQA A-Level Psychology</div>
@@ -19694,25 +19724,44 @@ function closeDailyCoachDialog(){
   if(overlay) overlay.classList.add("hidden");
 }
 
-const WELCOME_SPLASH_DURATION_MS = 3600;
+const WELCOME_SPLASH_DURATION_MS = 4200;
+const WELCOME_SPLASH_FADE_MS = 460;
+const WELCOME_VIDEO_PLAYBACK_RATE = 1.2;
 let welcomeSplashTimer = null;
+
+function scheduleWelcomeSplashClose(showCoach=true, delayMs=WELCOME_SPLASH_DURATION_MS){
+  clearTimeout(welcomeSplashTimer);
+  welcomeSplashTimer = setTimeout(()=>closeWelcomeVideoDialog(showCoach), delayMs);
+}
 
 function openWelcomeVideoDialog(){
   const splashScreen = $("welcomeSplashScreen");
   const player = $("welcomeVideoPlayer");
-  const welcomeVideoPlaybackRate = 1.35;
+  const videoWrap = player?.closest(".welcomeVideoWrap");
   if(!splashScreen || !player) return false;
+
   clearTimeout(welcomeSplashTimer);
   splashScreen.classList.remove("hidden", "is-fading");
+  videoWrap?.classList.add("is-loading");
+
+  const clearLoadingState = ()=>videoWrap?.classList.remove("is-loading");
+  player.onloadeddata = clearLoadingState;
+  player.oncanplay = clearLoadingState;
+
   try{
+    player.pause();
     player.currentTime = 0;
-    player.playbackRate = welcomeVideoPlaybackRate;
+    player.playbackRate = WELCOME_VIDEO_PLAYBACK_RATE;
     const playAttempt = player.play();
     if(playAttempt && typeof playAttempt.catch === "function"){
       playAttempt.catch(()=>{});
     }
   }catch(e){}
-  welcomeSplashTimer = setTimeout(()=>closeWelcomeVideoDialog(true), WELCOME_SPLASH_DURATION_MS);
+
+  const durationMs = Number.isFinite(player.duration) && player.duration > 0
+    ? Math.max(2200, Math.min(WELCOME_SPLASH_DURATION_MS, Math.round((player.duration / WELCOME_VIDEO_PLAYBACK_RATE) * 1000)))
+    : WELCOME_SPLASH_DURATION_MS;
+  scheduleWelcomeSplashClose(true, durationMs);
   return true;
 }
 
@@ -19738,7 +19787,7 @@ function closeWelcomeVideoDialog(showCoach=true){
 
   if(splashScreen){
     splashScreen.classList.add("is-fading");
-    setTimeout(finishClose, 460);
+    setTimeout(finishClose, WELCOME_SPLASH_FADE_MS);
   }else{
     finishClose();
   }
