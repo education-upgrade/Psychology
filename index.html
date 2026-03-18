@@ -17184,7 +17184,7 @@ function renderTopicLessonsView(root, topic){
               </div>
             </div>
             ${timelineImage
-              ? `<button class="topicTimelinePreview topicTimelinePreviewBtn" data-action="open-lesson-infographic" data-src="${escapeHtml(timelineImage)}" type="button" aria-label="Open timeline for ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} in full view"><img class="topicTimelineImage" src="${escapeHtml(timelineImage)}" alt="Topic ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} timeline"><span class="lessonInfographicHint">Tap timeline to expand</span></button>`
+              ? `<button class="topicTimelinePreview topicTimelinePreviewBtn" data-action="open-lesson-infographic" data-src="${escapeHtml(timelineImage)}" type="button" aria-label="Open timeline for ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} in full view"><img class="topicTimelineImage" src="${escapeHtml(timelineImage)}" alt="Topic ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} timeline"><span class="lessonInfographicHint">Tap to expand</span></button>`
               : `<p class="topicDescriptor">${escapeHtml(buildTopicDescriptor(topic))}</p>`}
             <div class="topicActionRow">
               <span class="topicExploreBtn" aria-hidden="true">Topic lessons</span>
@@ -17276,7 +17276,7 @@ function renderTopicsList(root){
                     </div>
                   </div>
                   ${timelineImage
-                    ? `<button class="topicTimelinePreview topicTimelinePreviewBtn" data-action="open-lesson-infographic" data-src="${escapeHtml(timelineImage)}" type="button" aria-label="Open timeline for ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} in full view"><img class="topicTimelineImage" src="${escapeHtml(timelineImage)}" alt="Topic ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} timeline"><span class="lessonInfographicHint">Tap timeline to expand</span></button>`
+                    ? `<button class="topicTimelinePreview topicTimelinePreviewBtn" data-action="open-lesson-infographic" data-src="${escapeHtml(timelineImage)}" type="button" aria-label="Open timeline for ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} in full view"><img class="topicTimelineImage" src="${escapeHtml(timelineImage)}" alt="Topic ${escapeHtml((titleParts.title || "").replace(/^[0-9]+\.\s*/, "") || topic.id)} timeline"><span class="lessonInfographicHint">Tap to expand</span></button>`
                     : `<p class="topicDescriptor">${escapeHtml(buildTopicDescriptor(topic))}</p>`}
                   <div class="topicActionRow">
                     <button class="topicExploreBtn" type="button" data-action="open-topic-lessons" data-topic="${topic.id}">Explore lessons</button>
