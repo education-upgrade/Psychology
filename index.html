@@ -3009,7 +3009,7 @@ section#games.gamePaneActive .gamesHeroCard{
       position:fixed;
       inset:0;
       z-index:10070;
-      background:#fff;
+      background:radial-gradient(1200px 680px at 50% 10%, rgba(110,144,202,.2), transparent 60%), linear-gradient(180deg, #f3f7fb 0%, #e7eff9 100%);
       display:grid;
       place-items:center;
       padding:24px;
@@ -3018,21 +3018,96 @@ section#games.gamePaneActive .gamesHeroCard{
     .welcomeSplashScreen.is-fading{
       opacity:0;
     }
-    .welcomeVideoPlayer{
+    .welcomeSplashCard{
       width:min(1100px, 100%);
       max-height:calc(100vh - 48px);
+      display:grid;
+      gap:16px;
+      padding:18px;
+      border-radius:24px;
+      border:1px solid rgba(30,60,100,.14);
+      background:rgba(255,255,255,.72);
+      box-shadow:0 24px 50px rgba(24,48,76,.16);
+      backdrop-filter:blur(14px) saturate(118%);
+    }
+    .welcomeVideoWrap{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      aspect-ratio:16 / 9;
+      background:linear-gradient(180deg, rgba(20,30,50,.08), rgba(20,30,50,.22));
+    }
+    .welcomeVideoWrap::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(9,18,32,.08) 0%, rgba(9,18,32,.1) 45%, rgba(9,18,32,.4) 100%);
+      pointer-events:none;
+    }
+    .welcomeVideoPlayer{
+      width:100%;
+      height:100%;
       display:block;
       border:none;
       outline:none;
       box-shadow:none;
-      border-radius:14px;
       background:#fff;
-      aspect-ratio: 16 / 9;
       object-fit:cover;
       object-position:center;
-      clip-path:inset(1mm 0 1mm 0);
       transform:scale(1.02);
       -webkit-appearance:none;
+    }
+    .welcomeSplashCopy{
+      position:absolute;
+      left:20px;
+      right:20px;
+      bottom:20px;
+      z-index:1;
+      display:grid;
+      gap:8px;
+      color:#fff;
+      text-shadow:0 6px 16px rgba(0,0,0,.35);
+      pointer-events:none;
+    }
+    .welcomeSplashEyebrow{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      opacity:.86;
+    }
+    .welcomeSplashTitle{
+      margin:0;
+      font-size:clamp(28px, 5vw, 48px);
+      line-height:1.02;
+      font-weight:1000;
+      max-width:10ch;
+    }
+    .welcomeSplashSubtitle{
+      margin:0;
+      max-width:34ch;
+      font-size:clamp(14px, 2.4vw, 18px);
+      line-height:1.45;
+      opacity:.94;
+    }
+    .welcomeSplashActions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .welcomeSplashHint{
+      font-size:13px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    @media (max-width:680px){
+      .welcomeSplashScreen{ padding:16px; }
+      .welcomeSplashCard{ padding:14px; }
+      .welcomeSplashCopy{ left:16px; right:16px; bottom:16px; }
+      .welcomeSplashTitle{ max-width:12ch; }
+      .welcomeSplashActions .btn{ width:100%; }
     }
     .coachTitleRow{display:flex;align-items:center;justify-content:flex-start;gap:10px}
     .coachTitle{
@@ -3635,16 +3710,29 @@ section#games.gamePaneActive .gamesHeroCard{
   <!-- HOME -->
   <section id="home" class="tabpane">
     <div id="welcomeSplashScreen" class="welcomeSplashScreen hidden" aria-label="Welcome splash video">
-      <video
-        id="welcomeVideoPlayer"
-        class="welcomeVideoPlayer"
-        src=""
-        playsinline
-        autoplay
-        muted
-        controlslist="nodownload noplaybackrate noremoteplayback"
-        preload="auto"
-      ></video>
+      <div class="welcomeSplashCard">
+        <div class="welcomeVideoWrap">
+          <video
+            id="welcomeVideoPlayer"
+            class="welcomeVideoPlayer"
+            src="./gemini_generated_video_EA512AAF.mp4"
+            playsinline
+            autoplay
+            muted
+            controlslist="nodownload noplaybackrate noremoteplayback"
+            preload="auto"
+          ></video>
+          <div class="welcomeSplashCopy" aria-hidden="true">
+            <div class="welcomeSplashEyebrow">AQA A-Level Psychology</div>
+            <h1 class="welcomeSplashTitle">Start focused. Stay curious.</h1>
+            <p class="welcomeSplashSubtitle">A brief opening splash introduces the app before taking learners straight into their revision flow.</p>
+          </div>
+        </div>
+        <div class="welcomeSplashActions">
+          <div class="welcomeSplashHint">The intro will continue automatically after a few seconds.</div>
+          <button id="welcomeSplashSkipBtn" class="btn primary" type="button">Skip intro</button>
+        </div>
+      </div>
     </div>
 
     <div class="homePanelHeaderRow">
@@ -19625,11 +19713,15 @@ function closeDailyCoachDialog(){
   if(overlay) overlay.classList.add("hidden");
 }
 
+const WELCOME_SPLASH_DURATION_MS = 3600;
+let welcomeSplashTimer = null;
+
 function openWelcomeVideoDialog(){
   const splashScreen = $("welcomeSplashScreen");
   const player = $("welcomeVideoPlayer");
-  const welcomeVideoPlaybackRate = 2.5;
+  const welcomeVideoPlaybackRate = 1.35;
   if(!splashScreen || !player) return false;
+  clearTimeout(welcomeSplashTimer);
   splashScreen.classList.remove("hidden", "is-fading");
   try{
     player.currentTime = 0;
@@ -19639,6 +19731,7 @@ function openWelcomeVideoDialog(){
       playAttempt.catch(()=>{});
     }
   }catch(e){}
+  welcomeSplashTimer = setTimeout(()=>closeWelcomeVideoDialog(true), WELCOME_SPLASH_DURATION_MS);
   return true;
 }
 
@@ -19649,6 +19742,8 @@ function playJourneyIntroThen(nextAction){
 function closeWelcomeVideoDialog(showCoach=true){
   const splashScreen = $("welcomeSplashScreen");
   const player = $("welcomeVideoPlayer");
+  if(splashScreen?.classList.contains("hidden")) return;
+  clearTimeout(welcomeSplashTimer);
   const finishClose = ()=>{
     if(player){
       try{ player.currentTime = 0; }catch(e){}
@@ -21176,7 +21271,13 @@ function init(){
     $("streakHeroCard")?.addEventListener("dblclick", ()=>openDailyCoachDialog(false));
     $("coachDismissBtn")?.addEventListener("click", closeDailyCoachDialog);
     $("welcomeVideoPlayer")?.addEventListener("ended", ()=>closeWelcomeVideoDialog(true));
-    $("welcomeSplashScreen")?.addEventListener("click", ()=>closeWelcomeVideoDialog(true));
+    $("welcomeSplashSkipBtn")?.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      closeWelcomeVideoDialog(true);
+    });
+    $("welcomeSplashScreen")?.addEventListener("click", (e)=>{
+      if(e.target && e.target.id === "welcomeSplashScreen") closeWelcomeVideoDialog(true);
+    });
     $("dailyCoachOverlay")?.addEventListener("click", (e)=>{ if(e.target && e.target.id === "dailyCoachOverlay") closeDailyCoachDialog(); });
     $("dailyChallengeCompleteOverlay")?.addEventListener("click", (e)=>{ if(e.target && e.target.id === "dailyChallengeCompleteOverlay") closeDailyChallengeCompleteModal(); });
     $("dailyNextTaskOverlay")?.addEventListener("click", (e)=>{ if(e.target && e.target.id === "dailyNextTaskOverlay") closeDailyNextTaskModal(); });
@@ -21200,7 +21301,7 @@ init();
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
       try{
-        const reg = await navigator.serviceWorker.register("./service-worker.js?v11", { scope: "./" });
+        const reg = await navigator.serviceWorker.register("./service-worker.js?v12", { scope: "./" });
         // Ask the browser to check for an updated SW file
         if (reg && reg.update) reg.update();
 
